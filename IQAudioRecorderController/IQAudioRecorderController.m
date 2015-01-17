@@ -30,37 +30,67 @@
 
 /************************************/
 
+@implementation NSString (TimeString)
+
++(NSString*)timeStringForTimeInterval:(NSTimeInterval)timeInterval
+{
+    NSInteger ti = (NSInteger)timeInterval;
+    NSInteger seconds = ti % 60;
+    NSInteger minutes = (ti / 60) % 60;
+    NSInteger hours = (ti / 3600);
+    
+    if (hours > 0)
+    {
+        return [NSString stringWithFormat:@"%02li:%02li:%02li", (long)hours, (long)minutes, (long)seconds];
+    }
+    else
+    {
+        return  [NSString stringWithFormat:@"%02li:%02li", (long)minutes, (long)seconds];
+    }
+}
+
+@end
+
 @interface IQInternalAudioRecorderController : UIViewController <AVAudioRecorderDelegate,AVAudioPlayerDelegate,UIActionSheetDelegate>
 {
+    //Recording...
+    AVAudioRecorder *_audioRecorder;
     SCSiriWaveformView *musicFlowView;
-    
     NSString *_recordingFilePath;
-    
     BOOL _isRecording;
+    CADisplayLink *meterUpdateDisplayLink;
     
+    //Playing
+    AVAudioPlayer *_audioPlayer;
+    BOOL _wasPlaying;
+    UIView *_viewPlayerDuration;
+    UISlider *_playerSlider;
+    UILabel *_labelCurrentTime;
+    UILabel *_labelRemainingTime;
+    CADisplayLink *playProgressDisplayLink;
+
+    //Navigation Bar
+    NSString *_navigationTitle;
     UIBarButtonItem *_cancelButton;
     UIBarButtonItem *_doneButton;
     
+    //Toolbar
     UIBarButtonItem *_flexItem1;
     UIBarButtonItem *_flexItem2;
-    UIBarButtonItem *_recordButton;
     UIBarButtonItem *_playButton;
     UIBarButtonItem *_pauseButton;
+    UIBarButtonItem *_recordButton;
     UIBarButtonItem *_trashButton;
     
+    //Private variables
     NSString *_oldSessionCategory;
-    
-    CADisplayLink *meterUpdateDisplayLink;
-    
     UIColor *_normalTintColor;
     UIColor *_selectedTintColor;
 }
 
 @property(nonatomic, weak) id<IQAudioRecorderControllerDelegate> delegate;
 
-@property (nonatomic,strong) AVAudioPlayer *audioPlayer;
-@property (nonatomic,strong) AVAudioRecorder *audioRecorder;
-
+@property(nonatomic, assign) BOOL shouldShowRemainingTime;
 @end
 
 /************************************/
@@ -111,7 +141,6 @@
     [view addSubview:musicFlowView];
     self.view = view;
 
-    
     NSLayoutConstraint *constraintRatio = [NSLayoutConstraint constraintWithItem:musicFlowView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:musicFlowView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
     
     NSLayoutConstraint *constraintCenterX = [NSLayoutConstraint constraintWithItem:musicFlowView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
@@ -127,6 +156,7 @@
 {
     [super viewDidLoad];
 
+    _navigationTitle = @"Audio Recorder";
     _normalTintColor = [UIColor whiteColor];
     _selectedTintColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
 
@@ -177,25 +207,76 @@
         self.navigationItem.leftBarButtonItem = _cancelButton;
         _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
     }
+    
+    //Player Duration View
+    {
+        _viewPlayerDuration = [[UIView alloc] init];
+        _viewPlayerDuration.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _viewPlayerDuration.backgroundColor = [UIColor clearColor];
+
+        _labelCurrentTime = [[UILabel alloc] init];
+        _labelCurrentTime.text = [NSString timeStringForTimeInterval:0];
+        _labelCurrentTime.font = [UIFont boldSystemFontOfSize:14.0];
+        _labelCurrentTime.textColor = _normalTintColor;
+        _labelCurrentTime.translatesAutoresizingMaskIntoConstraints = NO;
+
+        _playerSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
+        _playerSlider.minimumTrackTintColor = _selectedTintColor;
+        _playerSlider.value = 0;
+        [_playerSlider addTarget:self action:@selector(sliderStart:) forControlEvents:UIControlEventTouchDown];
+        [_playerSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
+        [_playerSlider addTarget:self action:@selector(sliderEnd:) forControlEvents:UIControlEventTouchUpInside];
+        [_playerSlider addTarget:self action:@selector(sliderEnd:) forControlEvents:UIControlEventTouchUpOutside];
+        _playerSlider.translatesAutoresizingMaskIntoConstraints = NO;
+
+        _labelRemainingTime = [[UILabel alloc] init];
+        _labelCurrentTime.text = [NSString timeStringForTimeInterval:0];
+        _labelRemainingTime.userInteractionEnabled = YES;
+        [_labelRemainingTime addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognizer:)]];
+        _labelRemainingTime.font = _labelCurrentTime.font;
+        _labelRemainingTime.textColor = _labelCurrentTime.textColor;
+        _labelRemainingTime.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        [_viewPlayerDuration addSubview:_labelCurrentTime];
+        [_viewPlayerDuration addSubview:_playerSlider];
+        [_viewPlayerDuration addSubview:_labelRemainingTime];
+        
+        NSLayoutConstraint *constraintCurrentTimeLeading = [NSLayoutConstraint constraintWithItem:_labelCurrentTime attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_viewPlayerDuration attribute:NSLayoutAttributeLeading multiplier:1 constant:10];
+        NSLayoutConstraint *constraintCurrentTimeTrailing = [NSLayoutConstraint constraintWithItem:_playerSlider attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_labelCurrentTime attribute:NSLayoutAttributeTrailing multiplier:1 constant:10];
+        NSLayoutConstraint *constraintRemainingTimeLeading = [NSLayoutConstraint constraintWithItem:_labelRemainingTime attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_playerSlider attribute:NSLayoutAttributeTrailing multiplier:1 constant:10];
+        NSLayoutConstraint *constraintRemainingTimeTrailing = [NSLayoutConstraint constraintWithItem:_viewPlayerDuration attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_labelRemainingTime attribute:NSLayoutAttributeTrailing multiplier:1 constant:10];
+        
+        NSLayoutConstraint *constraintCurrentTimeCenter = [NSLayoutConstraint constraintWithItem:_labelCurrentTime attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_viewPlayerDuration attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
+        NSLayoutConstraint *constraintSliderCenter = [NSLayoutConstraint constraintWithItem:_playerSlider attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_viewPlayerDuration attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
+        NSLayoutConstraint *constraintRemainingTimeCenter = [NSLayoutConstraint constraintWithItem:_labelRemainingTime attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_viewPlayerDuration attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
+        
+        [_viewPlayerDuration addConstraints:@[constraintCurrentTimeLeading,constraintCurrentTimeTrailing,constraintRemainingTimeLeading,constraintRemainingTimeTrailing,constraintCurrentTimeCenter,constraintSliderCenter,constraintRemainingTimeCenter]];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [self startRunningRecorder];
+    [self startUpdatingMeter];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    [self.audioPlayer stop];
-    self.audioPlayer.delegate = nil;
-    self.audioPlayer = nil;
+    _audioPlayer.delegate = nil;
+    [_audioPlayer stop];
+    _audioPlayer = nil;
     
-    [self stopRunningRecorder];
+    _audioRecorder.delegate = nil;
+    [_audioRecorder stop];
+    _audioRecorder = nil;
+    
+    [self stopUpdatingMeter];
 }
+
+#pragma mark - Update Meters
 
 - (void)updateMeters
 {
@@ -207,23 +288,59 @@
     
     if (_audioRecorder.isRecording)
     {
-        float audioDurationSeconds = _audioRecorder.currentTime;
-        NSInteger minutes = floor(audioDurationSeconds/60);
-        NSInteger seconds = round(audioDurationSeconds - minutes * 60);
-        self.navigationItem.prompt = [NSString stringWithFormat:@"%ld:%02ld", (long)minutes, (long)seconds];
+        self.navigationItem.title = [NSString timeStringForTimeInterval:_audioRecorder.currentTime];
     }
 }
 
--(void)startRunningRecorder
+#pragma mark - Update Play Progress
+
+-(void)updatePlayProgress
 {
+    _labelCurrentTime.text = [NSString timeStringForTimeInterval:_audioPlayer.currentTime];
+    _labelRemainingTime.text = [NSString timeStringForTimeInterval:(_shouldShowRemainingTime)?(_audioPlayer.duration-_audioPlayer.currentTime):_audioPlayer.duration];
+    [_playerSlider setValue:_audioPlayer.currentTime animated:YES];
+}
+
+-(void)sliderStart:(UISlider*)slider
+{
+    _wasPlaying = _audioPlayer.isPlaying;
+    
+    if (_audioPlayer.isPlaying)
+    {
+        [_audioPlayer pause];
+    }
+}
+
+-(void)sliderMoved:(UISlider*)slider
+{
+    _audioPlayer.currentTime = slider.value;
+}
+
+-(void)sliderEnd:(UISlider*)slider
+{
+    if (_wasPlaying)
+    {
+        [_audioPlayer play];
+    }
+}
+
+-(void)tapRecognizer:(UITapGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateEnded)
+    {
+        _shouldShowRemainingTime = !_shouldShowRemainingTime;
+    }
+}
+
+-(void)startUpdatingMeter
+{
+    [meterUpdateDisplayLink invalidate];
     meterUpdateDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateMeters)];
     [meterUpdateDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
 }
 
--(void)stopRunningRecorder
+-(void)stopUpdatingMeter
 {
-    [_audioRecorder stop];
-    
     [meterUpdateDisplayLink invalidate];
     meterUpdateDisplayLink = nil;
 }
@@ -260,7 +377,6 @@
         {
             [self showNavigationButton:NO];
             [musicFlowView setWaveColor:_selectedTintColor];
-            self.navigationItem.prompt = nil;
             _recordButton.tintColor = _selectedTintColor;
             _playButton.enabled = NO;
             _trashButton.enabled = NO;
@@ -302,10 +418,10 @@
     _oldSessionCategory = [[AVAudioSession sharedInstance] category];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     
-    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:_recordingFilePath] error:nil];
-    self.audioPlayer.delegate = self;
-    [self.audioPlayer prepareToPlay];
-    [self.audioPlayer play];
+    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:_recordingFilePath] error:nil];
+    _audioPlayer.delegate = self;
+    [_audioPlayer prepareToPlay];
+    [_audioPlayer play];
     
     //UI Update
     {
@@ -314,14 +430,28 @@
         _recordButton.enabled = NO;
         _trashButton.enabled = NO;
     }
+    
+    //Start regular update
+    {
+        _playerSlider.value = _audioPlayer.currentTime;
+        _playerSlider.maximumValue = _audioPlayer.duration;
+        _viewPlayerDuration.frame = self.navigationController.navigationBar.bounds;
+        
+        _labelCurrentTime.text = [NSString timeStringForTimeInterval:_audioPlayer.currentTime];
+        _labelRemainingTime.text = [NSString timeStringForTimeInterval:(_shouldShowRemainingTime)?(_audioPlayer.duration-_audioPlayer.currentTime):_audioPlayer.duration];
+
+        [_viewPlayerDuration setNeedsLayout];
+        [_viewPlayerDuration layoutIfNeeded];
+        self.navigationItem.titleView = _viewPlayerDuration;
+
+        [playProgressDisplayLink invalidate];
+        playProgressDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updatePlayProgress)];
+        [playProgressDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    }
 }
 
 -(void)pauseAction:(UIBarButtonItem*)item
 {
-    self.audioPlayer.delegate = nil;
-    [self.audioPlayer stop];
-    self.audioPlayer = nil;
-    
     //UI Update
     {
         [self setToolbarItems:@[_playButton,_flexItem1, _recordButton,_flexItem2, _trashButton] animated:YES];
@@ -329,6 +459,16 @@
         _recordButton.enabled = YES;
         _trashButton.enabled = YES;
     }
+    
+    {
+        [playProgressDisplayLink invalidate];
+        playProgressDisplayLink = nil;
+        self.navigationItem.titleView = nil;
+    }
+
+    _audioPlayer.delegate = nil;
+    [_audioPlayer stop];
+    _audioPlayer = nil;
     
     [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
 }
@@ -351,7 +491,7 @@
             _playButton.enabled = NO;
             _trashButton.enabled = NO;
             [self.navigationItem setRightBarButtonItem:nil animated:YES];
-            self.navigationItem.prompt = nil;
+            self.navigationItem.title = _navigationTitle;
         }
     }
 }
