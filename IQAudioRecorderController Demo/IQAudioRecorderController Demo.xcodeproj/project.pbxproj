@@ -1,0 +1,353 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B53594141A6A531100A81727 /* audio_record.png in Resources */ = {isa = PBXBuildFile; fileRef = B53594121A6A531100A81727 /* audio_record.png */; };
+		B53594151A6A531100A81727 /* audio_record@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B53594131A6A531100A81727 /* audio_record@2x.png */; };
+		B5D474141A6A2EF200771B83 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474131A6A2EF200771B83 /* main.m */; };
+		B5D474171A6A2EF200771B83 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474161A6A2EF200771B83 /* AppDelegate.m */; };
+		B5D4741A1A6A2EF200771B83 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474191A6A2EF200771B83 /* ViewController.m */; };
+		B5D4741D1A6A2EF200771B83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D4741B1A6A2EF200771B83 /* Main.storyboard */; };
+		B5D4741F1A6A2EF200771B83 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5D4741E1A6A2EF200771B83 /* Images.xcassets */; };
+		B5D474221A6A2EF200771B83 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D474201A6A2EF200771B83 /* LaunchScreen.xib */; };
+		B5D4743B1A6A2F4800771B83 /* IQAudioRecorderController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474391A6A2F4800771B83 /* IQAudioRecorderController.m */; };
+		B5D474401A6A2F9200771B83 /* SCSiriWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D4743F1A6A2F9200771B83 /* SCSiriWaveformView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B53594121A6A531100A81727 /* audio_record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audio_record.png; sourceTree = "<group>"; };
+		B53594131A6A531100A81727 /* audio_record@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_record@2x.png"; sourceTree = "<group>"; };
+		B5D4740E1A6A2EF200771B83 /* IQAudioRecorderController Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IQAudioRecorderController Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5D474121A6A2EF200771B83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5D474131A6A2EF200771B83 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B5D474151A6A2EF200771B83 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B5D474161A6A2EF200771B83 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B5D474181A6A2EF200771B83 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		B5D474191A6A2EF200771B83 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		B5D4741C1A6A2EF200771B83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B5D4741E1A6A2EF200771B83 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B5D474211A6A2EF200771B83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		B5D474381A6A2F4800771B83 /* IQAudioRecorderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorderController.h; sourceTree = "<group>"; };
+		B5D474391A6A2F4800771B83 /* IQAudioRecorderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorderController.m; sourceTree = "<group>"; };
+		B5D4743E1A6A2F9200771B83 /* SCSiriWaveformView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSiriWaveformView.h; sourceTree = "<group>"; };
+		B5D4743F1A6A2F9200771B83 /* SCSiriWaveformView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSiriWaveformView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B5D4740B1A6A2EF200771B83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B53594111A6A531100A81727 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B53594121A6A531100A81727 /* audio_record.png */,
+				B53594131A6A531100A81727 /* audio_record@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B5D474051A6A2EF200771B83 = {
+			isa = PBXGroup;
+			children = (
+				B5D474371A6A2F4800771B83 /* IQAudioRecorderController */,
+				B5D474101A6A2EF200771B83 /* IQAudioRecorderController Demo */,
+				B5D4740F1A6A2EF200771B83 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B5D4740F1A6A2EF200771B83 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B5D4740E1A6A2EF200771B83 /* IQAudioRecorderController Demo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B5D474101A6A2EF200771B83 /* IQAudioRecorderController Demo */ = {
+			isa = PBXGroup;
+			children = (
+				B5D474151A6A2EF200771B83 /* AppDelegate.h */,
+				B5D474161A6A2EF200771B83 /* AppDelegate.m */,
+				B5D474181A6A2EF200771B83 /* ViewController.h */,
+				B5D474191A6A2EF200771B83 /* ViewController.m */,
+				B5D4741B1A6A2EF200771B83 /* Main.storyboard */,
+				B5D4741E1A6A2EF200771B83 /* Images.xcassets */,
+				B5D474201A6A2EF200771B83 /* LaunchScreen.xib */,
+				B5D474111A6A2EF200771B83 /* Supporting Files */,
+			);
+			path = "IQAudioRecorderController Demo";
+			sourceTree = "<group>";
+		};
+		B5D474111A6A2EF200771B83 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B5D474121A6A2EF200771B83 /* Info.plist */,
+				B5D474131A6A2EF200771B83 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B5D474371A6A2F4800771B83 /* IQAudioRecorderController */ = {
+			isa = PBXGroup;
+			children = (
+				B53594111A6A531100A81727 /* Resources */,
+				B5D4743D1A6A2F9200771B83 /* SCSiriWaveformView */,
+				B5D474381A6A2F4800771B83 /* IQAudioRecorderController.h */,
+				B5D474391A6A2F4800771B83 /* IQAudioRecorderController.m */,
+			);
+			name = IQAudioRecorderController;
+			path = ../IQAudioRecorderController;
+			sourceTree = "<group>";
+		};
+		B5D4743D1A6A2F9200771B83 /* SCSiriWaveformView */ = {
+			isa = PBXGroup;
+			children = (
+				B5D4743E1A6A2F9200771B83 /* SCSiriWaveformView.h */,
+				B5D4743F1A6A2F9200771B83 /* SCSiriWaveformView.m */,
+			);
+			path = SCSiriWaveformView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B5D4740D1A6A2EF200771B83 /* IQAudioRecorderController Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5D474311A6A2EF200771B83 /* Build configuration list for PBXNativeTarget "IQAudioRecorderController Demo" */;
+			buildPhases = (
+				B5D4740A1A6A2EF200771B83 /* Sources */,
+				B5D4740B1A6A2EF200771B83 /* Frameworks */,
+				B5D4740C1A6A2EF200771B83 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "IQAudioRecorderController Demo";
+			productName = "IQAudioRecorderController Demo";
+			productReference = B5D4740E1A6A2EF200771B83 /* IQAudioRecorderController Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B5D474061A6A2EF200771B83 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Iftekhar;
+				TargetAttributes = {
+					B5D4740D1A6A2EF200771B83 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = B5D474091A6A2EF200771B83 /* Build configuration list for PBXProject "IQAudioRecorderController Demo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B5D474051A6A2EF200771B83;
+			productRefGroup = B5D4740F1A6A2EF200771B83 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B5D4740D1A6A2EF200771B83 /* IQAudioRecorderController Demo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B5D4740C1A6A2EF200771B83 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5D4741D1A6A2EF200771B83 /* Main.storyboard in Resources */,
+				B5D474221A6A2EF200771B83 /* LaunchScreen.xib in Resources */,
+				B5D4741F1A6A2EF200771B83 /* Images.xcassets in Resources */,
+				B53594141A6A531100A81727 /* audio_record.png in Resources */,
+				B53594151A6A531100A81727 /* audio_record@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B5D4740A1A6A2EF200771B83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5D4741A1A6A2EF200771B83 /* ViewController.m in Sources */,
+				B5D474171A6A2EF200771B83 /* AppDelegate.m in Sources */,
+				B5D4743B1A6A2F4800771B83 /* IQAudioRecorderController.m in Sources */,
+				B5D474141A6A2EF200771B83 /* main.m in Sources */,
+				B5D474401A6A2F9200771B83 /* SCSiriWaveformView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B5D4741B1A6A2EF200771B83 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5D4741C1A6A2EF200771B83 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B5D474201A6A2EF200771B83 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5D474211A6A2EF200771B83 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B5D4742F1A6A2EF200771B83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "02353cc9-afb5-44f8-8c61-0111ecaa8c9b";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		B5D474301A6A2EF200771B83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "02353cc9-afb5-44f8-8c61-0111ecaa8c9b";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B5D474321A6A2EF200771B83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				INFOPLIST_FILE = "IQAudioRecorderController Demo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "02353cc9-afb5-44f8-8c61-0111ecaa8c9b";
+			};
+			name = Debug;
+		};
+		B5D474331A6A2EF200771B83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				INFOPLIST_FILE = "IQAudioRecorderController Demo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "02353cc9-afb5-44f8-8c61-0111ecaa8c9b";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B5D474091A6A2EF200771B83 /* Build configuration list for PBXProject "IQAudioRecorderController Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5D4742F1A6A2EF200771B83 /* Debug */,
+				B5D474301A6A2EF200771B83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5D474311A6A2EF200771B83 /* Build configuration list for PBXNativeTarget "IQAudioRecorderController Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5D474321A6A2EF200771B83 /* Debug */,
+				B5D474331A6A2EF200771B83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B5D474061A6A2EF200771B83 /* Project object */;
+}
