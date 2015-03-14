@@ -85,7 +85,8 @@
     //Private variables
     NSString *_oldSessionCategory;
     UIColor *_normalTintColor;
-    UIColor *_selectedTintColor;
+    UIColor *_recordingTintColor;
+    UIColor *_playingTintColor;
 }
 
 @property(nonatomic, weak) id<IQAudioRecorderControllerDelegate> delegate;
@@ -158,8 +159,9 @@
 
     _navigationTitle = @"Audio Recorder";
     _normalTintColor = [UIColor whiteColor];
-    _selectedTintColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
-
+    _recordingTintColor = [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0];
+    _playingTintColor = [UIColor colorWithRed:255.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1.0];
+    
     self.view.tintColor = _normalTintColor;
     musicFlowView.backgroundColor = [self.view backgroundColor];
 //    musicFlowView.idleAmplitude = 0;
@@ -195,7 +197,6 @@
         _audioRecorder.delegate = self;
         _audioRecorder.meteringEnabled = YES;
         
-        [musicFlowView setWaveColor:_normalTintColor];
         [musicFlowView setPrimaryWaveLineWidth:3.0f];
         [musicFlowView setSecondaryWaveLineWidth:1.0];
     }
@@ -221,7 +222,7 @@
         _labelCurrentTime.translatesAutoresizingMaskIntoConstraints = NO;
 
         _playerSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
-        _playerSlider.minimumTrackTintColor = _selectedTintColor;
+        _playerSlider.minimumTrackTintColor = _playingTintColor;
         _playerSlider.value = 0;
         [_playerSlider addTarget:self action:@selector(sliderStart:) forControlEvents:UIControlEventTouchDown];
         [_playerSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -280,16 +281,44 @@
 
 - (void)updateMeters
 {
-    [_audioRecorder updateMeters];
-    
-    CGFloat normalizedValue = pow (10, [_audioRecorder averagePowerForChannel:0] / 20);
-    
-    [musicFlowView updateWithLevel:normalizedValue];
-    
     if (_audioRecorder.isRecording)
     {
+        [_audioRecorder updateMeters];
+        
+        CGFloat normalizedValue = pow (10, [_audioRecorder averagePowerForChannel:0] / 20);
+        
+        [musicFlowView setWaveColor:_recordingTintColor];
+        [musicFlowView updateWithLevel:normalizedValue];
+        
         self.navigationItem.title = [NSString timeStringForTimeInterval:_audioRecorder.currentTime];
     }
+    else if (_audioPlayer.isPlaying)
+    {
+        [_audioPlayer updateMeters];
+        
+        CGFloat normalizedValue = pow (10, [_audioPlayer averagePowerForChannel:0] / 20);
+        
+        [musicFlowView setWaveColor:_playingTintColor];
+        [musicFlowView updateWithLevel:normalizedValue];
+    }
+    else
+    {
+        [musicFlowView setWaveColor:_normalTintColor];
+        [musicFlowView updateWithLevel:0];
+    }
+}
+
+-(void)startUpdatingMeter
+{
+    [meterUpdateDisplayLink invalidate];
+    meterUpdateDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateMeters)];
+    [meterUpdateDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+}
+
+-(void)stopUpdatingMeter
+{
+    [meterUpdateDisplayLink invalidate];
+    meterUpdateDisplayLink = nil;
 }
 
 #pragma mark - Update Play Progress
@@ -332,19 +361,6 @@
     }
 }
 
--(void)startUpdatingMeter
-{
-    [meterUpdateDisplayLink invalidate];
-    meterUpdateDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateMeters)];
-    [meterUpdateDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-}
-
--(void)stopUpdatingMeter
-{
-    [meterUpdateDisplayLink invalidate];
-    meterUpdateDisplayLink = nil;
-}
-
 -(void)cancelAction:(UIBarButtonItem*)item
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorderControllerDidCancel:)])
@@ -376,8 +392,7 @@
         //UI Update
         {
             [self showNavigationButton:NO];
-            [musicFlowView setWaveColor:_selectedTintColor];
-            _recordButton.tintColor = _selectedTintColor;
+            _recordButton.tintColor = _recordingTintColor;
             _playButton.enabled = NO;
             _trashButton.enabled = NO;
         }
@@ -402,7 +417,6 @@
         //UI Update
         {
             [self showNavigationButton:YES];
-            [musicFlowView setWaveColor:_normalTintColor];
             _recordButton.tintColor = _normalTintColor;
             _playButton.enabled = YES;
             _trashButton.enabled = YES;
@@ -420,6 +434,7 @@
     
     _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:_recordingFilePath] error:nil];
     _audioPlayer.delegate = self;
+    _audioPlayer.meteringEnabled = YES;
     [_audioPlayer prepareToPlay];
     [_audioPlayer play];
     
