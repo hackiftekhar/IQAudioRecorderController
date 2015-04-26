@@ -9,6 +9,10 @@ IQAudioRecorderController is a drop-in universal library allows to record audio 
 ![Recording](./Screenshot/RecordingScrenshot.PNG)
 ![Recordered](./Screenshot/RecordedScrenshot.PNG)
 
+## Cocoapod:-
+
+pod 'IQAudioRecorderController'
+
 ## How to use
 ```
 #import "IQAudioRecorderController.h"
