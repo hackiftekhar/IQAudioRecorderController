@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.author       = { "Iftekhar Qurashi" => "hack.iftekhar@gmail.com" }
   s.platform     = :ios, '7.0'
   s.source       = { :git => "https://github.com/hackiftekhar/IQAudioRecorderController.git", :tag => "v1.0.0" }
-  s.source_files = 'Classes', 'IQAudioRecorderController/*.{h,m}'
+  s.source_files = 'Classes', 'IQAudioRecorderController/**/*.{h,m}'
   s.resources    = "IQAudioRecorderController/Resources/*.{png}"
   s.requires_arc = true
 end
