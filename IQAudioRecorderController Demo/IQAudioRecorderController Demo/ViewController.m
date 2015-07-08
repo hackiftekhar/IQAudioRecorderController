@@ -26,6 +26,7 @@
 - (IBAction)recordAction:(UIButton *)sender
 {
     UINavigationController *controller = [IQAudioRecorderController embeddedIQAudioRecorderControllerWithDelegate:self];
+    controller.topViewController.title = @"Custom";
     [self presentViewController:controller animated:YES completion:nil];
 }
 

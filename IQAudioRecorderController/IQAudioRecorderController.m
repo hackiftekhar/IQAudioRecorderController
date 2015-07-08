@@ -49,7 +49,6 @@
     CADisplayLink *playProgressDisplayLink;
     
     //Navigation Bar
-    NSString *_navigationTitle;
     UIBarButtonItem *_cancelButton;
     UIBarButtonItem *_doneButton;
     
@@ -131,7 +130,7 @@
 {
     [super viewDidLoad];
 
-    _navigationTitle = @"Audio Recorder";
+    self.title = self.title ?: @"Audio Recorder";
     _normalTintColor = [UIColor whiteColor];
     _recordingTintColor = [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0];
     _playingTintColor = [UIColor colorWithRed:255.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1.0];
@@ -179,7 +178,6 @@
 
     //Navigation Bar Settings
     {
-        self.navigationItem.title = _navigationTitle;
         _cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
         self.navigationItem.leftBarButtonItem = _cancelButton;
         _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
@@ -480,7 +478,7 @@
             _playButton.enabled = NO;
             _trashButton.enabled = NO;
             [self.navigationItem setRightBarButtonItem:nil animated:YES];
-            self.navigationItem.title = _navigationTitle;
+            self.navigationItem.title = self.title;
         }
     }
 }
