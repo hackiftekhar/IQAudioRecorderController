@@ -37,7 +37,7 @@
 
 @interface IQAudioRecorderController : UIViewController
 
-@property(nonatomic, weak) id<IQAudioRecorderControllerDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id<IQAudioRecorderControllerDelegate> delegate;
 
 @property (nonatomic) IBInspectable UIColor *normalTintColor;
 @property (nonatomic) IBInspectable UIColor *recordingTintColor;
