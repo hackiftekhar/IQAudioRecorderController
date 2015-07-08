@@ -36,7 +36,6 @@
     AVAudioRecorder *_audioRecorder;
     SCSiriWaveformView *musicFlowView;
     NSString *_recordingFilePath;
-    BOOL _isRecording;
     CADisplayLink *meterUpdateDisplayLink;
     
     //Playing
@@ -391,10 +390,8 @@
 
 - (void)recordingButtonAction:(UIBarButtonItem *)item
 {
-    if (_isRecording == NO)
+    if (_audioRecorder.recording == NO)
     {
-        _isRecording = YES;
-
         //UI Update
         {
             [self showNavigationButton:NO];
@@ -418,8 +415,6 @@
     }
     else
     {
-        _isRecording = NO;
-        
         //UI Update
         {
             [self showNavigationButton:YES];
