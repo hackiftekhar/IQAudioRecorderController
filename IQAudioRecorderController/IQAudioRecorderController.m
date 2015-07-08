@@ -54,7 +54,6 @@
     
     //Toolbar
     UIBarButtonItem *_playButton;
-    UIBarButtonItem *_pauseButton;
     UIBarButtonItem *_recordButton;
     UIBarButtonItem *_trashButton;
     NSArray *_recordToolbarItems;
@@ -144,13 +143,14 @@
     _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",fileName]];
 
     {
-        UIBarButtonItem *_flexItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        UIBarButtonItem *_flexItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        
         _recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
         _playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
-        _pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
         _trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
+        
+        UIBarButtonItem *_pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
+        UIBarButtonItem *_flexItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        UIBarButtonItem *_flexItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+
         _recordToolbarItems = @[_playButton,_flexItem1, _recordButton,_flexItem2, _trashButton];
         _playToolbarItems = @[_pauseButton,_flexItem1, _recordButton,_flexItem2, _trashButton];
         [self setToolbarItems:_recordToolbarItems animated:NO];
@@ -504,10 +504,7 @@
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
     //To update UI on stop playing
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[_pauseButton.target methodSignatureForSelector:_pauseButton.action]];
-    invocation.target = _pauseButton.target;
-    invocation.selector = _pauseButton.action;
-    [invocation invoke];
+    [self pauseAction:nil];
 }
 
 #pragma mark - AVAudioRecorderDelegate
