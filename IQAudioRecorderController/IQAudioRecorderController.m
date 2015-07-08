@@ -47,10 +47,50 @@
 
 @end
 
+@interface IQAudioRecorderController ()<AVAudioRecorderDelegate, AVAudioPlayerDelegate, UIActionSheetDelegate>
+
+@end
+
 
 /************************************/
 
 @implementation IQAudioRecorderController
+{
+    //Recording...
+    AVAudioRecorder *_audioRecorder;
+    SCSiriWaveformView *musicFlowView;
+    NSString *_recordingFilePath;
+    BOOL _isRecording;
+    CADisplayLink *meterUpdateDisplayLink;
+    
+    //Playing
+    AVAudioPlayer *_audioPlayer;
+    BOOL _wasPlaying;
+    UIView *_viewPlayerDuration;
+    UISlider *_playerSlider;
+    UILabel *_labelCurrentTime;
+    UILabel *_labelRemainingTime;
+    CADisplayLink *playProgressDisplayLink;
+    
+    //Navigation Bar
+    NSString *_navigationTitle;
+    UIBarButtonItem *_cancelButton;
+    UIBarButtonItem *_doneButton;
+    
+    //Toolbar
+    UIBarButtonItem *_flexItem1;
+    UIBarButtonItem *_flexItem2;
+    UIBarButtonItem *_playButton;
+    UIBarButtonItem *_pauseButton;
+    UIBarButtonItem *_recordButton;
+    UIBarButtonItem *_trashButton;
+    
+    //Private variables
+    NSString *_oldSessionCategory;
+    UIColor *_normalTintColor;
+    UIColor *_recordingTintColor;
+    UIColor *_playingTintColor;
+}
 
 
 + (UINavigationController *)embeddedIQAudioRecorderControllerWithDelegate:(id<IQAudioRecorderControllerDelegate, UINavigationControllerDelegate>)delegate
