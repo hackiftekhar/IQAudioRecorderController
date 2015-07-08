@@ -7,7 +7,7 @@
 #import "IQAudioRecorderController.h"
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface ViewController ()<IQAudioRecorderControllerDelegate>
+@interface ViewController ()<IQAudioRecorderControllerDelegate, UINavigationControllerDelegate>
 {
     IBOutlet UIButton *buttonPlayAudio;
     NSString *audioFilePath;
@@ -25,18 +25,17 @@
 
 - (IBAction)recordAction:(UIButton *)sender
 {
-    IQAudioRecorderController *controller = [[IQAudioRecorderController alloc] init];
-    controller.delegate = self;
+    UINavigationController *controller = [IQInternalAudioRecorderController embeddedIQAudioRecorderControllerWithDelegate:self];
     [self presentViewController:controller animated:YES completion:nil];
 }
 
--(void)audioRecorderController:(IQAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath
+-(void)audioRecorderController:(IQInternalAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath
 {
     audioFilePath = filePath;
     buttonPlayAudio.enabled = YES;
 }
 
--(void)audioRecorderControllerDidCancel:(IQAudioRecorderController *)controller
+-(void)audioRecorderControllerDidCancel:(IQInternalAudioRecorderController *)controller
 {
     buttonPlayAudio.enabled = NO;
 }

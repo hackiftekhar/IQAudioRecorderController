@@ -24,10 +24,6 @@
 
 #import "IQAudioRecorderController.h"
 
-#import "SCSiriWaveformView.h"
-
-#import <AVFoundation/AVFoundation.h>
-
 /************************************/
 
 @implementation NSString (TimeString)
@@ -51,86 +47,31 @@
 
 @end
 
-@interface IQInternalAudioRecorderController : UIViewController <AVAudioRecorderDelegate,AVAudioPlayerDelegate,UIActionSheetDelegate>
-{
-    //Recording...
-    AVAudioRecorder *_audioRecorder;
-    SCSiriWaveformView *musicFlowView;
-    NSString *_recordingFilePath;
-    BOOL _isRecording;
-    CADisplayLink *meterUpdateDisplayLink;
-    
-    //Playing
-    AVAudioPlayer *_audioPlayer;
-    BOOL _wasPlaying;
-    UIView *_viewPlayerDuration;
-    UISlider *_playerSlider;
-    UILabel *_labelCurrentTime;
-    UILabel *_labelRemainingTime;
-    CADisplayLink *playProgressDisplayLink;
-
-    //Navigation Bar
-    NSString *_navigationTitle;
-    UIBarButtonItem *_cancelButton;
-    UIBarButtonItem *_doneButton;
-    
-    //Toolbar
-    UIBarButtonItem *_flexItem1;
-    UIBarButtonItem *_flexItem2;
-    UIBarButtonItem *_playButton;
-    UIBarButtonItem *_pauseButton;
-    UIBarButtonItem *_recordButton;
-    UIBarButtonItem *_trashButton;
-    
-    //Private variables
-    NSString *_oldSessionCategory;
-    UIColor *_normalTintColor;
-    UIColor *_recordingTintColor;
-    UIColor *_playingTintColor;
-}
-
-@property(nonatomic, weak) id<IQAudioRecorderControllerDelegate> delegate;
-
-@property(nonatomic, assign) BOOL shouldShowRemainingTime;
-@end
-
-/************************************/
-
-@implementation IQAudioRecorderController
-{
-    IQInternalAudioRecorderController *_internalController;
-}
-@synthesize delegate = _delegate;
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    _internalController = [[IQInternalAudioRecorderController alloc] init];
-    _internalController.delegate = self.delegate;
-    
-    self.viewControllers = @[_internalController];
-    self.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationBar.translucent = YES;
-    self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    
-    self.toolbarHidden = NO;
-    self.toolbar.tintColor = self.navigationBar.tintColor;
-    self.toolbar.translucent = self.navigationBar.translucent;
-    self.toolbar.barStyle = self.navigationBar.barStyle;
-}
-
--(void)setDelegate:(id<IQAudioRecorderControllerDelegate,UINavigationControllerDelegate>)delegate
-{
-    _delegate = delegate;
-    _internalController.delegate = delegate;
-}
-
-@end
 
 /************************************/
 
 @implementation IQInternalAudioRecorderController
+
+
++ (UINavigationController *)embeddedIQAudioRecorderControllerWithDelegate:(id<IQAudioRecorderControllerDelegate, UINavigationControllerDelegate>)delegate
+{
+    IQInternalAudioRecorderController *recorderController = [IQInternalAudioRecorderController new];
+    recorderController.delegate = delegate;
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:recorderController];
+    navigationController.delegate = delegate;
+    
+    navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    navigationController.navigationBar.translucent = YES;
+    navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    
+    navigationController.toolbarHidden = NO;
+    navigationController.toolbar.tintColor = navigationController.navigationBar.tintColor;
+    navigationController.toolbar.translucent = navigationController.navigationBar.translucent;
+    navigationController.toolbar.barStyle = navigationController.navigationBar.barStyle;
+    
+    return navigationController;
+}
 
 -(void)loadView
 {
@@ -365,8 +306,7 @@
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorderControllerDidCancel:)])
     {
-        IQAudioRecorderController *controller = (IQAudioRecorderController*)[self navigationController];
-        [self.delegate audioRecorderControllerDidCancel:controller];
+        [self.delegate audioRecorderControllerDidCancel:self];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -376,8 +316,7 @@
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorderController:didFinishWithAudioAtPath:)])
     {
-        IQAudioRecorderController *controller = (IQAudioRecorderController*)[self navigationController];
-        [self.delegate audioRecorderController:controller didFinishWithAudioAtPath:_recordingFilePath];
+        [self.delegate audioRecorderController:self didFinishWithAudioAtPath:_recordingFilePath];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
