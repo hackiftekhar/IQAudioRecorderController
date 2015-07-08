@@ -58,6 +58,8 @@
     
     //Private variables
     NSString *_oldSessionCategory;
+    UIColor *_originalToolbarTintColor;
+    UIColor *_originalNavigationBarTintColor;
 }
 
 
@@ -151,8 +153,7 @@
     self.normalTintColor = self.normalTintColor ?: [UIColor whiteColor];
     self.recordingTintColor = self.recordingTintColor ?: [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0];
     self.playingTintColor = self.playingTintColor ?: [UIColor colorWithRed:255.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1.0];
-
-    self.view.tintColor = self.normalTintColor;
+    
     musicFlowView.backgroundColor = [self.view backgroundColor];
 //    musicFlowView.idleAmplitude = 0;
 
@@ -165,6 +166,7 @@
         _cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
         self.navigationItem.leftBarButtonItem = _cancelButton;
         _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
+        self.navigationController.navigationBar.tintColor = self.normalTintColor;
     }
     
     // Toolbar
@@ -175,8 +177,9 @@
 
         _recordToolbarItems = @[self.playButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
         _playToolbarItems = @[_pauseButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
+        
         [self setToolbarItems:_recordToolbarItems animated:NO];
-
+        
         self.playButton.enabled = NO;
         self.trashButton.enabled = NO;
     }
@@ -244,18 +247,25 @@
     }
 }
 
--(void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    _originalNavigationBarTintColor = self.navigationController.navigationBar.tintColor;
+    _originalToolbarTintColor = self.navigationController.toolbar.tintColor;
+    [self spreadTintColor:self.normalTintColor];
     
     [self.navigationController setToolbarHidden:NO animated:YES];
     
     [self startUpdatingMeter];
 }
 
--(void)viewWillDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    self.navigationController.navigationBar.tintColor = _originalNavigationBarTintColor;
+    self.navigationController.toolbar.tintColor = _originalToolbarTintColor;
     
     _audioPlayer.delegate = nil;
     [_audioPlayer stop];
@@ -266,6 +276,13 @@
     _audioRecorder = nil;
     
     [self stopUpdatingMeter];
+}
+
+- (void)spreadTintColor:(UIColor *)color
+{
+    self.view.tintColor = color;
+    musicFlowView.tintColor = color;
+    self.navigationController.toolbar.tintColor = color;
 }
 
 #pragma mark - Update Meters
@@ -381,7 +398,7 @@
         //UI Update
         {
             [self showNavigationButton:NO];
-            self.recordButton.tintColor = self.recordingTintColor;
+            [self spreadTintColor:self.recordingTintColor];
             self.playButton.enabled = NO;
             self.trashButton.enabled = NO;
         }
@@ -406,7 +423,7 @@
         //UI Update
         {
             [self showNavigationButton:YES];
-            self.recordButton.tintColor = self.normalTintColor;
+            [self spreadTintColor:self.normalTintColor];
             self.playButton.enabled = YES;
             self.trashButton.enabled = YES;
         }
