@@ -98,7 +98,13 @@
                     <navigationItem key="navigationItem" id="JUc-vC-jJE"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="color" keyPath="normalTintColor">
-                            <color key="value" red="1" green="0.035351606610000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="value" red="0.017116778650000001" green="0.81724950799999996" blue="0.94970840219999997" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="recordingTintColor">
+                            <color key="value" red="1" green="0.074557672389030882" blue="0.90025809119344591" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="playingTintColor">
+                            <color key="value" red="0.8262187638401699" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </viewController>
