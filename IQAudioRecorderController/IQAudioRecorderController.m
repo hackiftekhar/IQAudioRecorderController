@@ -53,17 +53,11 @@
     UIBarButtonItem *_doneButton;
     
     //Toolbar
-    UIBarButtonItem *_playButton;
-    UIBarButtonItem *_recordButton;
-    UIBarButtonItem *_trashButton;
     NSArray *_recordToolbarItems;
     NSArray *_playToolbarItems;
     
     //Private variables
     NSString *_oldSessionCategory;
-    UIColor *_normalTintColor;
-    UIColor *_recordingTintColor;
-    UIColor *_playingTintColor;
 }
 
 
@@ -104,6 +98,31 @@
     }
 }
 
+- (instancetype)init
+{
+    if (self = [super init]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup
+{
+    self.title = self.title ?: @"Audio Recorder";
+    
+    self.recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
+    self.playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
+    self.trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
+}
+
 -(void)loadView
 {
     UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -128,13 +147,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    self.title = self.title ?: @"Audio Recorder";
-    _normalTintColor = [UIColor whiteColor];
-    _recordingTintColor = [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0];
-    _playingTintColor = [UIColor colorWithRed:255.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1.0];
     
-    self.view.tintColor = _normalTintColor;
+    self.normalTintColor = self.normalTintColor ?: [UIColor whiteColor];
+    self.recordingTintColor = self.recordingTintColor ?: [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0];
+    self.playingTintColor = self.playingTintColor ?: [UIColor colorWithRed:255.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1.0];
+
+    self.view.tintColor = self.normalTintColor;
     musicFlowView.backgroundColor = [self.view backgroundColor];
 //    musicFlowView.idleAmplitude = 0;
 
@@ -143,20 +161,16 @@
     _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",fileName]];
 
     {
-        _recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
-        _playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
-        _trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
-        
         UIBarButtonItem *_pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
         UIBarButtonItem *_flexItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         UIBarButtonItem *_flexItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
-        _recordToolbarItems = @[_playButton,_flexItem1, _recordButton,_flexItem2, _trashButton];
-        _playToolbarItems = @[_pauseButton,_flexItem1, _recordButton,_flexItem2, _trashButton];
+        _recordToolbarItems = @[self.playButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
+        _playToolbarItems = @[_pauseButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
         [self setToolbarItems:_recordToolbarItems animated:NO];
 
-        _playButton.enabled = NO;
-        _trashButton.enabled = NO;
+        self.playButton.enabled = NO;
+        self.trashButton.enabled = NO;
     }
     
     // Define the recorder setting
@@ -192,11 +206,11 @@
         _labelCurrentTime = [[UILabel alloc] init];
         _labelCurrentTime.text = [self.class timeStringForTimeInterval:0];
         _labelCurrentTime.font = [UIFont boldSystemFontOfSize:14.0];
-        _labelCurrentTime.textColor = _normalTintColor;
+        _labelCurrentTime.textColor = self.normalTintColor;
         _labelCurrentTime.translatesAutoresizingMaskIntoConstraints = NO;
 
         _playerSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
-        _playerSlider.minimumTrackTintColor = _playingTintColor;
+        _playerSlider.minimumTrackTintColor = self.playingTintColor;
         _playerSlider.value = 0;
         [_playerSlider addTarget:self action:@selector(sliderStart:) forControlEvents:UIControlEventTouchDown];
         [_playerSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -233,6 +247,8 @@
 {
     [super viewWillAppear:animated];
     
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    
     [self startUpdatingMeter];
 }
 
@@ -261,7 +277,7 @@
         
         CGFloat normalizedValue = pow (10, [_audioRecorder averagePowerForChannel:0] / 20);
         
-        [musicFlowView setWaveColor:_recordingTintColor];
+        [musicFlowView setWaveColor:self.recordingTintColor];
         [musicFlowView updateWithLevel:normalizedValue];
         
         self.navigationItem.title = [self.class timeStringForTimeInterval:_audioRecorder.currentTime];
@@ -272,12 +288,12 @@
         
         CGFloat normalizedValue = pow (10, [_audioPlayer averagePowerForChannel:0] / 20);
         
-        [musicFlowView setWaveColor:_playingTintColor];
+        [musicFlowView setWaveColor:self.playingTintColor];
         [musicFlowView updateWithLevel:normalizedValue];
     }
     else
     {
-        [musicFlowView setWaveColor:_normalTintColor];
+        [musicFlowView setWaveColor:self.normalTintColor];
         [musicFlowView updateWithLevel:0];
     }
 }
@@ -364,9 +380,9 @@
         //UI Update
         {
             [self showNavigationButton:NO];
-            _recordButton.tintColor = _recordingTintColor;
-            _playButton.enabled = NO;
-            _trashButton.enabled = NO;
+            self.recordButton.tintColor = self.recordingTintColor;
+            self.playButton.enabled = NO;
+            self.trashButton.enabled = NO;
         }
         
         /*
@@ -389,9 +405,9 @@
         //UI Update
         {
             [self showNavigationButton:YES];
-            _recordButton.tintColor = _normalTintColor;
-            _playButton.enabled = YES;
-            _trashButton.enabled = YES;
+            self.recordButton.tintColor = self.normalTintColor;
+            self.playButton.enabled = YES;
+            self.trashButton.enabled = YES;
         }
 
         [_audioRecorder stop];
@@ -414,8 +430,8 @@
     {
         [self setToolbarItems:_playToolbarItems animated:YES];
         [self showNavigationButton:NO];
-        _recordButton.enabled = NO;
-        _trashButton.enabled = NO;
+        self.recordButton.enabled = NO;
+        self.trashButton.enabled = NO;
     }
     
     //Start regular update
@@ -443,8 +459,8 @@
     {
         [self setToolbarItems:_recordToolbarItems animated:YES];
         [self showNavigationButton:YES];
-        _recordButton.enabled = YES;
-        _trashButton.enabled = YES;
+        self.recordButton.enabled = YES;
+        self.trashButton.enabled = YES;
     }
     
     {
@@ -475,8 +491,8 @@
         {
             [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
             
-            _playButton.enabled = NO;
-            _trashButton.enabled = NO;
+            self.playButton.enabled = NO;
+            self.trashButton.enabled = NO;
             [self.navigationItem setRightBarButtonItem:nil animated:YES];
             self.navigationItem.title = self.title;
         }

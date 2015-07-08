@@ -39,6 +39,14 @@
 
 @property(nonatomic, weak) id<IQAudioRecorderControllerDelegate> delegate;
 
+@property (nonatomic) IBInspectable UIColor *normalTintColor;
+@property (nonatomic) IBInspectable UIColor *recordingTintColor;
+@property (nonatomic) IBInspectable UIColor *playingTintColor;
+
+@property (nonatomic) UIBarButtonItem *playButton;
+@property (nonatomic) UIBarButtonItem *recordButton;
+@property (nonatomic) UIBarButtonItem *trashButton;
+
 @property(nonatomic, assign) BOOL shouldShowRemainingTime;
 
 + (UINavigationController *)embeddedIQAudioRecorderControllerWithDelegate:(id<IQAudioRecorderControllerDelegate, UINavigationControllerDelegate>)delegate;
