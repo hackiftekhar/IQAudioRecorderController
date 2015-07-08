@@ -25,17 +25,17 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SCSiriWaveformView.h"
 
-@class IQInternalAudioRecorderController;
+@class IQAudioRecorderController;
 
 @protocol IQAudioRecorderControllerDelegate <NSObject>
 
-- (void)audioRecorderController:(IQInternalAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath;
-- (void)audioRecorderControllerDidCancel:(IQInternalAudioRecorderController *)controller;
+- (void)audioRecorderController:(IQAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath;
+- (void)audioRecorderControllerDidCancel:(IQAudioRecorderController *)controller;
 
 @end
 
 
-@interface IQInternalAudioRecorderController : UIViewController <AVAudioRecorderDelegate,AVAudioPlayerDelegate,UIActionSheetDelegate>
+@interface IQAudioRecorderController : UIViewController <AVAudioRecorderDelegate,AVAudioPlayerDelegate,UIActionSheetDelegate>
 {
     //Recording...
     AVAudioRecorder *_audioRecorder;

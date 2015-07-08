@@ -50,12 +50,12 @@
 
 /************************************/
 
-@implementation IQInternalAudioRecorderController
+@implementation IQAudioRecorderController
 
 
 + (UINavigationController *)embeddedIQAudioRecorderControllerWithDelegate:(id<IQAudioRecorderControllerDelegate, UINavigationControllerDelegate>)delegate
 {
-    IQInternalAudioRecorderController *recorderController = [IQInternalAudioRecorderController new];
+    IQAudioRecorderController *recorderController = [IQAudioRecorderController new];
     recorderController.delegate = delegate;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:recorderController];

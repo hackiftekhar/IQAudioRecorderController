@@ -25,17 +25,17 @@
 
 - (IBAction)recordAction:(UIButton *)sender
 {
-    UINavigationController *controller = [IQInternalAudioRecorderController embeddedIQAudioRecorderControllerWithDelegate:self];
+    UINavigationController *controller = [IQAudioRecorderController embeddedIQAudioRecorderControllerWithDelegate:self];
     [self presentViewController:controller animated:YES completion:nil];
 }
 
--(void)audioRecorderController:(IQInternalAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath
+-(void)audioRecorderController:(IQAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath
 {
     audioFilePath = filePath;
     buttonPlayAudio.enabled = YES;
 }
 
--(void)audioRecorderControllerDidCancel:(IQInternalAudioRecorderController *)controller
+-(void)audioRecorderControllerDidCancel:(IQAudioRecorderController *)controller
 {
     buttonPlayAudio.enabled = NO;
 }
