@@ -54,12 +54,12 @@
     UIBarButtonItem *_doneButton;
     
     //Toolbar
-    UIBarButtonItem *_flexItem1;
-    UIBarButtonItem *_flexItem2;
     UIBarButtonItem *_playButton;
     UIBarButtonItem *_pauseButton;
     UIBarButtonItem *_recordButton;
     UIBarButtonItem *_trashButton;
+    NSArray *_recordToolbarItems;
+    NSArray *_playToolbarItems;
     
     //Private variables
     NSString *_oldSessionCategory;
@@ -145,14 +145,16 @@
     _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",fileName]];
 
     {
-        _flexItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        _flexItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        UIBarButtonItem *_flexItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        UIBarButtonItem *_flexItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
         _recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
         _playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
         _pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
         _trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
-        [self setToolbarItems:@[_playButton,_flexItem1, _recordButton,_flexItem2, _trashButton] animated:NO];
+        _recordToolbarItems = @[_playButton,_flexItem1, _recordButton,_flexItem2, _trashButton];
+        _playToolbarItems = @[_pauseButton,_flexItem1, _recordButton,_flexItem2, _trashButton];
+        [self setToolbarItems:_recordToolbarItems animated:NO];
 
         _playButton.enabled = NO;
         _trashButton.enabled = NO;
@@ -177,7 +179,7 @@
 
     //Navigation Bar Settings
     {
-        self.navigationItem.title = @"Audio Recorder";
+        self.navigationItem.title = _navigationTitle;
         _cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
         self.navigationItem.leftBarButtonItem = _cancelButton;
         _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
@@ -412,7 +414,7 @@
     
     //UI Update
     {
-        [self setToolbarItems:@[_pauseButton,_flexItem1, _recordButton,_flexItem2, _trashButton] animated:YES];
+        [self setToolbarItems:_playToolbarItems animated:YES];
         [self showNavigationButton:NO];
         _recordButton.enabled = NO;
         _trashButton.enabled = NO;
@@ -441,7 +443,7 @@
 {
     //UI Update
     {
-        [self setToolbarItems:@[_playButton,_flexItem1, _recordButton,_flexItem2, _trashButton] animated:YES];
+        [self setToolbarItems:_recordToolbarItems animated:YES];
         [self showNavigationButton:YES];
         _recordButton.enabled = YES;
         _trashButton.enabled = YES;
