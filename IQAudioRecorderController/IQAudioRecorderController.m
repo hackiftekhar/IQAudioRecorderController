@@ -24,33 +24,9 @@
 
 #import "IQAudioRecorderController.h"
 
-/************************************/
-
-@implementation NSString (TimeString)
-
-+(NSString*)timeStringForTimeInterval:(NSTimeInterval)timeInterval
-{
-    NSInteger ti = (NSInteger)timeInterval;
-    NSInteger seconds = ti % 60;
-    NSInteger minutes = (ti / 60) % 60;
-    NSInteger hours = (ti / 3600);
-    
-    if (hours > 0)
-    {
-        return [NSString stringWithFormat:@"%02li:%02li:%02li", (long)hours, (long)minutes, (long)seconds];
-    }
-    else
-    {
-        return  [NSString stringWithFormat:@"%02li:%02li", (long)minutes, (long)seconds];
-    }
-}
-
-@end
-
 @interface IQAudioRecorderController ()<AVAudioRecorderDelegate, AVAudioPlayerDelegate, UIActionSheetDelegate>
 
 @end
-
 
 /************************************/
 
@@ -111,6 +87,23 @@
     navigationController.toolbar.barStyle = navigationController.navigationBar.barStyle;
     
     return navigationController;
+}
+
++ (NSString *)timeStringForTimeInterval:(NSTimeInterval)timeInterval
+{
+    NSInteger ti = (NSInteger)timeInterval;
+    NSInteger seconds = ti % 60;
+    NSInteger minutes = (ti / 60) % 60;
+    NSInteger hours = (ti / 3600);
+    
+    if (hours > 0)
+    {
+        return [NSString stringWithFormat:@"%02li:%02li:%02li", (long)hours, (long)minutes, (long)seconds];
+    }
+    else
+    {
+        return  [NSString stringWithFormat:@"%02li:%02li", (long)minutes, (long)seconds];
+    }
 }
 
 -(void)loadView
@@ -197,7 +190,7 @@
         _viewPlayerDuration.backgroundColor = [UIColor clearColor];
 
         _labelCurrentTime = [[UILabel alloc] init];
-        _labelCurrentTime.text = [NSString timeStringForTimeInterval:0];
+        _labelCurrentTime.text = [self.class timeStringForTimeInterval:0];
         _labelCurrentTime.font = [UIFont boldSystemFontOfSize:14.0];
         _labelCurrentTime.textColor = _normalTintColor;
         _labelCurrentTime.translatesAutoresizingMaskIntoConstraints = NO;
@@ -212,7 +205,7 @@
         _playerSlider.translatesAutoresizingMaskIntoConstraints = NO;
 
         _labelRemainingTime = [[UILabel alloc] init];
-        _labelCurrentTime.text = [NSString timeStringForTimeInterval:0];
+        _labelCurrentTime.text = [self.class timeStringForTimeInterval:0];
         _labelRemainingTime.userInteractionEnabled = YES;
         [_labelRemainingTime addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognizer:)]];
         _labelRemainingTime.font = _labelCurrentTime.font;
@@ -271,7 +264,7 @@
         [musicFlowView setWaveColor:_recordingTintColor];
         [musicFlowView updateWithLevel:normalizedValue];
         
-        self.navigationItem.title = [NSString timeStringForTimeInterval:_audioRecorder.currentTime];
+        self.navigationItem.title = [self.class timeStringForTimeInterval:_audioRecorder.currentTime];
     }
     else if (_audioPlayer.isPlaying)
     {
@@ -306,8 +299,8 @@
 
 -(void)updatePlayProgress
 {
-    _labelCurrentTime.text = [NSString timeStringForTimeInterval:_audioPlayer.currentTime];
-    _labelRemainingTime.text = [NSString timeStringForTimeInterval:(_shouldShowRemainingTime)?(_audioPlayer.duration-_audioPlayer.currentTime):_audioPlayer.duration];
+    _labelCurrentTime.text = [self.class timeStringForTimeInterval:_audioPlayer.currentTime];
+    _labelRemainingTime.text = [self.class timeStringForTimeInterval:(_shouldShowRemainingTime)?(_audioPlayer.duration-_audioPlayer.currentTime):_audioPlayer.duration];
     [_playerSlider setValue:_audioPlayer.currentTime animated:YES];
 }
 
@@ -431,8 +424,8 @@
         _playerSlider.maximumValue = _audioPlayer.duration;
         _viewPlayerDuration.frame = self.navigationController.navigationBar.bounds;
         
-        _labelCurrentTime.text = [NSString timeStringForTimeInterval:_audioPlayer.currentTime];
-        _labelRemainingTime.text = [NSString timeStringForTimeInterval:(_shouldShowRemainingTime)?(_audioPlayer.duration-_audioPlayer.currentTime):_audioPlayer.duration];
+        _labelCurrentTime.text = [self.class timeStringForTimeInterval:_audioPlayer.currentTime];
+        _labelRemainingTime.text = [self.class timeStringForTimeInterval:(_shouldShowRemainingTime)?(_audioPlayer.duration-_audioPlayer.currentTime):_audioPlayer.duration];
 
         [_viewPlayerDuration setNeedsLayout];
         [_viewPlayerDuration layoutIfNeeded];
