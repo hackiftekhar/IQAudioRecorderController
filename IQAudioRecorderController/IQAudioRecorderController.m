@@ -48,8 +48,8 @@
     CADisplayLink *playProgressDisplayLink;
     
     //Navigation Bar
-    UIBarButtonItem *_cancelButton;
-    UIBarButtonItem *_doneButton;
+    NSArray *_leftBarButtonItems;
+    NSArray *_rightBarButtonItems;
     
     //Private variables
     UIColor *_originalToolbarTintColor;
@@ -156,9 +156,9 @@
 
     // Navigation Bar Settings
     {
-        _cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
-        self.navigationItem.leftBarButtonItem = _cancelButton;
-        _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
+        self.navigationItem.hidesBackButton = YES;
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
         self.navigationController.navigationBar.tintColor = self.normalTintColor;
     }
     
@@ -229,6 +229,10 @@
     _originalNavigationBarTintColor = self.navigationController.navigationBar.tintColor;
     _originalToolbarTintColor = self.navigationController.toolbar.tintColor;
     [self spreadTintColor:self.normalTintColor];
+    
+    _leftBarButtonItems = self.navigationItem.leftBarButtonItems;
+    _rightBarButtonItems = self.navigationItem.rightBarButtonItems;
+    self.navigationItem.rightBarButtonItems = nil;
     
     [self.navigationController setToolbarHidden:NO animated:YES];
     
@@ -456,13 +460,13 @@
 {
     if (show)
     {
-        [self.navigationItem setLeftBarButtonItem:_cancelButton animated:YES];
-        [self.navigationItem setRightBarButtonItem:_doneButton animated:YES];
+        [self.navigationItem setLeftBarButtonItems:_leftBarButtonItems animated:YES];
+        [self.navigationItem setRightBarButtonItems:_rightBarButtonItems animated:YES];
     }
     else
     {
-        [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+        [self.navigationItem setLeftBarButtonItems:nil animated:YES];
+        [self.navigationItem setRightBarButtonItems:nil animated:YES];
     }
 }
 
