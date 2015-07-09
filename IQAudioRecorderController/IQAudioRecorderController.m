@@ -50,6 +50,7 @@
     //Navigation Bar
     NSArray *_leftBarButtonItems;
     NSArray *_rightBarButtonItems;
+    BOOL _shouldHideBackButton;
     
     //Private variables
     UIColor *_originalToolbarTintColor;
@@ -230,6 +231,7 @@
     _originalToolbarTintColor = self.navigationController.toolbar.tintColor;
     [self spreadTintColor:self.normalTintColor];
     
+    _shouldHideBackButton = self.navigationItem.hidesBackButton;
     _leftBarButtonItems = self.navigationItem.leftBarButtonItems;
     _rightBarButtonItems = self.navigationItem.rightBarButtonItems;
     self.navigationItem.rightBarButtonItems = nil;
@@ -460,11 +462,13 @@
 {
     if (show)
     {
+        [self.navigationItem setHidesBackButton:_shouldHideBackButton animated:YES];
         [self.navigationItem setLeftBarButtonItems:_leftBarButtonItems animated:YES];
         [self.navigationItem setRightBarButtonItems:_rightBarButtonItems animated:YES];
     }
     else
     {
+        [self.navigationItem setHidesBackButton:YES animated:YES];
         [self.navigationItem setLeftBarButtonItems:nil animated:YES];
         [self.navigationItem setRightBarButtonItems:nil animated:YES];
     }
