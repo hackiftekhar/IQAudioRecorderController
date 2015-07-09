@@ -27,6 +27,8 @@
         NSString *fileName = [[NSProcessInfo processInfo] globallyUniqueString];
         _filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",fileName]];
         
+        oldSessionCategory = [[AVAudioSession sharedInstance] category];
+        
         // Define the recorder setting
         {
             NSDictionary *recordSetting = @{AVFormatIDKey: @(kAudioFormatMPEG4AAC),
@@ -48,6 +50,8 @@
 {
     [audioRecorder stop];
     [audioPlayer stop];
+    
+    [[AVAudioSession sharedInstance] setCategory:oldSessionCategory error:nil];
 }
 
 - (CGFloat)updateMeters
@@ -88,7 +92,6 @@
 - (void)startRecording
 {
     // TODO: do this beforehand
-    oldSessionCategory = [[AVAudioSession sharedInstance] category];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
     [audioRecorder prepareToRecord];
     
@@ -98,7 +101,6 @@
 - (void)stopRecording
 {
     [audioRecorder stop];
-    [[AVAudioSession sharedInstance] setCategory:oldSessionCategory error:nil];
 }
 
 - (void)discardRecording
@@ -121,8 +123,6 @@
 - (void)startPlayback
 {
     // TODO: prevent playback while recording is running and vice versa
-    
-    oldSessionCategory = [[AVAudioSession sharedInstance] category];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     
     audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:self.filePath] error:nil];
@@ -135,7 +135,6 @@
 - (void)stopPlayback
 {
     [audioPlayer stop];
-    [[AVAudioSession sharedInstance] setCategory:oldSessionCategory error:nil];
 }
 
 - (void)pausePlayback

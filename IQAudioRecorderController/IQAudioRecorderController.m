@@ -118,9 +118,6 @@
     self.playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
     self.pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
     self.trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
-    
-    recorder = [[IQAudioRecorder alloc] init];
-    recorder.delegate = self;
 }
 
 -(void)loadView
@@ -235,6 +232,9 @@
     
     [self.navigationController setToolbarHidden:NO animated:YES];
     
+    recorder = [[IQAudioRecorder alloc] init];
+    recorder.delegate = self;
+    
     [self startUpdatingMeter];
 }
 
@@ -246,6 +246,8 @@
     self.navigationController.toolbar.tintColor = _originalToolbarTintColor;
     
     [self stopUpdatingMeter];
+    
+    recorder = nil;
 }
 
 - (void)spreadTintColor:(UIColor *)color
