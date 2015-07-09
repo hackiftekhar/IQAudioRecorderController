@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9ED7C5E71B4DEC26005E2966 /* IQAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED7C5E61B4DEC26005E2966 /* IQAudioRecorder.m */; };
 		B53594141A6A531100A81727 /* audio_record.png in Resources */ = {isa = PBXBuildFile; fileRef = B53594121A6A531100A81727 /* audio_record.png */; };
 		B53594151A6A531100A81727 /* audio_record@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B53594131A6A531100A81727 /* audio_record@2x.png */; };
 		B5D474141A6A2EF200771B83 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474131A6A2EF200771B83 /* main.m */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9ED7C5E51B4DEC26005E2966 /* IQAudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorder.h; sourceTree = "<group>"; };
+		9ED7C5E61B4DEC26005E2966 /* IQAudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorder.m; sourceTree = "<group>"; };
 		B53594121A6A531100A81727 /* audio_record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audio_record.png; sourceTree = "<group>"; };
 		B53594131A6A531100A81727 /* audio_record@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_record@2x.png"; sourceTree = "<group>"; };
 		B5D4740E1A6A2EF200771B83 /* IQAudioRecorderController Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IQAudioRecorderController Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +107,8 @@
 			children = (
 				B53594111A6A531100A81727 /* Resources */,
 				B5D4743D1A6A2F9200771B83 /* SCSiriWaveformView */,
+				9ED7C5E51B4DEC26005E2966 /* IQAudioRecorder.h */,
+				9ED7C5E61B4DEC26005E2966 /* IQAudioRecorder.m */,
 				B5D474381A6A2F4800771B83 /* IQAudioRecorderController.h */,
 				B5D474391A6A2F4800771B83 /* IQAudioRecorderController.m */,
 			);
@@ -192,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ED7C5E71B4DEC26005E2966 /* IQAudioRecorder.m in Sources */,
 				B5D4741A1A6A2EF200771B83 /* ViewController.m in Sources */,
 				B5D474171A6A2EF200771B83 /* AppDelegate.m in Sources */,
 				B5D4743B1A6A2F4800771B83 /* IQAudioRecorderController.m in Sources */,

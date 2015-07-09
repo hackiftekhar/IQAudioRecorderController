@@ -24,7 +24,9 @@
 
 #import "IQAudioRecorderController.h"
 
-@interface IQAudioRecorderController ()<AVAudioRecorderDelegate, AVAudioPlayerDelegate, UIActionSheetDelegate>
+#import "IQAudioRecorder.h"
+
+@interface IQAudioRecorderController () <IQAudioRecorderDelegate, UIActionSheetDelegate>
 
 @end
 
@@ -33,13 +35,11 @@
 @implementation IQAudioRecorderController
 {
     //Recording...
-    AVAudioRecorder *_audioRecorder;
+    IQAudioRecorder *recorder;
     SCSiriWaveformView *musicFlowView;
-    NSString *_recordingFilePath;
     CADisplayLink *meterUpdateDisplayLink;
     
     //Playing
-    AVAudioPlayer *_audioPlayer;
     BOOL _wasPlaying;
     UIView *_viewPlayerDuration;
     UISlider *_playerSlider;
@@ -56,7 +56,6 @@
     NSArray *_playToolbarItems;
     
     //Private variables
-    NSString *_oldSessionCategory;
     UIColor *_originalToolbarTintColor;
     UIColor *_originalNavigationBarTintColor;
 }
@@ -122,6 +121,9 @@
     self.recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
     self.playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
     self.trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
+    
+    recorder = [[IQAudioRecorder alloc] init];
+    recorder.delegate = self;
 }
 
 -(void)loadView
@@ -155,10 +157,8 @@
     
     musicFlowView.backgroundColor = [self.view backgroundColor];
 //    musicFlowView.idleAmplitude = 0;
-
-    // Unique recording URL
-    NSString *fileName = [[NSProcessInfo processInfo] globallyUniqueString];
-    _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",fileName]];
+    musicFlowView.primaryWaveLineWidth = 3.0f;
+    musicFlowView.secondaryWaveLineWidth = 1.0;
 
     // Navigation Bar Settings
     {
@@ -183,23 +183,6 @@
         self.trashButton.enabled = NO;
     }
     
-    // Define the recorder setting
-    {
-        NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
-        
-        [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-        [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
-        [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
-        
-        // Initiate and prepare the recorder
-        _audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:_recordingFilePath] settings:recordSetting error:nil];
-        _audioRecorder.delegate = self;
-        _audioRecorder.meteringEnabled = YES;
-        
-        [musicFlowView setPrimaryWaveLineWidth:3.0f];
-        [musicFlowView setSecondaryWaveLineWidth:1.0];
-    }
-
     // Player Duration View
     {
         _viewPlayerDuration = [[UIView alloc] init];
@@ -266,14 +249,6 @@
     self.navigationController.navigationBar.tintColor = _originalNavigationBarTintColor;
     self.navigationController.toolbar.tintColor = _originalToolbarTintColor;
     
-    _audioPlayer.delegate = nil;
-    [_audioPlayer stop];
-    _audioPlayer = nil;
-    
-    _audioRecorder.delegate = nil;
-    [_audioRecorder stop];
-    _audioRecorder = nil;
-    
     [self stopUpdatingMeter];
 }
 
@@ -288,25 +263,15 @@
 
 - (void)updateMeters
 {
-    if (_audioRecorder.isRecording)
+    if (recorder.isRecording || recorder.isPlaying)
     {
-        [_audioRecorder updateMeters];
+        [musicFlowView updateWithLevel:[recorder updateMeters]];
+    
+        musicFlowView.waveColor = recorder.isRecording ? self.recordingTintColor : self.playingTintColor;
         
-        CGFloat normalizedValue = pow (10, [_audioRecorder averagePowerForChannel:0] / 20);
-        
-        [musicFlowView setWaveColor:self.recordingTintColor];
-        [musicFlowView updateWithLevel:normalizedValue];
-        
-        self.navigationItem.title = [self.class timeStringForTimeInterval:_audioRecorder.currentTime];
-    }
-    else if (_audioPlayer.isPlaying)
-    {
-        [_audioPlayer updateMeters];
-        
-        CGFloat normalizedValue = pow (10, [_audioPlayer averagePowerForChannel:0] / 20);
-        
-        [musicFlowView setWaveColor:self.playingTintColor];
-        [musicFlowView updateWithLevel:normalizedValue];
+        if (recorder.isRecording) {
+            self.navigationItem.title = [self.class timeStringForTimeInterval:recorder.currentTime];
+        }
     }
     else
     {
@@ -332,31 +297,33 @@
 
 -(void)updatePlayProgress
 {
-    _labelCurrentTime.text = [self.class timeStringForTimeInterval:_audioPlayer.currentTime];
-    _labelRemainingTime.text = [self.class timeStringForTimeInterval:(_shouldShowRemainingTime)?(_audioPlayer.duration-_audioPlayer.currentTime):_audioPlayer.duration];
-    [_playerSlider setValue:_audioPlayer.currentTime animated:YES];
+    _labelCurrentTime.text = [self.class timeStringForTimeInterval:recorder.currentTime];
+    _labelRemainingTime.text = [self.class timeStringForTimeInterval:(_shouldShowRemainingTime)?(recorder.playbackDuration-recorder.currentTime):recorder.playbackDuration];
+    [_playerSlider setValue:recorder.currentTime animated:YES];
 }
 
 -(void)sliderStart:(UISlider*)slider
 {
-    _wasPlaying = _audioPlayer.isPlaying;
+    _wasPlaying = recorder.isPlaying;
     
-    if (_audioPlayer.isPlaying)
+    if (recorder.isPlaying)
     {
-        [_audioPlayer pause];
+        [recorder pausePlayback];
     }
 }
 
 -(void)sliderMoved:(UISlider*)slider
 {
-    _audioPlayer.currentTime = slider.value;
+    recorder.currentTime = slider.value;
 }
 
 -(void)sliderEnd:(UISlider*)slider
 {
+    recorder.currentTime = slider.value;
+    
     if (_wasPlaying)
     {
-        [_audioPlayer play];
+        [recorder resumePlayback];
     }
 }
 
@@ -382,7 +349,7 @@
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorderController:didFinishWithAudioAtPath:)])
     {
-        [self.delegate audioRecorderController:self didFinishWithAudioAtPath:_recordingFilePath];
+        [self.delegate audioRecorderController:self didFinishWithAudioAtPath:recorder.filePath];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -390,7 +357,7 @@
 
 - (void)recordingButtonAction:(UIBarButtonItem *)item
 {
-    if (_audioRecorder.recording == NO)
+    if (!recorder.isRecording)
     {
         //UI Update
         {
@@ -400,18 +367,7 @@
             self.trashButton.enabled = NO;
         }
         
-        /*
-         Create the recorder
-         */
-        if ([[NSFileManager defaultManager] fileExistsAtPath:_recordingFilePath])
-        {
-            [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
-        }
-        
-        _oldSessionCategory = [[AVAudioSession sharedInstance] category];
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
-        [_audioRecorder prepareToRecord];
-        [_audioRecorder record];
+        [recorder startRecording];
     }
     else
     {
@@ -423,21 +379,13 @@
             self.trashButton.enabled = YES;
         }
 
-        [_audioRecorder stop];
-        [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
+        [recorder stopRecording];
     }
 }
 
 - (void)playAction:(UIBarButtonItem *)item
 {
-    _oldSessionCategory = [[AVAudioSession sharedInstance] category];
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    
-    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:_recordingFilePath] error:nil];
-    _audioPlayer.delegate = self;
-    _audioPlayer.meteringEnabled = YES;
-    [_audioPlayer prepareToPlay];
-    [_audioPlayer play];
+    [recorder startPlayback];
     
     //UI Update
     {
@@ -449,12 +397,12 @@
     
     //Start regular update
     {
-        _playerSlider.value = _audioPlayer.currentTime;
-        _playerSlider.maximumValue = _audioPlayer.duration;
+        _playerSlider.value = recorder.currentTime;
+        _playerSlider.maximumValue = recorder.playbackDuration;
         _viewPlayerDuration.frame = self.navigationController.navigationBar.bounds;
         
-        _labelCurrentTime.text = [self.class timeStringForTimeInterval:_audioPlayer.currentTime];
-        _labelRemainingTime.text = [self.class timeStringForTimeInterval:(_shouldShowRemainingTime)?(_audioPlayer.duration-_audioPlayer.currentTime):_audioPlayer.duration];
+        _labelCurrentTime.text = [self.class timeStringForTimeInterval:recorder.currentTime];
+        _labelRemainingTime.text = [self.class timeStringForTimeInterval:(_shouldShowRemainingTime)?(recorder.playbackDuration-recorder.currentTime):recorder.playbackDuration];
 
         [_viewPlayerDuration setNeedsLayout];
         [_viewPlayerDuration layoutIfNeeded];
@@ -482,11 +430,7 @@
         self.navigationItem.titleView = nil;
     }
 
-    _audioPlayer.delegate = nil;
-    [_audioPlayer stop];
-    _audioPlayer = nil;
-    
-    [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
+    [recorder stopPlayback];    // TODO: no reason to stop - pause shoud do the trick (+rewind)
 }
 
 -(void)deleteAction:(UIBarButtonItem*)item
@@ -502,7 +446,7 @@
     {
         if (buttonIndex == actionSheet.destructiveButtonIndex)
         {
-            [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
+            [recorder discardRecording];
             
             self.playButton.enabled = NO;
             self.trashButton.enabled = NO;
@@ -526,26 +470,12 @@
     }
 }
 
-#pragma mark - AVAudioPlayerDelegate
-/*
- Occurs when the audio player instance completes playback
- */
--(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+#pragma mark - IQAudioRecorderDelegate
+
+- (void)audioRecorder:(IQAudioRecorder *)recorder didFinishPlaybackSuccessfully:(BOOL)successfully
 {
     //To update UI on stop playing
     [self pauseAction:nil];
-}
-
-#pragma mark - AVAudioRecorderDelegate
-
-- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag
-{
-    
-}
-
-- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
-{
-//    NSLog(@"%@: %@",NSStringFromSelector(_cmd),error);
 }
 
 @end
