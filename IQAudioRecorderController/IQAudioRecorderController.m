@@ -267,10 +267,13 @@
     {
         [musicFlowView updateWithLevel:[recorder updateMeters]];
     
-        musicFlowView.waveColor = recorder.isRecording ? self.recordingTintColor : self.playingTintColor;
-        
         if (recorder.isRecording) {
             self.navigationItem.title = [self.class timeStringForTimeInterval:recorder.currentTime];
+            musicFlowView.waveColor = self.recordingTintColor;
+        }
+        else
+        {
+            musicFlowView.waveColor = self.playingTintColor;
         }
     }
     else
@@ -290,7 +293,6 @@
 -(void)stopUpdatingMeter
 {
     [meterUpdateDisplayLink invalidate];
-    meterUpdateDisplayLink = nil;
 }
 
 #pragma mark - Update Play Progress
@@ -359,27 +361,20 @@
 {
     if (!recorder.isRecording)
     {
-        //UI Update
-        {
-            [self showNavigationButton:NO];
-            [self spreadTintColor:self.recordingTintColor];
-            self.playButton.enabled = NO;
-            self.trashButton.enabled = NO;
-        }
-        
         [recorder startRecording];
     }
     else
     {
-        //UI Update
-        {
-            [self showNavigationButton:YES];
-            [self spreadTintColor:self.normalTintColor];
-            self.playButton.enabled = YES;
-            self.trashButton.enabled = YES;
-        }
-
         [recorder stopRecording];
+    }
+    
+    //UI Update
+    {
+        [self spreadTintColor:recorder.isRecording ? self.recordingTintColor : self.normalTintColor];
+        
+        [self showNavigationButtons:!recorder.isRecording];
+        self.playButton.enabled = !recorder.isRecording;
+        self.trashButton.enabled = !recorder.isRecording;
     }
 }
 
@@ -390,7 +385,7 @@
     //UI Update
     {
         [self setToolbarItems:_playToolbarItems animated:YES];
-        [self showNavigationButton:NO];
+        [self showNavigationButtons:NO];
         self.recordButton.enabled = NO;
         self.trashButton.enabled = NO;
     }
@@ -418,16 +413,16 @@
 {
     //UI Update
     {
+        [self showNavigationButtons:YES];
+        self.navigationItem.titleView = nil;
+        
         [self setToolbarItems:_recordToolbarItems animated:YES];
-        [self showNavigationButton:YES];
         self.recordButton.enabled = YES;
         self.trashButton.enabled = YES;
     }
     
     {
         [playProgressDisplayLink invalidate];
-        playProgressDisplayLink = nil;
-        self.navigationItem.titleView = nil;
     }
 
     [recorder stopPlayback];    // TODO: no reason to stop - pause shoud do the trick (+rewind)
@@ -456,7 +451,7 @@
     }
 }
 
--(void)showNavigationButton:(BOOL)show
+-(void)showNavigationButtons:(BOOL)show
 {
     if (show)
     {
