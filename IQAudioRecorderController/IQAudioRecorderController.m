@@ -51,10 +51,6 @@
     UIBarButtonItem *_cancelButton;
     UIBarButtonItem *_doneButton;
     
-    //Toolbar
-    NSArray *_recordToolbarItems;
-    NSArray *_playToolbarItems;
-    
     //Private variables
     UIColor *_originalToolbarTintColor;
     UIColor *_originalNavigationBarTintColor;
@@ -120,6 +116,7 @@
     
     self.recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
     self.playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
+    self.pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
     self.trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
     
     recorder = [[IQAudioRecorder alloc] init];
@@ -170,14 +167,13 @@
     
     // Toolbar
     {
-        UIBarButtonItem *_pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
         UIBarButtonItem *_flexItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         UIBarButtonItem *_flexItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-
-        _recordToolbarItems = @[self.playButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
-        _playToolbarItems = @[_pauseButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
         
-        [self setToolbarItems:_recordToolbarItems animated:NO];
+        self.recordToolbarItems = @[self.playButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
+        self.playToolbarItems = @[self.pauseButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
+        
+        [self setToolbarItems:self.recordToolbarItems animated:NO];
         
         self.playButton.enabled = NO;
         self.trashButton.enabled = NO;
@@ -384,7 +380,7 @@
     
     //UI Update
     {
-        [self setToolbarItems:_playToolbarItems animated:YES];
+        [self setToolbarItems:self.playToolbarItems animated:YES];
         [self showNavigationButtons:NO];
         self.recordButton.enabled = NO;
         self.trashButton.enabled = NO;
@@ -416,7 +412,7 @@
         [self showNavigationButtons:YES];
         self.navigationItem.titleView = nil;
         
-        [self setToolbarItems:_recordToolbarItems animated:YES];
+        [self setToolbarItems:self.recordToolbarItems animated:YES];
         self.recordButton.enabled = YES;
         self.trashButton.enabled = YES;
     }

@@ -43,9 +43,14 @@
 @property (nonatomic) IBInspectable UIColor *recordingTintColor;
 @property (nonatomic) IBInspectable UIColor *playingTintColor;
 
+// Toolbar
 @property (nonatomic) UIBarButtonItem *playButton;
+@property (nonatomic) UIBarButtonItem *pauseButton;
 @property (nonatomic) UIBarButtonItem *recordButton;
 @property (nonatomic) UIBarButtonItem *trashButton;
+
+@property (nonatomic, copy) NSArray *recordToolbarItems;
+@property (nonatomic, copy) NSArray *playToolbarItems;
 
 @property(nonatomic, assign) BOOL shouldShowRemainingTime;
 
