@@ -17,6 +17,8 @@
     AVAudioRecorder *audioRecorder;
     AVAudioPlayer *audioPlayer;
     
+    BOOL recordingIsPrepared;
+    
     NSString *oldSessionCategory;
 }
 
@@ -40,6 +42,8 @@
                                                         settings:recordSetting
                                                            error:nil];
             audioRecorder.meteringEnabled = YES;
+            
+            [self prepareForRecording];
         }
 
     }
@@ -89,13 +93,22 @@
 
 #pragma mark Recording
 
-- (void)startRecording
+// HINT: at the moment this overwrites the current recording -> create new recorder with different URL?
+// HINT: this method is likely (and should) to be called on a background thread -> ensure thread safety
+- (void)prepareForRecording
 {
-    // TODO: do this beforehand
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
     [audioRecorder prepareToRecord];
-    
+    recordingIsPrepared = YES;
+}
+
+- (void)startRecording
+{
+    if (!recordingIsPrepared) {
+        [self prepareForRecording];
+    }
     [audioRecorder record];
+    recordingIsPrepared = NO;
 }
 
 - (void)stopRecording
@@ -106,6 +119,7 @@
 - (void)discardRecording
 {
     [[NSFileManager defaultManager] removeItemAtPath:self.filePath error:nil];
+    [self prepareForRecording];
 }
 
 - (BOOL)isRecording
@@ -124,6 +138,7 @@
 {
     // TODO: prevent playback while recording is running and vice versa
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    recordingIsPrepared = NO;
     
     audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:self.filePath] error:nil];
     audioPlayer.delegate = self;

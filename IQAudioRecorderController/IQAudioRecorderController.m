@@ -234,6 +234,9 @@
     
     recorder = [[IQAudioRecorder alloc] init];
     recorder.delegate = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        [recorder prepareForRecording];
+    });
     
     [self startUpdatingMeter];
 }
