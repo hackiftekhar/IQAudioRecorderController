@@ -27,7 +27,7 @@
     if (self = [super init]) {
         // Unique recording URL
         NSString *fileName = [[NSProcessInfo processInfo] globallyUniqueString];
-        _filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",fileName]];
+        _filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a", fileName]];
         
         oldSessionCategory = [[AVAudioSession sharedInstance] category];
         
