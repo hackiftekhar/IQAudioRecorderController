@@ -24,15 +24,62 @@
 
 #import "IQAudioRecorderController.h"
 
-#import "SCSiriWaveformView.h"
+#import "IQAudioRecorder.h"
 
-#import <AVFoundation/AVFoundation.h>
+@interface IQAudioRecorderController () <IQAudioRecorderDelegate, UIActionSheetDelegate>
+
+@end
 
 /************************************/
 
-@implementation NSString (TimeString)
+@implementation IQAudioRecorderController
+{
+    //Recording...
+    IQAudioRecorder *recorder;
+    SCSiriWaveformView *musicFlowView;
+    CADisplayLink *meterUpdateDisplayLink;
+    
+    //Playing
+    BOOL _wasPlaying;
+    UIView *_viewPlayerDuration;
+    UISlider *_playerSlider;
+    UILabel *_labelCurrentTime;
+    UILabel *_labelRemainingTime;
+    CADisplayLink *playProgressDisplayLink;
+    
+    //Navigation Bar
+    NSArray *_leftBarButtonItems;
+    NSArray *_rightBarButtonItems;
+    BOOL _shouldHideBackButton;
+    
+    //Private variables
+    UIColor *_originalToolbarTintColor;
+    UIColor *_originalNavigationBarTintColor;
+    BOOL _navigationControllerToolbarWasHidden;
+}
 
-+(NSString*)timeStringForTimeInterval:(NSTimeInterval)timeInterval
+
++ (UINavigationController *)embeddedIQAudioRecorderControllerWithDelegate:(id<IQAudioRecorderControllerDelegate, UINavigationControllerDelegate>)delegate
+{
+    IQAudioRecorderController *recorderController = [IQAudioRecorderController new];
+    recorderController.delegate = delegate;
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:recorderController];
+    navigationController.delegate = delegate;
+    
+    navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    navigationController.navigationBar.translucent = YES;
+    navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    
+    navigationController.toolbarHidden = NO;
+    navigationController.toolbar.tintColor = navigationController.navigationBar.tintColor;
+    navigationController.toolbar.translucent = navigationController.navigationBar.translucent;
+    navigationController.toolbar.barStyle = navigationController.navigationBar.barStyle;
+    
+    return navigationController;
+}
+
++ (NSString *)timeStringForTimeInterval:(NSTimeInterval)timeInterval
 {
     NSInteger ti = (NSInteger)timeInterval;
     NSInteger seconds = ti % 60;
@@ -49,88 +96,31 @@
     }
 }
 
-@end
-
-@interface IQInternalAudioRecorderController : UIViewController <AVAudioRecorderDelegate,AVAudioPlayerDelegate,UIActionSheetDelegate>
+- (instancetype)init
 {
-    //Recording...
-    AVAudioRecorder *_audioRecorder;
-    SCSiriWaveformView *musicFlowView;
-    NSString *_recordingFilePath;
-    BOOL _isRecording;
-    CADisplayLink *meterUpdateDisplayLink;
-    
-    //Playing
-    AVAudioPlayer *_audioPlayer;
-    BOOL _wasPlaying;
-    UIView *_viewPlayerDuration;
-    UISlider *_playerSlider;
-    UILabel *_labelCurrentTime;
-    UILabel *_labelRemainingTime;
-    CADisplayLink *playProgressDisplayLink;
-
-    //Navigation Bar
-    NSString *_navigationTitle;
-    UIBarButtonItem *_cancelButton;
-    UIBarButtonItem *_doneButton;
-    
-    //Toolbar
-    UIBarButtonItem *_flexItem1;
-    UIBarButtonItem *_flexItem2;
-    UIBarButtonItem *_playButton;
-    UIBarButtonItem *_pauseButton;
-    UIBarButtonItem *_recordButton;
-    UIBarButtonItem *_trashButton;
-    
-    //Private variables
-    NSString *_oldSessionCategory;
-    UIColor *_normalTintColor;
-    UIColor *_recordingTintColor;
-    UIColor *_playingTintColor;
+    if (self = [super init]) {
+        [self setup];
+    }
+    return self;
 }
 
-@property(nonatomic, weak) id<IQAudioRecorderControllerDelegate> delegate;
-
-@property(nonatomic, assign) BOOL shouldShowRemainingTime;
-@end
-
-/************************************/
-
-@implementation IQAudioRecorderController
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    IQInternalAudioRecorderController *_internalController;
-}
-@synthesize delegate = _delegate;
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    _internalController = [[IQInternalAudioRecorderController alloc] init];
-    _internalController.delegate = self.delegate;
-    
-    self.viewControllers = @[_internalController];
-    self.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationBar.translucent = YES;
-    self.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    
-    self.toolbarHidden = NO;
-    self.toolbar.tintColor = self.navigationBar.tintColor;
-    self.toolbar.translucent = self.navigationBar.translucent;
-    self.toolbar.barStyle = self.navigationBar.barStyle;
+    if (self = [super initWithCoder:aDecoder]) {
+        [self setup];
+    }
+    return self;
 }
 
--(void)setDelegate:(id<IQAudioRecorderControllerDelegate,UINavigationControllerDelegate>)delegate
+- (void)setup
 {
-    _delegate = delegate;
-    _internalController.delegate = delegate;
+    self.title = self.title ?: @"Audio Recorder";
+    
+    self.recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
+    self.playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
+    self.pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
+    self.trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
 }
-
-@end
-
-/************************************/
-
-@implementation IQInternalAudioRecorderController
 
 -(void)loadView
 {
@@ -156,73 +146,52 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    _navigationTitle = @"Audio Recorder";
-    _normalTintColor = [UIColor whiteColor];
-    _recordingTintColor = [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0];
-    _playingTintColor = [UIColor colorWithRed:255.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1.0];
     
-    self.view.tintColor = _normalTintColor;
+    self.normalTintColor = self.normalTintColor ?: [UIColor whiteColor];
+    self.recordingTintColor = self.recordingTintColor ?: [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0];
+    self.playingTintColor = self.playingTintColor ?: [UIColor colorWithRed:255.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1.0];
+    
     musicFlowView.backgroundColor = [self.view backgroundColor];
 //    musicFlowView.idleAmplitude = 0;
+    musicFlowView.primaryWaveLineWidth = 3.0f;
+    musicFlowView.secondaryWaveLineWidth = 1.0;
 
-    //Unique recording URL
-    NSString *fileName = [[NSProcessInfo processInfo] globallyUniqueString];
-    _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",fileName]];
-
+    // Navigation Bar Settings
     {
-        _flexItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        _flexItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        
-        _recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
-        _playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
-        _pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
-        _trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
-        [self setToolbarItems:@[_playButton,_flexItem1, _recordButton,_flexItem2, _trashButton] animated:NO];
-
-        _playButton.enabled = NO;
-        _trashButton.enabled = NO;
+        self.navigationItem.hidesBackButton = YES;
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
+        self.navigationController.navigationBar.tintColor = self.normalTintColor;
     }
     
-    // Define the recorder setting
+    // Toolbar
     {
-        NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
+        UIBarButtonItem *_flexItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        UIBarButtonItem *_flexItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
-        [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-        [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
-        [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
+        self.recordToolbarItems = @[self.playButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
+        self.playToolbarItems = @[self.pauseButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
         
-        // Initiate and prepare the recorder
-        _audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:_recordingFilePath] settings:recordSetting error:nil];
-        _audioRecorder.delegate = self;
-        _audioRecorder.meteringEnabled = YES;
+        [self setToolbarItems:self.recordToolbarItems animated:NO];
         
-        [musicFlowView setPrimaryWaveLineWidth:3.0f];
-        [musicFlowView setSecondaryWaveLineWidth:1.0];
-    }
-
-    //Navigation Bar Settings
-    {
-        self.navigationItem.title = @"Audio Recorder";
-        _cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
-        self.navigationItem.leftBarButtonItem = _cancelButton;
-        _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
+        self.playButton.enabled = NO;
+        self.trashButton.enabled = NO;
     }
     
-    //Player Duration View
+    // Player Duration View
     {
         _viewPlayerDuration = [[UIView alloc] init];
         _viewPlayerDuration.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _viewPlayerDuration.backgroundColor = [UIColor clearColor];
 
         _labelCurrentTime = [[UILabel alloc] init];
-        _labelCurrentTime.text = [NSString timeStringForTimeInterval:0];
+        _labelCurrentTime.text = [self.class timeStringForTimeInterval:0];
         _labelCurrentTime.font = [UIFont boldSystemFontOfSize:14.0];
-        _labelCurrentTime.textColor = _normalTintColor;
+        _labelCurrentTime.textColor = self.normalTintColor;
         _labelCurrentTime.translatesAutoresizingMaskIntoConstraints = NO;
 
         _playerSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
-        _playerSlider.minimumTrackTintColor = _playingTintColor;
+        _playerSlider.minimumTrackTintColor = self.playingTintColor;
         _playerSlider.value = 0;
         [_playerSlider addTarget:self action:@selector(sliderStart:) forControlEvents:UIControlEventTouchDown];
         [_playerSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
@@ -231,7 +200,7 @@
         _playerSlider.translatesAutoresizingMaskIntoConstraints = NO;
 
         _labelRemainingTime = [[UILabel alloc] init];
-        _labelCurrentTime.text = [NSString timeStringForTimeInterval:0];
+        _labelCurrentTime.text = [self.class timeStringForTimeInterval:0];
         _labelRemainingTime.userInteractionEnabled = YES;
         [_labelRemainingTime addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognizer:)]];
         _labelRemainingTime.font = _labelCurrentTime.font;
@@ -255,55 +224,72 @@
     }
 }
 
--(void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    _originalNavigationBarTintColor = self.navigationController.navigationBar.tintColor;
+    _originalToolbarTintColor = self.navigationController.toolbar.tintColor;
+    [self spreadTintColor:self.normalTintColor];
+    
+    _shouldHideBackButton = self.navigationItem.hidesBackButton;
+    _leftBarButtonItems = self.navigationItem.leftBarButtonItems;
+    _rightBarButtonItems = self.navigationItem.rightBarButtonItems;
+    self.navigationItem.rightBarButtonItems = nil;
+    
+    _navigationControllerToolbarWasHidden = self.navigationController.toolbarHidden;
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    
+    recorder = [[IQAudioRecorder alloc] init];
+    recorder.delegate = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        [recorder prepareForRecording];
+    });
     
     [self startUpdatingMeter];
 }
 
--(void)viewWillDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    _audioPlayer.delegate = nil;
-    [_audioPlayer stop];
-    _audioPlayer = nil;
+    self.navigationController.navigationBar.tintColor = _originalNavigationBarTintColor;
+    self.navigationController.toolbar.tintColor = _originalToolbarTintColor;
+    [self.navigationController setToolbarHidden:_navigationControllerToolbarWasHidden animated:YES];
     
-    _audioRecorder.delegate = nil;
-    [_audioRecorder stop];
-    _audioRecorder = nil;
     
     [self stopUpdatingMeter];
+    
+    recorder = nil;
+}
+
+- (void)spreadTintColor:(UIColor *)color
+{
+    self.view.tintColor = color;
+    musicFlowView.tintColor = color;
+    self.navigationController.toolbar.tintColor = color;
 }
 
 #pragma mark - Update Meters
 
 - (void)updateMeters
 {
-    if (_audioRecorder.isRecording)
+    if (recorder.isRecording || recorder.isPlaying)
     {
-        [_audioRecorder updateMeters];
-        
-        CGFloat normalizedValue = pow (10, [_audioRecorder averagePowerForChannel:0] / 20);
-        
-        [musicFlowView setWaveColor:_recordingTintColor];
-        [musicFlowView updateWithLevel:normalizedValue];
-        
-        self.navigationItem.title = [NSString timeStringForTimeInterval:_audioRecorder.currentTime];
-    }
-    else if (_audioPlayer.isPlaying)
-    {
-        [_audioPlayer updateMeters];
-        
-        CGFloat normalizedValue = pow (10, [_audioPlayer averagePowerForChannel:0] / 20);
-        
-        [musicFlowView setWaveColor:_playingTintColor];
-        [musicFlowView updateWithLevel:normalizedValue];
+        [musicFlowView updateWithLevel:[recorder updateMeters]];
+    
+        if (recorder.isRecording) {
+            self.navigationItem.title = [self.class timeStringForTimeInterval:recorder.currentTime];
+            musicFlowView.waveColor = self.recordingTintColor;
+        }
+        else
+        {
+            musicFlowView.waveColor = self.playingTintColor;
+        }
     }
     else
     {
-        [musicFlowView setWaveColor:_normalTintColor];
+        [musicFlowView setWaveColor:self.normalTintColor];
         [musicFlowView updateWithLevel:0];
     }
 }
@@ -318,38 +304,39 @@
 -(void)stopUpdatingMeter
 {
     [meterUpdateDisplayLink invalidate];
-    meterUpdateDisplayLink = nil;
 }
 
 #pragma mark - Update Play Progress
 
 -(void)updatePlayProgress
 {
-    _labelCurrentTime.text = [NSString timeStringForTimeInterval:_audioPlayer.currentTime];
-    _labelRemainingTime.text = [NSString timeStringForTimeInterval:(_shouldShowRemainingTime)?(_audioPlayer.duration-_audioPlayer.currentTime):_audioPlayer.duration];
-    [_playerSlider setValue:_audioPlayer.currentTime animated:YES];
+    _labelCurrentTime.text = [self.class timeStringForTimeInterval:recorder.currentTime];
+    _labelRemainingTime.text = [self.class timeStringForTimeInterval:(_shouldShowRemainingTime)?(recorder.playbackDuration-recorder.currentTime):recorder.playbackDuration];
+    [_playerSlider setValue:recorder.currentTime animated:YES];
 }
 
 -(void)sliderStart:(UISlider*)slider
 {
-    _wasPlaying = _audioPlayer.isPlaying;
+    _wasPlaying = recorder.isPlaying;
     
-    if (_audioPlayer.isPlaying)
+    if (recorder.isPlaying)
     {
-        [_audioPlayer pause];
+        [recorder pausePlayback];
     }
 }
 
 -(void)sliderMoved:(UISlider*)slider
 {
-    _audioPlayer.currentTime = slider.value;
+    recorder.currentTime = slider.value;
 }
 
 -(void)sliderEnd:(UISlider*)slider
 {
+    recorder.currentTime = slider.value;
+    
     if (_wasPlaying)
     {
-        [_audioPlayer play];
+        [recorder resumePlayback];
     }
 }
 
@@ -365,8 +352,7 @@
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorderControllerDidCancel:)])
     {
-        IQAudioRecorderController *controller = (IQAudioRecorderController*)[self navigationController];
-        [self.delegate audioRecorderControllerDidCancel:controller];
+        [self.delegate audioRecorderControllerDidCancel:self];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -376,8 +362,7 @@
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorderController:didFinishWithAudioAtPath:)])
     {
-        IQAudioRecorderController *controller = (IQAudioRecorderController*)[self navigationController];
-        [self.delegate audioRecorderController:controller didFinishWithAudioAtPath:_recordingFilePath];
+        [self.delegate audioRecorderController:self didFinishWithAudioAtPath:recorder.filePath];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -385,75 +370,45 @@
 
 - (void)recordingButtonAction:(UIBarButtonItem *)item
 {
-    if (_isRecording == NO)
+    if (!recorder.isRecording)
     {
-        _isRecording = YES;
-
-        //UI Update
-        {
-            [self showNavigationButton:NO];
-            _recordButton.tintColor = _recordingTintColor;
-            _playButton.enabled = NO;
-            _trashButton.enabled = NO;
-        }
-        
-        /*
-         Create the recorder
-         */
-        if ([[NSFileManager defaultManager] fileExistsAtPath:_recordingFilePath])
-        {
-            [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
-        }
-        
-        _oldSessionCategory = [[AVAudioSession sharedInstance] category];
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
-        [_audioRecorder prepareToRecord];
-        [_audioRecorder record];
+        [recorder startRecording];
     }
     else
     {
-        _isRecording = NO;
+        [recorder stopRecording];
+    }
+    
+    //UI Update
+    {
+        [self spreadTintColor:recorder.isRecording ? self.recordingTintColor : self.normalTintColor];
         
-        //UI Update
-        {
-            [self showNavigationButton:YES];
-            _recordButton.tintColor = _normalTintColor;
-            _playButton.enabled = YES;
-            _trashButton.enabled = YES;
-        }
-
-        [_audioRecorder stop];
-        [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
+        [self showNavigationButtons:!recorder.isRecording];
+        self.playButton.enabled = !recorder.isRecording;
+        self.trashButton.enabled = !recorder.isRecording;
     }
 }
 
 - (void)playAction:(UIBarButtonItem *)item
 {
-    _oldSessionCategory = [[AVAudioSession sharedInstance] category];
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    
-    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:_recordingFilePath] error:nil];
-    _audioPlayer.delegate = self;
-    _audioPlayer.meteringEnabled = YES;
-    [_audioPlayer prepareToPlay];
-    [_audioPlayer play];
+    [recorder startPlayback];
     
     //UI Update
     {
-        [self setToolbarItems:@[_pauseButton,_flexItem1, _recordButton,_flexItem2, _trashButton] animated:YES];
-        [self showNavigationButton:NO];
-        _recordButton.enabled = NO;
-        _trashButton.enabled = NO;
+        [self setToolbarItems:self.playToolbarItems animated:YES];
+        [self showNavigationButtons:NO];
+        self.recordButton.enabled = NO;
+        self.trashButton.enabled = NO;
     }
     
     //Start regular update
     {
-        _playerSlider.value = _audioPlayer.currentTime;
-        _playerSlider.maximumValue = _audioPlayer.duration;
+        _playerSlider.value = recorder.currentTime;
+        _playerSlider.maximumValue = recorder.playbackDuration;
         _viewPlayerDuration.frame = self.navigationController.navigationBar.bounds;
         
-        _labelCurrentTime.text = [NSString timeStringForTimeInterval:_audioPlayer.currentTime];
-        _labelRemainingTime.text = [NSString timeStringForTimeInterval:(_shouldShowRemainingTime)?(_audioPlayer.duration-_audioPlayer.currentTime):_audioPlayer.duration];
+        _labelCurrentTime.text = [self.class timeStringForTimeInterval:recorder.currentTime];
+        _labelRemainingTime.text = [self.class timeStringForTimeInterval:(_shouldShowRemainingTime)?(recorder.playbackDuration-recorder.currentTime):recorder.playbackDuration];
 
         [_viewPlayerDuration setNeedsLayout];
         [_viewPlayerDuration layoutIfNeeded];
@@ -469,23 +424,19 @@
 {
     //UI Update
     {
-        [self setToolbarItems:@[_playButton,_flexItem1, _recordButton,_flexItem2, _trashButton] animated:YES];
-        [self showNavigationButton:YES];
-        _recordButton.enabled = YES;
-        _trashButton.enabled = YES;
+        [self showNavigationButtons:YES];
+        self.navigationItem.titleView = nil;
+        
+        [self setToolbarItems:self.recordToolbarItems animated:YES];
+        self.recordButton.enabled = YES;
+        self.trashButton.enabled = YES;
     }
     
     {
         [playProgressDisplayLink invalidate];
-        playProgressDisplayLink = nil;
-        self.navigationItem.titleView = nil;
     }
 
-    _audioPlayer.delegate = nil;
-    [_audioPlayer stop];
-    _audioPlayer = nil;
-    
-    [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
+    [recorder stopPlayback];    // TODO: no reason to stop - pause shoud do the trick (+rewind)
 }
 
 -(void)deleteAction:(UIBarButtonItem*)item
@@ -501,53 +452,38 @@
     {
         if (buttonIndex == actionSheet.destructiveButtonIndex)
         {
-            [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
+            [recorder discardRecording];
             
-            _playButton.enabled = NO;
-            _trashButton.enabled = NO;
+            self.playButton.enabled = NO;
+            self.trashButton.enabled = NO;
             [self.navigationItem setRightBarButtonItem:nil animated:YES];
-            self.navigationItem.title = _navigationTitle;
+            self.navigationItem.title = self.title;
         }
     }
 }
 
--(void)showNavigationButton:(BOOL)show
+-(void)showNavigationButtons:(BOOL)show
 {
     if (show)
     {
-        [self.navigationItem setLeftBarButtonItem:_cancelButton animated:YES];
-        [self.navigationItem setRightBarButtonItem:_doneButton animated:YES];
+        [self.navigationItem setHidesBackButton:_shouldHideBackButton animated:YES];
+        [self.navigationItem setLeftBarButtonItems:_leftBarButtonItems animated:YES];
+        [self.navigationItem setRightBarButtonItems:_rightBarButtonItems animated:YES];
     }
     else
     {
-        [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+        [self.navigationItem setHidesBackButton:YES animated:YES];
+        [self.navigationItem setLeftBarButtonItems:nil animated:YES];
+        [self.navigationItem setRightBarButtonItems:nil animated:YES];
     }
 }
 
-#pragma mark - AVAudioPlayerDelegate
-/*
- Occurs when the audio player instance completes playback
- */
--(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+#pragma mark - IQAudioRecorderDelegate
+
+- (void)audioRecorder:(IQAudioRecorder *)recorder didFinishPlaybackSuccessfully:(BOOL)successfully
 {
     //To update UI on stop playing
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[_pauseButton.target methodSignatureForSelector:_pauseButton.action]];
-    invocation.target = _pauseButton.target;
-    invocation.selector = _pauseButton.action;
-    [invocation invoke];
-}
-
-#pragma mark - AVAudioRecorderDelegate
-
-- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag
-{
-    
-}
-
-- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
-{
-//    NSLog(@"%@: %@",NSStringFromSelector(_cmd),error);
+    [self pauseAction:nil];
 }
 
 @end

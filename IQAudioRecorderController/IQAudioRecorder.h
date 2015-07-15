@@ -21,39 +21,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
 
+#import <Foundation/Foundation.h>
+
+#import <AVFoundation/AVFoundation.h>
 #import "SCSiriWaveformView.h"
 
-@class IQAudioRecorderController;
+@class IQAudioRecorder;
 
-@protocol IQAudioRecorderControllerDelegate <NSObject>
+@protocol IQAudioRecorderDelegate <NSObject>
 
-- (void)audioRecorderController:(IQAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath;
-- (void)audioRecorderControllerDidCancel:(IQAudioRecorderController *)controller;
+- (void)audioRecorder:(IQAudioRecorder *)recorder didFinishPlaybackSuccessfully:(BOOL)successfully;
 
 @end
 
 
-@interface IQAudioRecorderController : UIViewController
+@interface IQAudioRecorder : NSObject
 
-@property (nonatomic, weak) IBOutlet id<IQAudioRecorderControllerDelegate> delegate;
+@property (nonatomic, weak) id<IQAudioRecorderDelegate> delegate;
 
-@property (nonatomic) IBInspectable UIColor *normalTintColor;
-@property (nonatomic) IBInspectable UIColor *recordingTintColor;
-@property (nonatomic) IBInspectable UIColor *playingTintColor;
+@property (nonatomic, readonly) NSString *filePath;     // HINT: maybe change to URL?
+@property (nonatomic, readonly, getter=isRecording) BOOL recording;
+@property (nonatomic, readonly, getter=isPlaying) BOOL playing;
+@property (nonatomic, readonly) NSTimeInterval playbackDuration;
+@property (nonatomic) NSTimeInterval currentTime;
 
-// Toolbar
-@property (nonatomic) UIBarButtonItem *playButton;
-@property (nonatomic) UIBarButtonItem *pauseButton;
-@property (nonatomic) UIBarButtonItem *recordButton;
-@property (nonatomic) UIBarButtonItem *trashButton;
+- (void)prepareForRecording;    // you may call this method to ensure the recording can start as quickly as possible. BEWARE: overwrites any previous recordings at the moment!
+- (void)startRecording;
+- (void)stopRecording;
+- (void)discardRecording;
 
-@property (nonatomic, copy) NSArray *recordToolbarItems;
-@property (nonatomic, copy) NSArray *playToolbarItems;
+- (void)startPlayback;
+- (void)pausePlayback;
+- (void)resumePlayback;
+- (void)stopPlayback;
 
-@property(nonatomic, assign) BOOL shouldShowRemainingTime;
-
-+ (UINavigationController *)embeddedIQAudioRecorderControllerWithDelegate:(id<IQAudioRecorderControllerDelegate, UINavigationControllerDelegate>)delegate;
+- (CGFloat)updateMeters;
 
 @end

@@ -4,18 +4,14 @@
 
 
 #import "ViewController.h"
-#import "IQAudioRecorderController.h"
+
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface ViewController ()<IQAudioRecorderControllerDelegate>
+@implementation ViewController
 {
     IBOutlet UIButton *buttonPlayAudio;
     NSString *audioFilePath;
 }
-
-@end
-
-@implementation ViewController
 
 - (void)viewDidLoad
 {
@@ -25,9 +21,14 @@
 
 - (IBAction)recordAction:(UIButton *)sender
 {
-    IQAudioRecorderController *controller = [[IQAudioRecorderController alloc] init];
-    controller.delegate = self;
+    UINavigationController *controller = [IQAudioRecorderController embeddedIQAudioRecorderControllerWithDelegate:self];
+    controller.topViewController.title = @"Custom";
     [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    [(IQAudioRecorderController *)[segue.destinationViewController topViewController] setDelegate:self];
 }
 
 -(void)audioRecorderController:(IQAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath

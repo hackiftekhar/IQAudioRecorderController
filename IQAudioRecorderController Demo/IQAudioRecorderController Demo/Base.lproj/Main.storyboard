@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -37,6 +37,16 @@
                                     <action selector="playAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="yGU-ed-J8q"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kW0-NO-NKP">
+                                <rect key="frame" x="257" y="405" width="86" height="30"/>
+                                <state key="normal" title="Open via SB">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="1eO-QA-JdN" kind="show" id="AfV-XY-GSe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -44,6 +54,8 @@
                             <constraint firstItem="wc8-6V-hBI" firstAttribute="top" secondItem="qyx-zC-ewW" secondAttribute="bottom" constant="30" id="Khx-nc-vM2"/>
                             <constraint firstAttribute="centerX" secondItem="wc8-6V-hBI" secondAttribute="centerX" id="QlQ-Vj-7GU"/>
                             <constraint firstAttribute="centerY" secondItem="qyx-zC-ewW" secondAttribute="centerY" id="X0L-6o-c40"/>
+                            <constraint firstItem="kW0-NO-NKP" firstAttribute="top" secondItem="wc8-6V-hBI" secondAttribute="bottom" constant="30" id="bDY-fX-6gX"/>
+                            <constraint firstItem="kW0-NO-NKP" firstAttribute="centerX" secondItem="wc8-6V-hBI" secondAttribute="centerX" id="eqv-gh-yYC"/>
                             <constraint firstAttribute="centerX" secondItem="qyx-zC-ewW" secondAttribute="centerX" id="gyb-3g-QOT"/>
                         </constraints>
                     </view>
@@ -53,6 +65,52 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="kuP-DX-dS4">
+            <objects>
+                <navigationController id="1eO-QA-JdN" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cnV-zw-4Ki">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="qft-Uw-Erd" kind="relationship" relationship="rootViewController" id="kJ5-5q-X3b"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FuZ-2B-kC7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1027" y="278"/>
+        </scene>
+        <!--Audio Recorder Controller-->
+        <scene sceneID="AIe-Du-FiF">
+            <objects>
+                <viewController id="qft-Uw-Erd" customClass="IQAudioRecorderController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nHa-Da-Hec"/>
+                        <viewControllerLayoutGuide type="bottom" id="0Ar-Rk-VAk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="P1v-Xb-rfY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="JUc-vC-jJE"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="normalTintColor">
+                            <color key="value" red="0.017116778650000001" green="0.81724950799999996" blue="0.94970840219999997" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="recordingTintColor">
+                            <color key="value" red="1" green="0.074557672389030882" blue="0.90025809119344591" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="playingTintColor">
+                            <color key="value" red="0.8262187638401699" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pZ7-9V-2Oo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1747" y="278"/>
         </scene>
     </scenes>
 </document>
