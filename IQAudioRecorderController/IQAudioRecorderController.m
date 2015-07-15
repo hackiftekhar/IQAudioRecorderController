@@ -55,6 +55,7 @@
     //Private variables
     UIColor *_originalToolbarTintColor;
     UIColor *_originalNavigationBarTintColor;
+    BOOL _navigationControllerToolbarWasHidden;
 }
 
 
@@ -236,6 +237,7 @@
     _rightBarButtonItems = self.navigationItem.rightBarButtonItems;
     self.navigationItem.rightBarButtonItems = nil;
     
+    _navigationControllerToolbarWasHidden = self.navigationController.toolbarHidden;
     [self.navigationController setToolbarHidden:NO animated:YES];
     
     recorder = [[IQAudioRecorder alloc] init];
@@ -253,6 +255,8 @@
     
     self.navigationController.navigationBar.tintColor = _originalNavigationBarTintColor;
     self.navigationController.toolbar.tintColor = _originalToolbarTintColor;
+    [self.navigationController setToolbarHidden:_navigationControllerToolbarWasHidden animated:YES];
+    
     
     [self stopUpdatingMeter];
     
