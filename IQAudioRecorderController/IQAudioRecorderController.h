@@ -37,8 +37,8 @@
 
 @property(nonatomic, weak) id<IQAudioRecorderControllerDelegate,UINavigationControllerDelegate> delegate;
 
-@property (nonatomic, weak) UIColor *normalTintColor;
-@property (nonatomic, weak) UIColor *recordingTintColor;
-@property (nonatomic, weak) UIColor *playingTintColor;
+@property (nonatomic, strong) UIColor *normalTintColor;
+@property (nonatomic, strong) UIColor *recordingTintColor;
+@property (nonatomic, strong) UIColor *playingTintColor;
 
 @end
