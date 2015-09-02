@@ -27,6 +27,14 @@
 {
     IQAudioRecorderController *controller = [[IQAudioRecorderController alloc] init];
     controller.delegate = self;
+    
+    //For overriding default colors:
+    /*
+    controller.normalTintColor = [UIColor redColor];
+    controller.recordingTintColor = [UIColor purpleColor];
+    controller.playingTintColor = [UIColor orangeColor];
+    */
+    
     [self presentViewController:controller animated:YES completion:nil];
 }
 
