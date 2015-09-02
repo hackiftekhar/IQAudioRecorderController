@@ -84,14 +84,15 @@
     
     //Private variables
     NSString *_oldSessionCategory;
-    UIColor *_normalTintColor;
-    UIColor *_recordingTintColor;
-    UIColor *_playingTintColor;
 }
 
-@property(nonatomic, weak) id<IQAudioRecorderControllerDelegate> delegate;
+@property (nonatomic, weak) id<IQAudioRecorderControllerDelegate> delegate;
+@property (nonatomic, assign) BOOL shouldShowRemainingTime;
 
-@property(nonatomic, assign) BOOL shouldShowRemainingTime;
+@property (nonatomic, weak) UIColor *normalTintColor;
+@property (nonatomic, weak) UIColor *recordingTintColor;
+@property (nonatomic, weak) UIColor *playingTintColor;
+
 @end
 
 /************************************/
@@ -108,6 +109,9 @@
     
     _internalController = [[IQInternalAudioRecorderController alloc] init];
     _internalController.delegate = self.delegate;
+    _internalController.normalTintColor = self.normalTintColor;
+    _internalController.recordingTintColor = self.recordingTintColor;
+    _internalController.playingTintColor = self.playingTintColor;
     
     self.viewControllers = @[_internalController];
     self.navigationBar.tintColor = [UIColor whiteColor];
@@ -158,11 +162,11 @@
     [super viewDidLoad];
 
     _navigationTitle = @"Audio Recorder";
-    _normalTintColor = [UIColor whiteColor];
-    _recordingTintColor = [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0];
-    _playingTintColor = [UIColor colorWithRed:255.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1.0];
+    _normalTintColor = (self.normalTintColor ? self.normalTintColor : [UIColor whiteColor]);
+    _recordingTintColor = (self.recordingTintColor ? self.recordingTintColor : [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0]);
+    _playingTintColor = (self.playingTintColor ? self.playingTintColor : [UIColor colorWithRed:255.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1.0]);
     
-    self.view.tintColor = _normalTintColor;
+    self.view.tintColor = self.normalTintColor;
     musicFlowView.backgroundColor = [self.view backgroundColor];
 //    musicFlowView.idleAmplitude = 0;
 
