@@ -51,7 +51,7 @@
 
 @end
 
-@interface IQInternalAudioRecorderController : UIViewController <AVAudioRecorderDelegate,AVAudioPlayerDelegate,UIActionSheetDelegate>
+@interface IQInternalAudioRecorderController : UIViewController <AVAudioRecorderDelegate,AVAudioPlayerDelegate>
 {
     //Recording...
     AVAudioRecorder *_audioRecorder;
@@ -494,25 +494,28 @@
 
 -(void)deleteAction:(UIBarButtonItem*)item
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete Recording" otherButtonTitles:nil, nil];
-    actionSheet.tag = 1;
-    [actionSheet showInView:self.view];
-}
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"Delete Recording"
+                                                      style:UIAlertActionStyleDestructive
+                                                    handler:^(UIAlertAction *action){
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (actionSheet.tag == 1)
-    {
-        if (buttonIndex == actionSheet.destructiveButtonIndex)
-        {
-            [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
-            
-            _playButton.enabled = NO;
-            _trashButton.enabled = NO;
-            [self.navigationItem setRightBarButtonItem:nil animated:YES];
-            self.navigationItem.title = _navigationTitle;
-        }
-    }
+                                                        [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
+                                                        
+                                                        _playButton.enabled = NO;
+                                                        _trashButton.enabled = NO;
+                                                        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+                                                        self.navigationItem.title = _navigationTitle;
+
+                                                    }];
+    
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"Cancel"
+                                                      style:UIAlertActionStyleCancel
+                                                    handler:nil];
+    
+    [alert addAction:action1];
+    [alert addAction:action2];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 -(void)showNavigationButton:(BOOL)show
