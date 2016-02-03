@@ -1,5 +1,5 @@
 //
-//  IQAudioRecorderController.h
+//  IQAudioRecorderViewController.h
 // https://github.com/hackiftekhar/IQAudioRecorderController
 // Copyright (c) 2013-14 Iftekhar Qurashi.
 //
@@ -25,19 +25,19 @@
 
 #import "SCSiriWaveformView.h"
 
-@class IQAudioRecorderController;
+@class IQAudioRecorderViewController;
 
-@protocol IQAudioRecorderControllerDelegate <NSObject>
+@protocol IQAudioRecorderViewControllerDelegate <NSObject>
 
-- (void)audioRecorderController:(IQAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath;
-- (void)audioRecorderControllerDidCancel:(IQAudioRecorderController *)controller;
+- (void)audioRecorderViewController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath;
+- (void)audioRecorderViewControllerDidCancel:(IQAudioRecorderViewController *)controller;
 
 @end
 
 
-@interface IQAudioRecorderController : UIViewController
+@interface IQAudioRecorderViewController : UIViewController
 
-@property (nonatomic, weak) IBOutlet id<IQAudioRecorderControllerDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id<IQAudioRecorderViewControllerDelegate> delegate;
 
 @property (nonatomic) IBInspectable UIColor *normalTintColor;
 @property (nonatomic) IBInspectable UIColor *recordingTintColor;
@@ -54,6 +54,6 @@
 
 @property(nonatomic, assign) BOOL shouldShowRemainingTime;
 
-+ (UINavigationController *)embeddedIQAudioRecorderControllerWithDelegate:(id<IQAudioRecorderControllerDelegate, UINavigationControllerDelegate>)delegate;
++ (UINavigationController *)embeddedIQAudioRecorderViewControllerWithDelegate:(id<IQAudioRecorderViewControllerDelegate, UINavigationControllerDelegate>)delegate;
 
 @end

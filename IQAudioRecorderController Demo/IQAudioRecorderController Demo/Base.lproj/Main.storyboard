@@ -82,10 +82,10 @@
             </objects>
             <point key="canvasLocation" x="1027" y="278"/>
         </scene>
-        <!--Audio Recorder Controller-->
+        <!--Audio Recorder View Controller-->
         <scene sceneID="AIe-Du-FiF">
             <objects>
-                <viewController id="qft-Uw-Erd" customClass="IQAudioRecorderController" sceneMemberID="viewController">
+                <viewController id="qft-Uw-Erd" customClass="IQAudioRecorderViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nHa-Da-Hec"/>
                         <viewControllerLayoutGuide type="bottom" id="0Ar-Rk-VAk"/>

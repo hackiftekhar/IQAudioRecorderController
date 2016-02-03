@@ -1,5 +1,5 @@
 //
-//  IQAudioRecorderController.m
+//  IQAudioRecorderViewController.m
 // https://github.com/hackiftekhar/IQAudioRecorderController
 // Copyright (c) 2013-14 Iftekhar Qurashi.
 //
@@ -22,17 +22,17 @@
 // THE SOFTWARE.
 
 
-#import "IQAudioRecorderController.h"
+#import "IQAudioRecorderViewController.h"
 
 #import "IQAudioRecorder.h"
 
-@interface IQAudioRecorderController () <IQAudioRecorderDelegate, UIActionSheetDelegate>
+@interface IQAudioRecorderViewController () <IQAudioRecorderDelegate, UIActionSheetDelegate>
 
 @end
 
 /************************************/
 
-@implementation IQAudioRecorderController
+@implementation IQAudioRecorderViewController
 {
     //Recording...
     IQAudioRecorder *recorder;
@@ -59,12 +59,12 @@
 }
 
 
-+ (UINavigationController *)embeddedIQAudioRecorderControllerWithDelegate:(id<IQAudioRecorderControllerDelegate, UINavigationControllerDelegate>)delegate
++ (UINavigationController *)embeddedIQAudioRecorderViewControllerWithDelegate:(id<IQAudioRecorderViewControllerDelegate, UINavigationControllerDelegate>)delegate
 {
-    IQAudioRecorderController *recorderController = [IQAudioRecorderController new];
-    recorderController.delegate = delegate;
+    IQAudioRecorderViewController *viewController = [IQAudioRecorderViewController new];
+    viewController.delegate = delegate;
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:recorderController];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     navigationController.delegate = delegate;
     
     navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -350,9 +350,9 @@
 
 -(void)cancelAction:(UIBarButtonItem*)item
 {
-    if ([self.delegate respondsToSelector:@selector(audioRecorderControllerDidCancel:)])
+    if ([self.delegate respondsToSelector:@selector(audioRecorderViewControllerDidCancel:)])
     {
-        [self.delegate audioRecorderControllerDidCancel:self];
+        [self.delegate audioRecorderViewControllerDidCancel:self];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -360,9 +360,9 @@
 
 -(void)doneAction:(UIBarButtonItem*)item
 {
-    if ([self.delegate respondsToSelector:@selector(audioRecorderController:didFinishWithAudioAtPath:)])
+    if ([self.delegate respondsToSelector:@selector(audioRecorderViewController:didFinishWithAudioAtPath:)])
     {
-        [self.delegate audioRecorderController:self didFinishWithAudioAtPath:recorder.filePath];
+        [self.delegate audioRecorderViewController:self didFinishWithAudioAtPath:recorder.filePath];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];

@@ -21,23 +21,23 @@
 
 - (IBAction)recordAction:(UIButton *)sender
 {
-    UINavigationController *controller = [IQAudioRecorderController embeddedIQAudioRecorderControllerWithDelegate:self];
+    UINavigationController *controller = [IQAudioRecorderViewController embeddedIQAudioRecorderViewControllerWithDelegate:self];
     controller.topViewController.title = @"Custom";
     [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [(IQAudioRecorderController *)[segue.destinationViewController topViewController] setDelegate:self];
+    [(IQAudioRecorderViewController *)[segue.destinationViewController topViewController] setDelegate:self];
 }
 
--(void)audioRecorderController:(IQAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath
+-(void)audioRecorderViewController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
 {
     audioFilePath = filePath;
     buttonPlayAudio.enabled = YES;
 }
 
--(void)audioRecorderControllerDidCancel:(IQAudioRecorderController *)controller
+-(void)audioRecorderViewControllerDidCancel:(IQAudioRecorderViewController *)controller
 {
     buttonPlayAudio.enabled = NO;
 }

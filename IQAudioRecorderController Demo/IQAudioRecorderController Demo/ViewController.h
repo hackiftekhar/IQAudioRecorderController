@@ -5,9 +5,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "IQAudioRecorderController.h"
+#import "IQAudioRecorderViewController.h"
 
-@interface ViewController : UIViewController<IQAudioRecorderControllerDelegate, UINavigationControllerDelegate>
+@interface ViewController : UIViewController<IQAudioRecorderViewControllerDelegate, UINavigationControllerDelegate>
 
 
 @end
