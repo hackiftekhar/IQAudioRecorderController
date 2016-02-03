@@ -25,6 +25,7 @@
 #import "IQAudioRecorderViewController.h"
 
 #import "IQAudioRecorder.h"
+#import "IQTimeIntervalFormatter.h"
 
 @interface IQAudioRecorderViewController () <IQAudioRecorderDelegate, UIActionSheetDelegate>
 
@@ -34,6 +35,8 @@
 
 @implementation IQAudioRecorderViewController
 {
+    IQTimeIntervalFormatter *_timeIntervalFormatter;
+    
     //Recording...
     IQAudioRecorder *recorder;
     SCSiriWaveformView *musicFlowView;
@@ -79,23 +82,6 @@
     return navigationController;
 }
 
-+ (NSString *)timeStringForTimeInterval:(NSTimeInterval)timeInterval
-{
-    NSInteger ti = (NSInteger)timeInterval;
-    NSInteger seconds = ti % 60;
-    NSInteger minutes = (ti / 60) % 60;
-    NSInteger hours = (ti / 3600);
-    
-    if (hours > 0)
-    {
-        return [NSString stringWithFormat:@"%02li:%02li:%02li", (long)hours, (long)minutes, (long)seconds];
-    }
-    else
-    {
-        return  [NSString stringWithFormat:@"%02li:%02li", (long)minutes, (long)seconds];
-    }
-}
-
 - (instancetype)init
 {
     if (self = [super init]) {
@@ -114,6 +100,8 @@
 
 - (void)setup
 {
+    _timeIntervalFormatter = [[IQTimeIntervalFormatter alloc] init];
+    
     self.title = self.title ?: @"Audio Recorder";
     
     self.recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
@@ -185,7 +173,7 @@
         _viewPlayerDuration.backgroundColor = [UIColor clearColor];
 
         _labelCurrentTime = [[UILabel alloc] init];
-        _labelCurrentTime.text = [self.class timeStringForTimeInterval:0];
+        _labelCurrentTime.text = [timeIntervalFormatter stringFromTimeInterval:0];
         _labelCurrentTime.font = [UIFont boldSystemFontOfSize:14.0];
         _labelCurrentTime.textColor = self.normalTintColor;
         _labelCurrentTime.translatesAutoresizingMaskIntoConstraints = NO;
@@ -200,7 +188,7 @@
         _playerSlider.translatesAutoresizingMaskIntoConstraints = NO;
 
         _labelRemainingTime = [[UILabel alloc] init];
-        _labelCurrentTime.text = [self.class timeStringForTimeInterval:0];
+        _labelCurrentTime.text = [timeIntervalFormatter stringFromTimeInterval:0];
         _labelRemainingTime.userInteractionEnabled = YES;
         [_labelRemainingTime addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognizer:)]];
         _labelRemainingTime.font = _labelCurrentTime.font;
@@ -279,7 +267,7 @@
         [musicFlowView updateWithLevel:[recorder updateMeters]];
     
         if (recorder.isRecording) {
-            self.navigationItem.title = [self.class timeStringForTimeInterval:recorder.currentTime];
+            self.navigationItem.title = [_timeIntervalFormatter stringFromTimeInterval:recorder.currentTime];;
             musicFlowView.waveColor = self.recordingTintColor;
         }
         else
@@ -310,8 +298,8 @@
 
 -(void)updatePlayProgress
 {
-    _labelCurrentTime.text = [self.class timeStringForTimeInterval:recorder.currentTime];
-    _labelRemainingTime.text = [self.class timeStringForTimeInterval:(_shouldShowRemainingTime)?(recorder.playbackDuration-recorder.currentTime):recorder.playbackDuration];
+    _labelCurrentTime.text = [_timeIntervalFormatter stringFromTimeInterval:recorder.currentTime];
+    _labelRemainingTime.text = [_timeIntervalFormatter stringFromTimeInterval:(_shouldShowRemainingTime)?(recorder.playbackDuration-recorder.currentTime):recorder.playbackDuration];
     [_playerSlider setValue:recorder.currentTime animated:YES];
 }
 
@@ -407,8 +395,8 @@
         _playerSlider.maximumValue = recorder.playbackDuration;
         _viewPlayerDuration.frame = self.navigationController.navigationBar.bounds;
         
-        _labelCurrentTime.text = [self.class timeStringForTimeInterval:recorder.currentTime];
-        _labelRemainingTime.text = [self.class timeStringForTimeInterval:(_shouldShowRemainingTime)?(recorder.playbackDuration-recorder.currentTime):recorder.playbackDuration];
+        _labelCurrentTime.text = [_timeIntervalFormatter stringFromTimeInterval:recorder.currentTime];
+        _labelRemainingTime.text = [_timeIntervalFormatter stringFromTimeInterval:(_shouldShowRemainingTime)?(recorder.playbackDuration-recorder.currentTime):recorder.playbackDuration];
 
         [_viewPlayerDuration setNeedsLayout];
         [_viewPlayerDuration layoutIfNeeded];
