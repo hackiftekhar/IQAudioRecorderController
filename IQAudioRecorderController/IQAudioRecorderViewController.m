@@ -34,7 +34,7 @@
 
 @optional
 - (void)audioRecorderControllerDidFinishPlayback:(IQAudioRecorderController *)controller;
-- (void)audioRecorderController:(IQAudioRecorderController *)controller didUpdateWaveformAtTime:(NSTimeInterval)time;
+- (void)audioRecorderController:(IQAudioRecorderController *)controller didRecordTimeInterval:(NSTimeInterval)time;
 
 @end
 
@@ -192,8 +192,8 @@
         
         if (recorder.isRecording) {
             self.waveformView.waveColor = self.recordingTintColor;
-            if ([self.delegate respondsToSelector:@selector(audioRecorderController:didUpdateWaveformAtTime:)]) {
-                [self.delegate audioRecorderController:self didUpdateWaveformAtTime:recorder.currentTime];
+            if ([self.delegate respondsToSelector:@selector(audioRecorderController:didRecordTimeInterval:)]) {
+                [self.delegate audioRecorderController:self didRecordTimeInterval:recorder.currentTime];
             }
         } else {
             self.waveformView.waveColor = self.playingTintColor;
@@ -545,7 +545,7 @@
     [self pauseAction:nil];
 }
 
-- (void)audioRecorderController:(IQAudioRecorderController *)controller didUpdateWaveformAtTime:(NSTimeInterval)time
+- (void)audioRecorderController:(IQAudioRecorderController *)controller didRecordTimeInterval:(NSTimeInterval)time
 {
     self.navigationItem.title = [_timeIntervalFormatter stringFromTimeInterval:time];
 }
