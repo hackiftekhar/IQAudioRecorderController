@@ -45,6 +45,12 @@
 @property (nonatomic) IBOutlet __weak SCSiriWaveformView *waveformView;
 @property (nonatomic) IBOutlet __weak IQPlaybackDurationView *playbackDurationView;
 
+// no need to assign these, but if you do they'll be enabled and disabled when it makes sense
+@property (nonatomic) IBOutlet __weak id recordButton;
+@property (nonatomic) IBOutlet __weak id playButton;
+@property (nonatomic) IBOutlet __weak id pauseButton;
+@property (nonatomic) IBOutlet __weak id trashButton;
+
 @property (nonatomic) IBInspectable UIColor *normalTintColor;
 @property (nonatomic) IBInspectable UIColor *recordingTintColor;
 @property (nonatomic) IBInspectable UIColor *playingTintColor;
@@ -120,6 +126,9 @@
     [waveformUpdateDisplayLink invalidate];
     waveformUpdateDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateWaveform)];
     [waveformUpdateDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    
+    // TODO: this should probably go somewhere else
+    [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:NO];
 }
 
 - (void)stopUpdatingWaveformView
@@ -130,16 +139,22 @@
 - (void)startRecording
 {
     [recorder startRecording];
+    
+    [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:NO];
 }
 
 - (void)stopRecording
 {
     [recorder stopRecording];
+    
+    [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:YES];
 }
 
 - (void)discardRecording
 {
     [recorder discardRecording];
+    
+    [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:NO];
 }
 
 - (void)startPlayback
@@ -152,6 +167,10 @@
     [playProgressDisplayLink invalidate];
     playProgressDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updatePlaybackProgress)];
     [playProgressDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    
+    
+    [self setObjects:@[self.recordButton, self.playButton, self.trashButton] enabled:NO];
+    [self setObjects:@[self.pauseButton] enabled:YES];
 }
 
 - (void)stopPlayback
@@ -159,6 +178,9 @@
     [playProgressDisplayLink invalidate];
     
     [recorder stopPlayback];    // TODO: no reason to stop - pause shoud do the trick (+rewind)
+    
+    [self setObjects:@[self.recordButton, self.playButton, self.trashButton] enabled:YES];
+    [self setObjects:@[self.pauseButton] enabled:NO];
 }
 
 #pragma mark Private methods
@@ -192,6 +214,15 @@
     self.playbackDurationView.delegate = self;
     self.playbackDurationView.textColor = self.normalTintColor;
     self.playbackDurationView.sliderTintColor = self.playingTintColor;
+}
+
+- (void)setObjects:(NSArray *)objects enabled:(BOOL)enabled
+{
+    for (id object in objects) {
+        if ([object respondsToSelector:@selector(setEnabled:)]) {
+            [object setEnabled:enabled];
+        }
+    }
 }
 
 #pragma mark - IQAudioRecorderDelegate
@@ -307,17 +338,12 @@
 
 - (void)setup
 {
+    self.title = self.title ?: @"Audio Recorder";
+    
     _timeIntervalFormatter = [[IQTimeIntervalFormatter alloc] init];
     
     _controller = [[IQAudioRecorderController alloc] init];
     _controller.delegate = self;
-    
-    self.title = self.title ?: @"Audio Recorder";
-    
-    _recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
-    _playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
-    _pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
-    _trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
 }
 
 - (void)viewDidLoad
@@ -335,12 +361,11 @@
     [self.view addSubview:musicFlowView];
     _controller.waveformView = musicFlowView;
     
-    NSLayoutConstraint *constraintRatio = [NSLayoutConstraint constraintWithItem:musicFlowView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:musicFlowView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
     NSLayoutConstraint *constraintCenterX = [NSLayoutConstraint constraintWithItem:musicFlowView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
     NSLayoutConstraint *constraintCenterY = [NSLayoutConstraint constraintWithItem:musicFlowView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
     NSLayoutConstraint *constraintWidth = [NSLayoutConstraint constraintWithItem:musicFlowView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
-    [musicFlowView addConstraint:constraintRatio];
-    [self.view addConstraints:@[constraintWidth,constraintCenterX,constraintCenterY]];
+    NSLayoutConstraint *constraintHeight = [NSLayoutConstraint constraintWithItem:musicFlowView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+    [self.view addConstraints:@[constraintCenterX, constraintCenterY, constraintWidth, constraintHeight]];
     
     // Navigation Bar Settings
     {
@@ -352,6 +377,11 @@
     
     // Toolbar
     {
+        _recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
+        _playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
+        _pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
+        _trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
+        
         UIBarButtonItem *_flexItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         UIBarButtonItem *_flexItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
@@ -359,16 +389,18 @@
         _playToolbarItems = @[_pauseButton, _flexItem1, _recordButton, _flexItem2, _trashButton];
         
         [self setToolbarItems:_recordToolbarItems animated:NO];
-        
-        _playButton.enabled = NO;
-        _trashButton.enabled = NO;
     }
     
-    // Player Duration View
+    // Controller
     {
         _viewPlayerDuration = [[IQPlaybackDurationView alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
         _viewPlayerDuration.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _controller.playbackDurationView = _viewPlayerDuration;
+        
+        _controller.recordButton = _recordButton;
+        _controller.playButton = _playButton;
+        _controller.pauseButton = _pauseButton;
+        _controller.trashButton = _trashButton;
     }
 }
 
@@ -406,11 +438,27 @@
 - (void)spreadTintColor:(UIColor *)color
 {
     self.view.tintColor = color;
-    _controller.waveformView.tintColor = color;
+    _controller.waveformView.tintColor = color; // TODO: move this up
     self.navigationController.toolbar.tintColor = color;
 }
 
-#pragma mark - Update Play Progress
+- (void)showNavigationButtons:(BOOL)show
+{
+    if (show)
+    {
+        [self.navigationItem setHidesBackButton:_shouldHideBackButton animated:YES];
+        [self.navigationItem setLeftBarButtonItems:_leftBarButtonItems animated:YES];
+        [self.navigationItem setRightBarButtonItems:_rightBarButtonItems animated:YES];
+    }
+    else
+    {
+        [self.navigationItem setHidesBackButton:YES animated:YES];
+        [self.navigationItem setLeftBarButtonItems:nil animated:YES];
+        [self.navigationItem setRightBarButtonItems:nil animated:YES];
+    }
+}
+
+#pragma mark - Button actions
 
 -(void)cancelAction:(UIBarButtonItem*)item
 {
@@ -434,17 +482,15 @@
 {
     if (_controller.isRecording) {
         [_controller stopRecording];
+        [self spreadTintColor:_controller.normalTintColor];
     } else {
         [_controller startRecording];
+        [self spreadTintColor:_controller.recordingTintColor];
     }
     
     //UI Update
     {
-        [self spreadTintColor:_controller.isRecording ? _controller.recordingTintColor : _controller.normalTintColor];
-        
         [self showNavigationButtons:!_controller.isRecording];
-        _playButton.enabled = !_controller.isRecording;
-        _trashButton.enabled = !_controller.isRecording;
     }
 }
 
@@ -455,8 +501,6 @@
     //UI Update
     [self setToolbarItems:_playToolbarItems animated:YES];
     [self showNavigationButtons:NO];
-    _recordButton.enabled = NO;
-    _trashButton.enabled = NO;
 
     _viewPlayerDuration.frame = self.navigationController.navigationBar.bounds;
     [_viewPlayerDuration setNeedsLayout];
@@ -472,8 +516,6 @@
         self.navigationItem.titleView = nil;
         
         [self setToolbarItems:_recordToolbarItems animated:YES];
-        _recordButton.enabled = YES;
-        _trashButton.enabled = YES;
     }
     
     [_controller stopPlayback];
@@ -491,26 +533,8 @@
     {
         [_controller discardRecording];
         
-        _playButton.enabled = NO;
-        _trashButton.enabled = NO;
         [self.navigationItem setRightBarButtonItem:nil animated:YES];
         self.navigationItem.title = self.title;
-    }
-}
-
-- (void)showNavigationButtons:(BOOL)show
-{
-    if (show)
-    {
-        [self.navigationItem setHidesBackButton:_shouldHideBackButton animated:YES];
-        [self.navigationItem setLeftBarButtonItems:_leftBarButtonItems animated:YES];
-        [self.navigationItem setRightBarButtonItems:_rightBarButtonItems animated:YES];
-    }
-    else
-    {
-        [self.navigationItem setHidesBackButton:YES animated:YES];
-        [self.navigationItem setLeftBarButtonItems:nil animated:YES];
-        [self.navigationItem setRightBarButtonItems:nil animated:YES];
     }
 }
 
