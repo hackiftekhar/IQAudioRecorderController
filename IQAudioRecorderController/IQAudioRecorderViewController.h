@@ -46,9 +46,6 @@
 @property (nonatomic) UIBarButtonItem *recordButton;
 @property (nonatomic) UIBarButtonItem *trashButton;
 
-@property (nonatomic, copy) NSArray *recordToolbarItems;
-@property (nonatomic, copy) NSArray *playToolbarItems;
-
 + (UINavigationController *)embeddedIQAudioRecorderViewControllerWithDelegate:(id<IQAudioRecorderViewControllerDelegate, UINavigationControllerDelegate>)delegate;
 
 @end

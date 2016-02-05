@@ -245,6 +245,9 @@
     
     IQAudioRecorderController *_controller;
     
+    NSArray *_recordToolbarItems;
+    NSArray *_layToolbarItems;
+    
     //Playing
     IQPlaybackDurationView *_viewPlayerDuration;
     
@@ -346,10 +349,10 @@
         UIBarButtonItem *_flexItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         UIBarButtonItem *_flexItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
-        self.recordToolbarItems = @[self.playButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
-        self.playToolbarItems = @[self.pauseButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
+        _recordToolbarItems = @[self.playButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
+        _playToolbarItems = @[self.pauseButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
         
-        [self setToolbarItems:self.recordToolbarItems animated:NO];
+        [self setToolbarItems:_recordToolbarItems animated:NO];
         
         self.playButton.enabled = NO;
         self.trashButton.enabled = NO;
@@ -444,7 +447,7 @@
     [_controller startPlayback];
     
     //UI Update
-    [self setToolbarItems:self.playToolbarItems animated:YES];
+    [self setToolbarItems:_playToolbarItems animated:YES];
     [self showNavigationButtons:NO];
     self.recordButton.enabled = NO;
     self.trashButton.enabled = NO;
@@ -462,7 +465,7 @@
         [self showNavigationButtons:YES];
         self.navigationItem.titleView = nil;
         
-        [self setToolbarItems:self.recordToolbarItems animated:YES];
+        [self setToolbarItems:_recordToolbarItems animated:YES];
         self.recordButton.enabled = YES;
         self.trashButton.enabled = YES;
     }
