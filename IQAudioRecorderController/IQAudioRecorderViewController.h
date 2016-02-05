@@ -39,9 +39,6 @@
 
 @property (nonatomic, weak) IBOutlet id<IQAudioRecorderViewControllerDelegate> delegate;
 
-@property (nonatomic) IBInspectable UIColor *normalTintColor;
-@property (nonatomic) IBInspectable UIColor *recordingTintColor;
-@property (nonatomic) IBInspectable UIColor *playingTintColor;
 
 // Toolbar
 @property (nonatomic) UIBarButtonItem *playButton;
