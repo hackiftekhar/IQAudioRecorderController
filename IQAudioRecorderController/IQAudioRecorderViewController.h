@@ -49,8 +49,6 @@
 @property (nonatomic, copy) NSArray *recordToolbarItems;
 @property (nonatomic, copy) NSArray *playToolbarItems;
 
-@property(nonatomic, assign) BOOL shouldShowRemainingTime;
-
 + (UINavigationController *)embeddedIQAudioRecorderViewControllerWithDelegate:(id<IQAudioRecorderViewControllerDelegate, UINavigationControllerDelegate>)delegate;
 
 @end
