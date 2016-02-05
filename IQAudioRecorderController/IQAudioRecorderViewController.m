@@ -42,7 +42,7 @@
 
 @property (weak) id<IQAudioRecorderControllerDelegate> delegate;
 
-@property IBOutlet __weak SCSiriWaveformView *waveformView;
+@property (nonatomic) IBOutlet __weak SCSiriWaveformView *waveformView;
 @property (nonatomic) IBOutlet __weak IQPlaybackDurationView *playbackDurationView;
 
 @property (nonatomic) IBInspectable UIColor *normalTintColor;
