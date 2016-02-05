@@ -245,8 +245,14 @@
     
     IQAudioRecorderController *_controller;
     
+    // Toolbar
     NSArray *_recordToolbarItems;
-    NSArray *_layToolbarItems;
+    NSArray *_playToolbarItems;
+    
+    UIBarButtonItem *_playButton;
+    UIBarButtonItem *_pauseButton;
+    UIBarButtonItem *_recordButton;
+    UIBarButtonItem *_trashButton;
     
     //Playing
     IQPlaybackDurationView *_viewPlayerDuration;
@@ -308,10 +314,10 @@
     
     self.title = self.title ?: @"Audio Recorder";
     
-    self.recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
-    self.playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
-    self.pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
-    self.trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
+    _recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
+    _playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
+    _pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
+    _trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
 }
 
 - (void)viewDidLoad
@@ -349,13 +355,13 @@
         UIBarButtonItem *_flexItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         UIBarButtonItem *_flexItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
-        _recordToolbarItems = @[self.playButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
-        _playToolbarItems = @[self.pauseButton,_flexItem1, self.recordButton,_flexItem2, self.trashButton];
+        _recordToolbarItems = @[_playButton, _flexItem1, _recordButton, _flexItem2, _trashButton];
+        _playToolbarItems = @[_pauseButton, _flexItem1, _recordButton, _flexItem2, _trashButton];
         
         [self setToolbarItems:_recordToolbarItems animated:NO];
         
-        self.playButton.enabled = NO;
-        self.trashButton.enabled = NO;
+        _playButton.enabled = NO;
+        _trashButton.enabled = NO;
     }
     
     // Player Duration View
@@ -437,8 +443,8 @@
         [self spreadTintColor:_controller.isRecording ? _controller.recordingTintColor : _controller.normalTintColor];
         
         [self showNavigationButtons:!_controller.isRecording];
-        self.playButton.enabled = !_controller.isRecording;
-        self.trashButton.enabled = !_controller.isRecording;
+        _playButton.enabled = !_controller.isRecording;
+        _trashButton.enabled = !_controller.isRecording;
     }
 }
 
@@ -449,8 +455,8 @@
     //UI Update
     [self setToolbarItems:_playToolbarItems animated:YES];
     [self showNavigationButtons:NO];
-    self.recordButton.enabled = NO;
-    self.trashButton.enabled = NO;
+    _recordButton.enabled = NO;
+    _trashButton.enabled = NO;
 
     _viewPlayerDuration.frame = self.navigationController.navigationBar.bounds;
     [_viewPlayerDuration setNeedsLayout];
@@ -466,8 +472,8 @@
         self.navigationItem.titleView = nil;
         
         [self setToolbarItems:_recordToolbarItems animated:YES];
-        self.recordButton.enabled = YES;
-        self.trashButton.enabled = YES;
+        _recordButton.enabled = YES;
+        _trashButton.enabled = YES;
     }
     
     [_controller stopPlayback];
@@ -485,8 +491,8 @@
     {
         [_controller discardRecording];
         
-        self.playButton.enabled = NO;
-        self.trashButton.enabled = NO;
+        _playButton.enabled = NO;
+        _trashButton.enabled = NO;
         [self.navigationItem setRightBarButtonItem:nil animated:YES];
         self.navigationItem.title = self.title;
     }

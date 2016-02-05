@@ -39,13 +39,6 @@
 
 @property (nonatomic, weak) IBOutlet id<IQAudioRecorderViewControllerDelegate> delegate;
 
-
-// Toolbar
-@property (nonatomic) UIBarButtonItem *playButton;
-@property (nonatomic) UIBarButtonItem *pauseButton;
-@property (nonatomic) UIBarButtonItem *recordButton;
-@property (nonatomic) UIBarButtonItem *trashButton;
-
 + (UINavigationController *)embeddedIQAudioRecorderViewControllerWithDelegate:(id<IQAudioRecorderViewControllerDelegate, UINavigationControllerDelegate>)delegate;
 
 @end
