@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9E391F001C62B41300B22D57 /* IQTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E391EFF1C62B41300B22D57 /* IQTimeIntervalFormatter.m */; };
+		9E391F031C62B7B100B22D57 /* IQPlaybackDurationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E391F021C62B7B100B22D57 /* IQPlaybackDurationView.m */; };
 		9ED7C5E71B4DEC26005E2966 /* IQAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED7C5E61B4DEC26005E2966 /* IQAudioRecorder.m */; };
 		B53594141A6A531100A81727 /* audio_record.png in Resources */ = {isa = PBXBuildFile; fileRef = B53594121A6A531100A81727 /* audio_record.png */; };
 		B53594151A6A531100A81727 /* audio_record@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B53594131A6A531100A81727 /* audio_record@2x.png */; };
@@ -24,6 +25,8 @@
 /* Begin PBXFileReference section */
 		9E391EFE1C62B41300B22D57 /* IQTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQTimeIntervalFormatter.h; sourceTree = "<group>"; };
 		9E391EFF1C62B41300B22D57 /* IQTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQTimeIntervalFormatter.m; sourceTree = "<group>"; };
+		9E391F011C62B7B100B22D57 /* IQPlaybackDurationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQPlaybackDurationView.h; sourceTree = "<group>"; };
+		9E391F021C62B7B100B22D57 /* IQPlaybackDurationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQPlaybackDurationView.m; sourceTree = "<group>"; };
 		9ED7C5E51B4DEC26005E2966 /* IQAudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorder.h; sourceTree = "<group>"; };
 		9ED7C5E61B4DEC26005E2966 /* IQAudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorder.m; sourceTree = "<group>"; };
 		B53594121A6A531100A81727 /* audio_record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audio_record.png; sourceTree = "<group>"; };
@@ -116,6 +119,8 @@
 				B5D474391A6A2F4800771B83 /* IQAudioRecorderViewController.m */,
 				9E391EFE1C62B41300B22D57 /* IQTimeIntervalFormatter.h */,
 				9E391EFF1C62B41300B22D57 /* IQTimeIntervalFormatter.m */,
+				9E391F011C62B7B100B22D57 /* IQPlaybackDurationView.h */,
+				9E391F021C62B7B100B22D57 /* IQPlaybackDurationView.m */,
 			);
 			name = IQAudioRecorderController;
 			path = ../IQAudioRecorderController;
@@ -207,6 +212,7 @@
 				B5D474171A6A2EF200771B83 /* AppDelegate.m in Sources */,
 				B5D4743B1A6A2F4800771B83 /* IQAudioRecorderViewController.m in Sources */,
 				9E391F001C62B41300B22D57 /* IQTimeIntervalFormatter.m in Sources */,
+				9E391F031C62B7B100B22D57 /* IQPlaybackDurationView.m in Sources */,
 				B5D474141A6A2EF200771B83 /* main.m in Sources */,
 				B5D474401A6A2F9200771B83 /* SCSiriWaveformView.m in Sources */,
 			);

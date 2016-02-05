@@ -26,8 +26,9 @@
 
 #import "IQAudioRecorder.h"
 #import "IQTimeIntervalFormatter.h"
+#import "IQPlaybackDurationView.h"
 
-@interface IQAudioRecorderViewController () <IQAudioRecorderDelegate, UIActionSheetDelegate>
+@interface IQAudioRecorderViewController () <IQAudioRecorderDelegate, IQPlaybackDurationViewDelegate, UIActionSheetDelegate>
 
 @end
 
@@ -44,10 +45,7 @@
     
     //Playing
     BOOL _wasPlaying;
-    UIView *_viewPlayerDuration;
-    UISlider *_playerSlider;
-    UILabel *_labelCurrentTime;
-    UILabel *_labelRemainingTime;
+    IQPlaybackDurationView *_viewPlayerDuration;
     CADisplayLink *playProgressDisplayLink;
     
     //Navigation Bar
@@ -168,47 +166,11 @@
     
     // Player Duration View
     {
-        _viewPlayerDuration = [[UIView alloc] init];
-        _viewPlayerDuration.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        _viewPlayerDuration.backgroundColor = [UIColor clearColor];
-
-        _labelCurrentTime = [[UILabel alloc] init];
-        _labelCurrentTime.text = [timeIntervalFormatter stringFromTimeInterval:0];
-        _labelCurrentTime.font = [UIFont boldSystemFontOfSize:14.0];
-        _labelCurrentTime.textColor = self.normalTintColor;
-        _labelCurrentTime.translatesAutoresizingMaskIntoConstraints = NO;
-
-        _playerSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
-        _playerSlider.minimumTrackTintColor = self.playingTintColor;
-        _playerSlider.value = 0;
-        [_playerSlider addTarget:self action:@selector(sliderStart:) forControlEvents:UIControlEventTouchDown];
-        [_playerSlider addTarget:self action:@selector(sliderMoved:) forControlEvents:UIControlEventValueChanged];
-        [_playerSlider addTarget:self action:@selector(sliderEnd:) forControlEvents:UIControlEventTouchUpInside];
-        [_playerSlider addTarget:self action:@selector(sliderEnd:) forControlEvents:UIControlEventTouchUpOutside];
-        _playerSlider.translatesAutoresizingMaskIntoConstraints = NO;
-
-        _labelRemainingTime = [[UILabel alloc] init];
-        _labelCurrentTime.text = [timeIntervalFormatter stringFromTimeInterval:0];
-        _labelRemainingTime.userInteractionEnabled = YES;
-        [_labelRemainingTime addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognizer:)]];
-        _labelRemainingTime.font = _labelCurrentTime.font;
-        _labelRemainingTime.textColor = _labelCurrentTime.textColor;
-        _labelRemainingTime.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        [_viewPlayerDuration addSubview:_labelCurrentTime];
-        [_viewPlayerDuration addSubview:_playerSlider];
-        [_viewPlayerDuration addSubview:_labelRemainingTime];
-        
-        NSLayoutConstraint *constraintCurrentTimeLeading = [NSLayoutConstraint constraintWithItem:_labelCurrentTime attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_viewPlayerDuration attribute:NSLayoutAttributeLeading multiplier:1 constant:10];
-        NSLayoutConstraint *constraintCurrentTimeTrailing = [NSLayoutConstraint constraintWithItem:_playerSlider attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_labelCurrentTime attribute:NSLayoutAttributeTrailing multiplier:1 constant:10];
-        NSLayoutConstraint *constraintRemainingTimeLeading = [NSLayoutConstraint constraintWithItem:_labelRemainingTime attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_playerSlider attribute:NSLayoutAttributeTrailing multiplier:1 constant:10];
-        NSLayoutConstraint *constraintRemainingTimeTrailing = [NSLayoutConstraint constraintWithItem:_viewPlayerDuration attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_labelRemainingTime attribute:NSLayoutAttributeTrailing multiplier:1 constant:10];
-        
-        NSLayoutConstraint *constraintCurrentTimeCenter = [NSLayoutConstraint constraintWithItem:_labelCurrentTime attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_viewPlayerDuration attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-        NSLayoutConstraint *constraintSliderCenter = [NSLayoutConstraint constraintWithItem:_playerSlider attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_viewPlayerDuration attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-        NSLayoutConstraint *constraintRemainingTimeCenter = [NSLayoutConstraint constraintWithItem:_labelRemainingTime attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_viewPlayerDuration attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-        
-        [_viewPlayerDuration addConstraints:@[constraintCurrentTimeLeading,constraintCurrentTimeTrailing,constraintRemainingTimeLeading,constraintRemainingTimeTrailing,constraintCurrentTimeCenter,constraintSliderCenter,constraintRemainingTimeCenter]];
+        _viewPlayerDuration = [[IQPlaybackDurationView alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
+        _viewPlayerDuration.delegate = self;
+        _viewPlayerDuration.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _viewPlayerDuration.textColor = self.normalTintColor;
+        _viewPlayerDuration.sliderTintColor = self.playingTintColor;
     }
 }
 
@@ -298,42 +260,7 @@
 
 -(void)updatePlayProgress
 {
-    _labelCurrentTime.text = [_timeIntervalFormatter stringFromTimeInterval:recorder.currentTime];
-    _labelRemainingTime.text = [_timeIntervalFormatter stringFromTimeInterval:(_shouldShowRemainingTime)?(recorder.playbackDuration-recorder.currentTime):recorder.playbackDuration];
-    [_playerSlider setValue:recorder.currentTime animated:YES];
-}
-
--(void)sliderStart:(UISlider*)slider
-{
-    _wasPlaying = recorder.isPlaying;
-    
-    if (recorder.isPlaying)
-    {
-        [recorder pausePlayback];
-    }
-}
-
--(void)sliderMoved:(UISlider*)slider
-{
-    recorder.currentTime = slider.value;
-}
-
--(void)sliderEnd:(UISlider*)slider
-{
-    recorder.currentTime = slider.value;
-    
-    if (_wasPlaying)
-    {
-        [recorder resumePlayback];
-    }
-}
-
--(void)tapRecognizer:(UITapGestureRecognizer*)gesture
-{
-    if (gesture.state == UIGestureRecognizerStateEnded)
-    {
-        _shouldShowRemainingTime = !_shouldShowRemainingTime;
-    }
+    [_viewPlayerDuration setCurrentTime:recorder.currentTime animated:YES];
 }
 
 -(void)cancelAction:(UIBarButtonItem*)item
@@ -391,12 +318,9 @@
     
     //Start regular update
     {
-        _playerSlider.value = recorder.currentTime;
-        _playerSlider.maximumValue = recorder.playbackDuration;
+        [_viewPlayerDuration setDuration:recorder.playbackDuration];
+        [_viewPlayerDuration setCurrentTime:recorder.currentTime];
         _viewPlayerDuration.frame = self.navigationController.navigationBar.bounds;
-        
-        _labelCurrentTime.text = [_timeIntervalFormatter stringFromTimeInterval:recorder.currentTime];
-        _labelRemainingTime.text = [_timeIntervalFormatter stringFromTimeInterval:(_shouldShowRemainingTime)?(recorder.playbackDuration-recorder.currentTime):recorder.playbackDuration];
 
         [_viewPlayerDuration setNeedsLayout];
         [_viewPlayerDuration layoutIfNeeded];
@@ -472,6 +396,31 @@
 {
     //To update UI on stop playing
     [self pauseAction:nil];
+}
+
+#pragma mark - IQPlaybackDurationViewDelegate
+
+- (void)playbackDurationView:(IQPlaybackDurationView *)playbackView didStartScrubbingAtTime:(NSTimeInterval)time
+{
+    _wasPlaying = recorder.isPlaying;
+    
+    if (recorder.isPlaying) {
+        [recorder pausePlayback];
+    }
+}
+
+- (void)playbackDurationView:(IQPlaybackDurationView *)playbackView didScrubToTime:(NSTimeInterval)time
+{
+    recorder.currentTime = time;
+}
+
+- (void)playbackDurationView:(IQPlaybackDurationView *)playbackView didEndScrubbingAtTime:(NSTimeInterval)time
+{
+    recorder.currentTime = time;
+    
+    if (_wasPlaying) {
+        [recorder resumePlayback];
+    }
 }
 
 @end
