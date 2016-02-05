@@ -438,7 +438,6 @@
 - (void)spreadTintColor:(UIColor *)color
 {
     self.view.tintColor = color;
-    _controller.waveformView.tintColor = color; // TODO: move this up
     self.navigationController.toolbar.tintColor = color;
 }
 
