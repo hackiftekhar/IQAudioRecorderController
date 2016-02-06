@@ -55,7 +55,7 @@ IB_DESIGNABLE
     _slider.translatesAutoresizingMaskIntoConstraints = NO;
     
     _remainingTimeLabel = [[UILabel alloc] init];
-    _currentTimeLabel.text = [_timeIntervalFormatter stringFromTimeInterval:0];
+    _remainingTimeLabel.text = [_timeIntervalFormatter stringFromTimeInterval:0];
     _remainingTimeLabel.userInteractionEnabled = YES;
     [_remainingTimeLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleRemainingTimeDisplay:)]];
     _remainingTimeLabel.font = _currentTimeLabel.font;
