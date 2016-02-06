@@ -96,7 +96,6 @@
 #pragma mark Recording
 
 // HINT: at the moment this overwrites the current recording -> create new recorder with different URL?
-// HINT: this method is likely (and should) to be called on a background thread -> ensure thread safety
 - (void)prepareForRecording
 {
     @synchronized(self) {
