@@ -24,6 +24,11 @@
 
 - (instancetype)init
 {
+    return [self initWithFormat:kAudioFormatMPEG4AAC sampleRate:44100.0 numberOfChannels:2];
+}
+
+- (instancetype)initWithFormat:(AudioFormatID)format sampleRate:(CGFloat)sampleRate numberOfChannels:(int)channels
+{
     if (self = [super init]) {
         // Unique recording URL
         NSString *fileName = [[NSProcessInfo processInfo] globallyUniqueString];
@@ -33,9 +38,9 @@
         
         // Define the recorder setting
         {
-            NSDictionary *recordSetting = @{AVFormatIDKey: @(kAudioFormatMPEG4AAC),
-                                            AVSampleRateKey: @(44100.0),
-                                            AVNumberOfChannelsKey: @(2)};
+            NSDictionary *recordSetting = @{AVFormatIDKey: @(format),
+                                            AVSampleRateKey: @(sampleRate),
+                                            AVNumberOfChannelsKey: @(channels)};
             
             // Initiate and prepare the recorder
             audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:_filePath]
@@ -47,7 +52,6 @@
                 [self prepareForRecording];
             });
         }
-
     }
     return self;
 }

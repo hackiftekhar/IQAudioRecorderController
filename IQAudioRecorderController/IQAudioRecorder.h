@@ -46,6 +46,9 @@
 @property (nonatomic, readonly) NSTimeInterval playbackDuration;
 @property (nonatomic) NSTimeInterval currentTime;
 
+- (instancetype)init;   // uses default values
+- (instancetype)initWithFormat:(AudioFormatID)format sampleRate:(CGFloat)sampleRate numberOfChannels:(int)channels;
+
 - (void)prepareForRecording;    // you may call this method to ensure the recording can start as quickly as possible. BEWARE: overwrites any previous recordings at the moment!
 - (void)startRecording;
 - (void)stopRecording;
