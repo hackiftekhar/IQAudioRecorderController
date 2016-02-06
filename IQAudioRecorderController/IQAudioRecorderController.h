@@ -27,18 +27,39 @@
 
 @protocol IQAudioRecorderControllerDelegate <UINavigationControllerDelegate>
 
+@required
+/**
+ Returns the temporary recorded filePath, you need to copy the recorded file to your own location and don't rely on the filePath anymore. You don't need to dismiss controller from here, library does this for you.
+ */
 -(void)audioRecorderController:(IQAudioRecorderController*)controller didFinishWithAudioAtPath:(NSString*)filePath;
+
+@optional
+/**
+ Optional method to determine if user taps on Cancel button. You don't need to dismiss controller from here, library does this for you.
+ */
 -(void)audioRecorderControllerDidCancel:(IQAudioRecorderController*)controller;
 
 @end
+
 
 
 @interface IQAudioRecorderController : UINavigationController
 
 @property(nonatomic, weak) id<IQAudioRecorderControllerDelegate,UINavigationControllerDelegate> delegate;
 
+/**
+ Support light and dark style UI for the user interface. If you would like to present light style then you may need to set barStyle to UIBarStyleDefault, otherwise dark style UI is the default.
+ */
+@property(nonatomic,assign) UIBarStyle barStyle;
+
+/**
+ normalTintColor is used for showing wave tintColor while not recording, it is also used for navigationBar and toolbar tintColor.
+ */
 @property (nonatomic, strong) UIColor *normalTintColor;
-@property (nonatomic, strong) UIColor *recordingTintColor;
-@property (nonatomic, strong) UIColor *playingTintColor;
+
+/**
+ Highlighted tintColor is used when playing the recorded audio file or when recording the audio file.
+ */
+@property (nonatomic, strong) UIColor *highlightedTintColor;
 
 @end

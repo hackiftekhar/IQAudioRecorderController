@@ -16,10 +16,12 @@
 		B5D4741F1A6A2EF200771B83 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5D4741E1A6A2EF200771B83 /* Images.xcassets */; };
 		B5D474221A6A2EF200771B83 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D474201A6A2EF200771B83 /* LaunchScreen.xib */; };
 		B5D4743B1A6A2F4800771B83 /* IQAudioRecorderController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474391A6A2F4800771B83 /* IQAudioRecorderController.m */; };
-		B5D474401A6A2F9200771B83 /* SCSiriWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D4743F1A6A2F9200771B83 /* SCSiriWaveformView.m */; };
+		EE424EE440838B61F2FACDD3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30CB9E576D87DD5C1F6995FD /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		30CB9E576D87DD5C1F6995FD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4757ED4EB990C1B373B49F4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B53594121A6A531100A81727 /* audio_record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audio_record.png; sourceTree = "<group>"; };
 		B53594131A6A531100A81727 /* audio_record@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_record@2x.png"; sourceTree = "<group>"; };
 		B5D4740E1A6A2EF200771B83 /* IQAudioRecorderController Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IQAudioRecorderController Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,8 +36,7 @@
 		B5D474211A6A2EF200771B83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		B5D474381A6A2F4800771B83 /* IQAudioRecorderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorderController.h; sourceTree = "<group>"; };
 		B5D474391A6A2F4800771B83 /* IQAudioRecorderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorderController.m; sourceTree = "<group>"; };
-		B5D4743E1A6A2F9200771B83 /* SCSiriWaveformView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSiriWaveformView.h; sourceTree = "<group>"; };
-		B5D4743F1A6A2F9200771B83 /* SCSiriWaveformView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSiriWaveformView.m; sourceTree = "<group>"; };
+		C6A1915A910D0321075889F2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE424EE440838B61F2FACDD3 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +66,8 @@
 				B5D474371A6A2F4800771B83 /* IQAudioRecorderController */,
 				B5D474101A6A2EF200771B83 /* IQAudioRecorderController Demo */,
 				B5D4740F1A6A2EF200771B83 /* Products */,
+				B734CE3B41117A2ED298E4E7 /* Pods */,
+				E4FA94057184407CBEE6925E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,7 +107,6 @@
 			isa = PBXGroup;
 			children = (
 				B53594111A6A531100A81727 /* Resources */,
-				B5D4743D1A6A2F9200771B83 /* SCSiriWaveformView */,
 				B5D474381A6A2F4800771B83 /* IQAudioRecorderController.h */,
 				B5D474391A6A2F4800771B83 /* IQAudioRecorderController.m */,
 			);
@@ -111,13 +114,21 @@
 			path = ../IQAudioRecorderController;
 			sourceTree = "<group>";
 		};
-		B5D4743D1A6A2F9200771B83 /* SCSiriWaveformView */ = {
+		B734CE3B41117A2ED298E4E7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B5D4743E1A6A2F9200771B83 /* SCSiriWaveformView.h */,
-				B5D4743F1A6A2F9200771B83 /* SCSiriWaveformView.m */,
+				C6A1915A910D0321075889F2 /* Pods.debug.xcconfig */,
+				B4757ED4EB990C1B373B49F4 /* Pods.release.xcconfig */,
 			);
-			path = SCSiriWaveformView;
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E4FA94057184407CBEE6925E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				30CB9E576D87DD5C1F6995FD /* libPods.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,9 +138,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5D474311A6A2EF200771B83 /* Build configuration list for PBXNativeTarget "IQAudioRecorderController Demo" */;
 			buildPhases = (
+				BF0F08750EC75E249A1833EB /* Check Pods Manifest.lock */,
 				B5D4740A1A6A2EF200771B83 /* Sources */,
 				B5D4740B1A6A2EF200771B83 /* Frameworks */,
 				B5D4740C1A6A2EF200771B83 /* Resources */,
+				65D39FA5F8DBD5E79FE6528C /* Embed Pods Frameworks */,
+				88656FFD208C2889511240BE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -187,6 +201,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		65D39FA5F8DBD5E79FE6528C /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		88656FFD208C2889511240BE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BF0F08750EC75E249A1833EB /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B5D4740A1A6A2EF200771B83 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -196,7 +258,6 @@
 				B5D474171A6A2EF200771B83 /* AppDelegate.m in Sources */,
 				B5D4743B1A6A2F4800771B83 /* IQAudioRecorderController.m in Sources */,
 				B5D474141A6A2EF200771B83 /* main.m in Sources */,
-				B5D474401A6A2F9200771B83 /* SCSiriWaveformView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,7 +318,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "02353cc9-afb5-44f8-8c61-0111ecaa8c9b";
@@ -293,7 +354,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "02353cc9-afb5-44f8-8c61-0111ecaa8c9b";
 				SDKROOT = iphoneos;
@@ -303,11 +364,12 @@
 		};
 		B5D474321A6A2EF200771B83 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6A1915A910D0321075889F2 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				INFOPLIST_FILE = "IQAudioRecorderController Demo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iftekhar.audiorecordercontroller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -318,11 +380,12 @@
 		};
 		B5D474331A6A2EF200771B83 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B4757ED4EB990C1B373B49F4 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				INFOPLIST_FILE = "IQAudioRecorderController Demo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iftekhar.audiorecordercontroller;
 				PRODUCT_NAME = "$(TARGET_NAME)";

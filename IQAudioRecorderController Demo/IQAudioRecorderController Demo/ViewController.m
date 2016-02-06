@@ -23,18 +23,23 @@
     buttonPlayAudio.enabled = NO;
 }
 
+- (IBAction)recordWhiteAction:(UIButton *)sender
+{
+    IQAudioRecorderController *controller = [[IQAudioRecorderController alloc] init];
+    controller.delegate = self;
+    controller.barStyle = UIBarStyleDefault;
+    controller.normalTintColor = [UIColor orangeColor];
+    controller.highlightedTintColor = [UIColor purpleColor];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
 - (IBAction)recordAction:(UIButton *)sender
 {
     IQAudioRecorderController *controller = [[IQAudioRecorderController alloc] init];
     controller.delegate = self;
-    
-    //For overriding default colors:
-    /*
-    controller.normalTintColor = [UIColor redColor];
-    controller.recordingTintColor = [UIColor purpleColor];
-    controller.playingTintColor = [UIColor orangeColor];
-    */
-    
+    controller.barStyle = UIBarStyleBlackTranslucent;
+    controller.normalTintColor = [UIColor purpleColor];
+    controller.highlightedTintColor = [UIColor orangeColor];
     [self presentViewController:controller animated:YES completion:nil];
 }
 

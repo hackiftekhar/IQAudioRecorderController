@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,8 +18,8 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qyx-zC-ewW">
-                                <rect key="frame" x="253" y="285" width="94" height="30"/>
-                                <state key="normal" title="Record Audio">
+                                <rect key="frame" x="233" y="285" width="134" height="30"/>
+                                <state key="normal" title="Record Audio Black">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -28,7 +28,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wc8-6V-hBI">
-                                <rect key="frame" x="263" y="345" width="74" height="30"/>
+                                <rect key="frame" x="264" y="345" width="72" height="30"/>
                                 <state key="normal" title="Play Audio">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -37,14 +37,26 @@
                                     <action selector="playAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="yGU-ed-J8q"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NIy-jj-6xy">
+                                <rect key="frame" x="232" y="225" width="136" height="30"/>
+                                <state key="normal" title="Record Audio White">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="recordWhiteAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="E2D-vM-Bcf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="qyx-zC-ewW" secondAttribute="centerX" id="AHB-bu-6ZI"/>
                             <constraint firstItem="wc8-6V-hBI" firstAttribute="top" secondItem="qyx-zC-ewW" secondAttribute="bottom" constant="30" id="Khx-nc-vM2"/>
+                            <constraint firstItem="qyx-zC-ewW" firstAttribute="top" secondItem="NIy-jj-6xy" secondAttribute="bottom" constant="30" id="M6d-c4-EkW"/>
                             <constraint firstAttribute="centerX" secondItem="wc8-6V-hBI" secondAttribute="centerX" id="QlQ-Vj-7GU"/>
                             <constraint firstAttribute="centerY" secondItem="qyx-zC-ewW" secondAttribute="centerY" id="X0L-6o-c40"/>
                             <constraint firstAttribute="centerX" secondItem="qyx-zC-ewW" secondAttribute="centerX" id="gyb-3g-QOT"/>
+                            <constraint firstItem="qyx-zC-ewW" firstAttribute="centerX" secondItem="NIy-jj-6xy" secondAttribute="centerX" id="slv-Xg-9or"/>
                         </constraints>
                     </view>
                     <connections>
