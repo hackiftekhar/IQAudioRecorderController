@@ -23,8 +23,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SCSiriWaveformView.h"
-
 @class IQAudioRecorderViewController;
 
 @protocol IQAudioRecorderViewControllerDelegate <NSObject>

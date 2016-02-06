@@ -10,6 +10,7 @@
 		9E391F001C62B41300B22D57 /* IQTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E391EFF1C62B41300B22D57 /* IQTimeIntervalFormatter.m */; };
 		9E391F031C62B7B100B22D57 /* IQPlaybackDurationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E391F021C62B7B100B22D57 /* IQPlaybackDurationView.m */; };
 		9ED7C5E71B4DEC26005E2966 /* IQAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED7C5E61B4DEC26005E2966 /* IQAudioRecorder.m */; };
+		9EE4DB951C657F5E005F8582 /* IQAudioRecorderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE4DB941C657F5E005F8582 /* IQAudioRecorderController.m */; };
 		B53594141A6A531100A81727 /* audio_record.png in Resources */ = {isa = PBXBuildFile; fileRef = B53594121A6A531100A81727 /* audio_record.png */; };
 		B53594151A6A531100A81727 /* audio_record@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B53594131A6A531100A81727 /* audio_record@2x.png */; };
 		B5D474141A6A2EF200771B83 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474131A6A2EF200771B83 /* main.m */; };
@@ -29,6 +30,8 @@
 		9E391F021C62B7B100B22D57 /* IQPlaybackDurationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQPlaybackDurationView.m; sourceTree = "<group>"; };
 		9ED7C5E51B4DEC26005E2966 /* IQAudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorder.h; sourceTree = "<group>"; };
 		9ED7C5E61B4DEC26005E2966 /* IQAudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorder.m; sourceTree = "<group>"; };
+		9EE4DB931C657F5E005F8582 /* IQAudioRecorderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorderController.h; sourceTree = "<group>"; };
+		9EE4DB941C657F5E005F8582 /* IQAudioRecorderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorderController.m; sourceTree = "<group>"; };
 		B53594121A6A531100A81727 /* audio_record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audio_record.png; sourceTree = "<group>"; };
 		B53594131A6A531100A81727 /* audio_record@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_record@2x.png"; sourceTree = "<group>"; };
 		B5D4740E1A6A2EF200771B83 /* IQAudioRecorderController Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IQAudioRecorderController Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,16 +114,18 @@
 		B5D474371A6A2F4800771B83 /* IQAudioRecorderController */ = {
 			isa = PBXGroup;
 			children = (
-				B53594111A6A531100A81727 /* Resources */,
-				B5D4743D1A6A2F9200771B83 /* SCSiriWaveformView */,
 				9ED7C5E51B4DEC26005E2966 /* IQAudioRecorder.h */,
 				9ED7C5E61B4DEC26005E2966 /* IQAudioRecorder.m */,
+				9EE4DB931C657F5E005F8582 /* IQAudioRecorderController.h */,
+				9EE4DB941C657F5E005F8582 /* IQAudioRecorderController.m */,
 				B5D474381A6A2F4800771B83 /* IQAudioRecorderViewController.h */,
 				B5D474391A6A2F4800771B83 /* IQAudioRecorderViewController.m */,
-				9E391EFE1C62B41300B22D57 /* IQTimeIntervalFormatter.h */,
-				9E391EFF1C62B41300B22D57 /* IQTimeIntervalFormatter.m */,
 				9E391F011C62B7B100B22D57 /* IQPlaybackDurationView.h */,
 				9E391F021C62B7B100B22D57 /* IQPlaybackDurationView.m */,
+				9E391EFE1C62B41300B22D57 /* IQTimeIntervalFormatter.h */,
+				9E391EFF1C62B41300B22D57 /* IQTimeIntervalFormatter.m */,
+				B53594111A6A531100A81727 /* Resources */,
+				B5D4743D1A6A2F9200771B83 /* SCSiriWaveformView */,
 			);
 			name = IQAudioRecorderController;
 			path = ../IQAudioRecorderController;
@@ -212,6 +217,7 @@
 				B5D474171A6A2EF200771B83 /* AppDelegate.m in Sources */,
 				B5D4743B1A6A2F4800771B83 /* IQAudioRecorderViewController.m in Sources */,
 				9E391F001C62B41300B22D57 /* IQTimeIntervalFormatter.m in Sources */,
+				9EE4DB951C657F5E005F8582 /* IQAudioRecorderController.m in Sources */,
 				9E391F031C62B7B100B22D57 /* IQPlaybackDurationView.m in Sources */,
 				B5D474141A6A2EF200771B83 /* main.m in Sources */,
 				B5D474401A6A2F9200771B83 /* SCSiriWaveformView.m in Sources */,
