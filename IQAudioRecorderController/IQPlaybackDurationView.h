@@ -20,13 +20,13 @@
 
 @interface IQPlaybackDurationView : UIView
 
-@property (weak) id<IQPlaybackDurationViewDelegate> delegate;
+@property (nonatomic, weak) id<IQPlaybackDurationViewDelegate> delegate;
 @property (nonatomic, getter=isShowingRemainingTime) IBInspectable BOOL showRemainingTime;
 @property (nonatomic) IBInspectable UIColor *textColor;
 @property (nonatomic) IBInspectable UIColor *sliderTintColor;
+@property (nonatomic) NSTimeInterval duration;
+@property (nonatomic) NSTimeInterval currentTime;
 
-- (void)setDuration:(NSTimeInterval)duration;
-- (void)setCurrentTime:(NSTimeInterval)time;
 - (void)setCurrentTime:(NSTimeInterval)time animated:(BOOL)animated;
 
 @end

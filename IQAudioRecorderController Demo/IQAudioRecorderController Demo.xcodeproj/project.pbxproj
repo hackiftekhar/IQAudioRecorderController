@@ -11,6 +11,7 @@
 		9E391F031C62B7B100B22D57 /* IQPlaybackDurationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E391F021C62B7B100B22D57 /* IQPlaybackDurationView.m */; };
 		9ED7C5E71B4DEC26005E2966 /* IQAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED7C5E61B4DEC26005E2966 /* IQAudioRecorder.m */; };
 		9EE4DB951C657F5E005F8582 /* IQAudioRecorderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE4DB941C657F5E005F8582 /* IQAudioRecorderController.m */; };
+		9EE4DB981C658E46005F8582 /* CustomRecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE4DB971C658E46005F8582 /* CustomRecorderViewController.m */; };
 		B53594141A6A531100A81727 /* audio_record.png in Resources */ = {isa = PBXBuildFile; fileRef = B53594121A6A531100A81727 /* audio_record.png */; };
 		B53594151A6A531100A81727 /* audio_record@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B53594131A6A531100A81727 /* audio_record@2x.png */; };
 		B5D474141A6A2EF200771B83 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474131A6A2EF200771B83 /* main.m */; };
@@ -32,6 +33,8 @@
 		9ED7C5E61B4DEC26005E2966 /* IQAudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorder.m; sourceTree = "<group>"; };
 		9EE4DB931C657F5E005F8582 /* IQAudioRecorderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorderController.h; sourceTree = "<group>"; };
 		9EE4DB941C657F5E005F8582 /* IQAudioRecorderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorderController.m; sourceTree = "<group>"; };
+		9EE4DB961C658E46005F8582 /* CustomRecorderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRecorderViewController.h; sourceTree = "<group>"; };
+		9EE4DB971C658E46005F8582 /* CustomRecorderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomRecorderViewController.m; sourceTree = "<group>"; };
 		B53594121A6A531100A81727 /* audio_record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audio_record.png; sourceTree = "<group>"; };
 		B53594131A6A531100A81727 /* audio_record@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_record@2x.png"; sourceTree = "<group>"; };
 		B5D4740E1A6A2EF200771B83 /* IQAudioRecorderController Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IQAudioRecorderController Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +95,8 @@
 			children = (
 				B5D474151A6A2EF200771B83 /* AppDelegate.h */,
 				B5D474161A6A2EF200771B83 /* AppDelegate.m */,
+				9EE4DB961C658E46005F8582 /* CustomRecorderViewController.h */,
+				9EE4DB971C658E46005F8582 /* CustomRecorderViewController.m */,
 				B5D474181A6A2EF200771B83 /* ViewController.h */,
 				B5D474191A6A2EF200771B83 /* ViewController.m */,
 				B5D4741B1A6A2EF200771B83 /* Main.storyboard */,
@@ -215,6 +220,7 @@
 				9ED7C5E71B4DEC26005E2966 /* IQAudioRecorder.m in Sources */,
 				B5D4741A1A6A2EF200771B83 /* ViewController.m in Sources */,
 				B5D474171A6A2EF200771B83 /* AppDelegate.m in Sources */,
+				9EE4DB981C658E46005F8582 /* CustomRecorderViewController.m in Sources */,
 				B5D4743B1A6A2F4800771B83 /* IQAudioRecorderViewController.m in Sources */,
 				9E391F001C62B41300B22D57 /* IQTimeIntervalFormatter.m in Sources */,
 				9EE4DB951C657F5E005F8582 /* IQAudioRecorderController.m in Sources */,

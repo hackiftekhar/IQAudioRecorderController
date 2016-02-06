@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qyx-zC-ewW">
-                                <rect key="frame" x="253" y="285" width="94" height="30"/>
+                                <rect key="frame" x="254" y="285" width="92" height="30"/>
                                 <state key="normal" title="Record Audio">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -28,7 +28,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wc8-6V-hBI">
-                                <rect key="frame" x="263" y="345" width="74" height="30"/>
+                                <rect key="frame" x="264" y="345" width="72" height="30"/>
                                 <state key="normal" title="Play Audio">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -38,7 +38,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kW0-NO-NKP">
-                                <rect key="frame" x="257" y="405" width="86" height="30"/>
+                                <rect key="frame" x="258" y="405" width="84" height="30"/>
                                 <state key="normal" title="Open via SB">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -47,17 +47,35 @@
                                     <segue destination="1eO-QA-JdN" kind="show" id="AfV-XY-GSe"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zne-3o-Rst">
+                                <rect key="frame" x="261" y="465" width="78" height="30"/>
+                                <state key="normal" title="Custom VC">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="ubj-1r-LTa" kind="show" identifier="ShowCustomVC" id="obF-3l-4ld"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Zne-3o-Rst" firstAttribute="centerX" secondItem="kW0-NO-NKP" secondAttribute="centerX" id="3mp-Gq-tSa"/>
                             <constraint firstAttribute="centerX" secondItem="qyx-zC-ewW" secondAttribute="centerX" id="AHB-bu-6ZI"/>
                             <constraint firstItem="wc8-6V-hBI" firstAttribute="top" secondItem="qyx-zC-ewW" secondAttribute="bottom" constant="30" id="Khx-nc-vM2"/>
                             <constraint firstAttribute="centerX" secondItem="wc8-6V-hBI" secondAttribute="centerX" id="QlQ-Vj-7GU"/>
+                            <constraint firstItem="Zne-3o-Rst" firstAttribute="top" secondItem="kW0-NO-NKP" secondAttribute="bottom" constant="30" id="WyU-Kr-h2s"/>
                             <constraint firstAttribute="centerY" secondItem="qyx-zC-ewW" secondAttribute="centerY" id="X0L-6o-c40"/>
+                            <constraint firstItem="Zne-3o-Rst" firstAttribute="centerY" secondItem="kW0-NO-NKP" secondAttribute="centerY" id="avV-D0-A1B"/>
                             <constraint firstItem="kW0-NO-NKP" firstAttribute="top" secondItem="wc8-6V-hBI" secondAttribute="bottom" constant="30" id="bDY-fX-6gX"/>
                             <constraint firstItem="kW0-NO-NKP" firstAttribute="centerX" secondItem="wc8-6V-hBI" secondAttribute="centerX" id="eqv-gh-yYC"/>
                             <constraint firstAttribute="centerX" secondItem="qyx-zC-ewW" secondAttribute="centerX" id="gyb-3g-QOT"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="avV-D0-A1B"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="buttonPlayAudio" destination="wc8-6V-hBI" id="7Q8-tX-8Yi"/>
@@ -65,6 +83,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="168" y="278"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kuP-DX-dS4">
@@ -81,6 +100,128 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FuZ-2B-kC7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1027" y="278"/>
+        </scene>
+        <!--Custom Recorder View Controller-->
+        <scene sceneID="uSw-al-aKN">
+            <objects>
+                <viewController id="ubj-1r-LTa" customClass="CustomRecorderViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1zP-vU-eHG"/>
+                        <viewControllerLayoutGuide type="bottom" id="sKC-X9-tdr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gpo-cv-7rK">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VPA-df-DgK" customClass="SCSiriWaveformView">
+                                <rect key="frame" x="0.0" y="20" width="600" height="460"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kzD-Rd-8sh" userLabel="Controls">
+                                <rect key="frame" x="0.0" y="480" width="600" height="120"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1l0-9x-1Q4" userLabel="Playback" customClass="IQPlaybackDurationView">
+                                        <rect key="frame" x="8" y="82" width="584" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="3eh-jX-vTe"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVk-eh-8FM" userLabel="Record">
+                                        <rect key="frame" x="277" y="8" width="46" height="46"/>
+                                        <color key="backgroundColor" red="0.96470588239999999" green="0.0" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="8Mm-OO-cFz"/>
+                                            <constraint firstAttribute="width" constant="46" id="dlt-Ir-cjI"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="23"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="record" destination="ubj-1r-LTa" eventType="touchUpInside" id="PU7-2P-Bk1"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bdk-11-llh">
+                                        <rect key="frame" x="8" y="16" width="30" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="play" destination="ubj-1r-LTa" eventType="touchUpInside" id="76Z-tY-EXV"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Wi-gx-G6f">
+                                        <rect key="frame" x="550" y="16" width="39" height="30"/>
+                                        <state key="normal" title="Trash"/>
+                                        <connections>
+                                            <action selector="trash" destination="ubj-1r-LTa" eventType="touchUpInside" id="81p-AW-wAC"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xWc-rw-YfP">
+                                        <rect key="frame" x="68" y="16" width="42" height="30"/>
+                                        <state key="normal" title="Pause"/>
+                                        <connections>
+                                            <action selector="pause" destination="ubj-1r-LTa" eventType="touchUpInside" id="mxR-ng-I9U"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="6Wi-gx-G6f" secondAttribute="trailing" constant="11" id="21D-9G-8mc"/>
+                                    <constraint firstItem="xWc-rw-YfP" firstAttribute="centerY" secondItem="Bdk-11-llh" secondAttribute="centerY" id="3k0-uM-kvC"/>
+                                    <constraint firstItem="xWc-rw-YfP" firstAttribute="leading" secondItem="Bdk-11-llh" secondAttribute="trailing" constant="30" id="BEe-EW-BLR"/>
+                                    <constraint firstItem="6Wi-gx-G6f" firstAttribute="centerY" secondItem="RVk-eh-8FM" secondAttribute="centerY" id="DCG-Us-hMW"/>
+                                    <constraint firstItem="RVk-eh-8FM" firstAttribute="top" secondItem="kzD-Rd-8sh" secondAttribute="top" constant="8" id="EWD-xw-o4l"/>
+                                    <constraint firstAttribute="trailing" secondItem="1l0-9x-1Q4" secondAttribute="trailing" constant="8" id="FBq-dJ-mdK"/>
+                                    <constraint firstItem="Bdk-11-llh" firstAttribute="leading" secondItem="kzD-Rd-8sh" secondAttribute="leading" constant="8" id="Ll1-IK-cO9"/>
+                                    <constraint firstAttribute="bottom" secondItem="1l0-9x-1Q4" secondAttribute="bottom" constant="8" id="Y0W-WK-bDK"/>
+                                    <constraint firstItem="Bdk-11-llh" firstAttribute="centerY" secondItem="RVk-eh-8FM" secondAttribute="centerY" id="khS-Jt-R4O"/>
+                                    <constraint firstItem="RVk-eh-8FM" firstAttribute="centerX" secondItem="kzD-Rd-8sh" secondAttribute="centerX" id="lZH-gu-3dc"/>
+                                    <constraint firstItem="1l0-9x-1Q4" firstAttribute="leading" secondItem="kzD-Rd-8sh" secondAttribute="leading" constant="8" id="tLQ-KS-Sxs"/>
+                                    <constraint firstAttribute="height" constant="120" id="wQY-A0-lga"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kzD-Rd-8sh" firstAttribute="leading" secondItem="gpo-cv-7rK" secondAttribute="leading" id="2Mz-vx-SAB"/>
+                            <constraint firstItem="VPA-df-DgK" firstAttribute="top" secondItem="1zP-vU-eHG" secondAttribute="bottom" id="5h0-gP-7eO"/>
+                            <constraint firstAttribute="trailing" secondItem="kzD-Rd-8sh" secondAttribute="trailing" id="5lY-GA-LMY"/>
+                            <constraint firstItem="sKC-X9-tdr" firstAttribute="top" secondItem="kzD-Rd-8sh" secondAttribute="bottom" id="ame-oi-x2V"/>
+                            <constraint firstItem="VPA-df-DgK" firstAttribute="leading" secondItem="gpo-cv-7rK" secondAttribute="leading" id="bFS-3d-B8a"/>
+                            <constraint firstItem="kzD-Rd-8sh" firstAttribute="top" secondItem="VPA-df-DgK" secondAttribute="bottom" id="bSv-qr-ksg"/>
+                            <constraint firstAttribute="trailing" secondItem="VPA-df-DgK" secondAttribute="trailing" id="ocP-XU-S27"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="controller" destination="6ZP-IW-rIW" id="pLS-1Z-8CW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jD1-bZ-f7U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="6ZP-IW-rIW" customClass="IQAudioRecorderController">
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="normalTintColor">
+                            <color key="value" red="0.2666666667" green="0.67843137249999996" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="recordingTintColor">
+                            <color key="value" red="0.96470588239999999" green="0.0" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="playingTintColor">
+                            <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <outlet property="pauseButton" destination="xWc-rw-YfP" id="TQo-o1-pjU"/>
+                        <outlet property="playButton" destination="Bdk-11-llh" id="Xqe-51-1vK"/>
+                        <outlet property="playbackDurationView" destination="1l0-9x-1Q4" id="Z1e-JW-66F"/>
+                        <outlet property="recordButton" destination="RVk-eh-8FM" id="ham-h4-TgY"/>
+                        <outlet property="trashButton" destination="6Wi-gx-G6f" id="R6v-HY-ebY"/>
+                        <outlet property="waveformView" destination="VPA-df-DgK" id="Dbp-47-jCm"/>
+                    </connections>
+                </customObject>
+            </objects>
+            <point key="canvasLocation" x="1027" y="1036"/>
         </scene>
         <!--Audio Recorder View Controller-->
         <scene sceneID="AIe-Du-FiF">

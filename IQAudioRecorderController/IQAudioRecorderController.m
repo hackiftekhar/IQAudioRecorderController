@@ -80,6 +80,9 @@
 {
     [recorder startRecording];
     
+    self.playbackDurationView.duration = 0;
+    self.playbackDurationView.currentTime = 0;
+    
     [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:NO];
 }
 
@@ -94,6 +97,9 @@
 {
     [recorder discardRecording];
     
+    self.playbackDurationView.duration = 0;
+    self.playbackDurationView.currentTime = 0;
+    
     [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:NO];
 }
 
@@ -101,8 +107,8 @@
 {
     [recorder startPlayback];
     
-    [self.playbackDurationView setDuration:recorder.playbackDuration];
-    [self.playbackDurationView setCurrentTime:recorder.currentTime];
+    self.playbackDurationView.duration = recorder.playbackDuration;
+    self.playbackDurationView.currentTime = recorder.currentTime;
     
     [playProgressDisplayLink invalidate];
     playProgressDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updatePlaybackProgress)];
@@ -132,6 +138,9 @@
         
         if (recorder.isRecording) {
             self.waveformView.waveColor = self.recordingTintColor;
+            
+            self.playbackDurationView.duration = recorder.currentTime;
+            
             if ([self.delegate respondsToSelector:@selector(audioRecorderController:didRecordTimeInterval:)]) {
                 [self.delegate audioRecorderController:self didRecordTimeInterval:recorder.currentTime];
             }

@@ -28,7 +28,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [(IQAudioRecorderViewController *)[segue.destinationViewController topViewController] setDelegate:self];
+    if (![segue.identifier isEqualToString:@"ShowCustomVC"]) {
+        [(IQAudioRecorderViewController *)[segue.destinationViewController topViewController] setDelegate:self];
+    }
 }
 
 -(void)audioRecorderViewController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
