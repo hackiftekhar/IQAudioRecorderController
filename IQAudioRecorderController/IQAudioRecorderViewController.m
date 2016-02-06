@@ -108,6 +108,7 @@
     
     _controller = [[IQAudioRecorderController alloc] init];
     _controller.delegate = self;
+    _controller.recorder = [[IQAudioRecorder alloc] initWithDefaults];
 }
 
 - (void)viewDidLoad

@@ -14,6 +14,9 @@
 
 @implementation IQAudioRecorder
 {
+    AudioFormatID formatID;
+    NSString *fileNameExtension;
+    
     AVAudioRecorder *audioRecorder;
     AVAudioPlayer *audioPlayer;
     
@@ -24,36 +27,67 @@
 
 - (instancetype)init
 {
-    return [self initWithFormat:kAudioFormatMPEG4AAC sampleRate:44100.0 numberOfChannels:2];
+    if (self = [super init]) {
+        formatID = kAudioFormatMPEG4AAC;
+        fileNameExtension = @"m4a";
+        
+        self.format = @"aac";
+        self.sampleRate = 44100;
+        self.channels = 2;
+    }
+    return self;
+}
+
+- (instancetype)initWithDefaults
+{
+    if (self = [self init]) {
+        [self setup];
+    }
+    return self;
 }
 
 - (instancetype)initWithFormat:(AudioFormatID)format sampleRate:(CGFloat)sampleRate numberOfChannels:(int)channels
 {
-    if (self = [super init]) {
-        // Unique recording URL
-        NSString *fileName = [[NSProcessInfo processInfo] globallyUniqueString];
-        _filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a", fileName]];
+    if (self = [self init]) {
+        formatID = format;
+        self.sampleRate = sampleRate;
+        self.channels = channels;
         
-        oldSessionCategory = [[AVAudioSession sharedInstance] category];
-        
-        // Define the recorder setting
-        {
-            NSDictionary *recordSetting = @{AVFormatIDKey: @(format),
-                                            AVSampleRateKey: @(sampleRate),
-                                            AVNumberOfChannelsKey: @(channels)};
-            
-            // Initiate and prepare the recorder
-            audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:_filePath]
-                                                        settings:recordSetting
-                                                           error:nil];
-            audioRecorder.meteringEnabled = YES;
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-                [self prepareForRecording];
-            });
-        }
+        [self setup];
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [self setup];
+}
+
+- (void)setup
+{
+    if ([self.format isEqualToString:@"mp3"]) {
+        formatID = kAudioFormatMPEGLayer3;
+        fileNameExtension = @"mp3";
+    }
+    
+    NSString *fileName = [[NSProcessInfo processInfo] globallyUniqueString];
+    _filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", fileName, fileNameExtension]];
+    
+    oldSessionCategory = [[AVAudioSession sharedInstance] category];
+    
+    NSDictionary *recordSetting = @{AVFormatIDKey: @(formatID),
+                                    AVSampleRateKey: @(self.sampleRate),
+                                    AVNumberOfChannelsKey: @(self.channels)};
+    
+    // Initiate and prepare the recorder
+    audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:_filePath]
+                                                settings:recordSetting
+                                                   error:nil];
+    audioRecorder.meteringEnabled = YES;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+        [self prepareForRecording];
+    });
 }
 
 - (void)dealloc

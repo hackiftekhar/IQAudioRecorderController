@@ -10,6 +10,7 @@
 
 #import "SCSiriWaveformView.h"
 #import "IQPlaybackDurationView.h"
+#import "IQAudioRecorder.h"
 
 @class IQAudioRecorderController;
 
@@ -25,6 +26,7 @@
 
 @property (weak) id<IQAudioRecorderControllerDelegate> delegate;
 
+@property (nonatomic) IBOutlet IQAudioRecorder *recorder;
 @property (nonatomic) IBOutlet __weak SCSiriWaveformView *waveformView;
 @property (nonatomic) IBOutlet __weak IQPlaybackDurationView *playbackDurationView;
 

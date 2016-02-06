@@ -8,7 +8,6 @@
 
 #import "IQAudioRecorderController.h"
 
-#import "IQAudioRecorder.h"
 
 @interface IQAudioRecorderController () <IQAudioRecorderDelegate, IQPlaybackDurationViewDelegate>
 
@@ -17,7 +16,6 @@
 @implementation IQAudioRecorderController
 {
     BOOL wasPlaying;
-    IQAudioRecorder *recorder;
     
     CADisplayLink *waveformUpdateDisplayLink;
     CADisplayLink *playProgressDisplayLink;
@@ -26,9 +24,6 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        recorder = [[IQAudioRecorder alloc] init];
-        recorder.delegate = self;
-        
         self.normalTintColor = [UIColor whiteColor];
         self.recordingTintColor = [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0];
         self.playingTintColor = [UIColor colorWithRed:255.0/255.0 green:64.0/255.0 blue:64.0/255.0 alpha:1.0];
@@ -39,6 +34,11 @@
 - (void)awakeFromNib
 {
     [self preparePlaybackDurationview];
+    
+    if (!self.recorder) {
+        self.recorder = [[IQAudioRecorder alloc] initWithDefaults];
+    }
+    self.recorder.delegate = self;
 }
 
 - (void)setPlaybackDurationView:(IQPlaybackDurationView *)playbackDurationView
@@ -50,12 +50,12 @@
 
 - (BOOL)isRecording
 {
-    return recorder.isRecording;
+    return self.recorder.isRecording;
 }
 
 - (NSString *)recordedFilePath
 {
-    return [recorder filePath];
+    return [self.recorder filePath];
 }
 
 - (void)startUpdatingWaveformView
@@ -75,7 +75,7 @@
 
 - (void)startRecording
 {
-    [recorder startRecording];
+    [self.recorder startRecording];
     
     self.playbackDurationView.duration = 0;
     self.playbackDurationView.currentTime = 0;
@@ -85,14 +85,14 @@
 
 - (void)stopRecording
 {
-    [recorder stopRecording];
+    [self.recorder stopRecording];
     
     [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:YES];
 }
 
 - (void)discardRecording
 {
-    [recorder discardRecording];
+    [self.recorder discardRecording];
     
     self.playbackDurationView.duration = 0;
     self.playbackDurationView.currentTime = 0;
@@ -102,10 +102,10 @@
 
 - (void)startPlayback
 {
-    [recorder startPlayback];
+    [self.recorder startPlayback];
     
-    self.playbackDurationView.duration = recorder.playbackDuration;
-    self.playbackDurationView.currentTime = recorder.currentTime;
+    self.playbackDurationView.duration = self.recorder.playbackDuration;
+    self.playbackDurationView.currentTime = self.recorder.currentTime;
     
     [playProgressDisplayLink invalidate];
     playProgressDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updatePlaybackProgress)];
@@ -120,26 +120,28 @@
 {
     [playProgressDisplayLink invalidate];
     
-    [recorder stopPlayback];    // TODO: no reason to stop - pause shoud do the trick (+rewind)
+    [self.recorder stopPlayback];    // TODO: no reason to stop (undoes the setup needed for playback) - pause shoud do the trick (+rewind)
     
     [self setObjects:@[self.recordButton, self.playButton, self.trashButton] enabled:YES];
     [self setObjects:@[self.pauseButton] enabled:NO];
 }
 
+// TODO: add pausePlayback
+
 #pragma mark Private methods
 
 - (void)updateWaveform
 {
-    if (recorder.isRecording || recorder.isPlaying) {
-        [self.waveformView updateWithLevel:[recorder updateMeters]];
+    if (self.recorder.isRecording || self.recorder.isPlaying) {
+        [self.waveformView updateWithLevel:[self.recorder updateMeters]];
         
-        if (recorder.isRecording) {
+        if (self.recorder.isRecording) {
             self.waveformView.waveColor = self.recordingTintColor;
             
-            self.playbackDurationView.duration = recorder.currentTime;
+            self.playbackDurationView.duration = self.recorder.currentTime;
             
             if ([self.delegate respondsToSelector:@selector(audioRecorderController:didRecordTimeInterval:)]) {
-                [self.delegate audioRecorderController:self didRecordTimeInterval:recorder.currentTime];
+                [self.delegate audioRecorderController:self didRecordTimeInterval:self.recorder.currentTime];
             }
         } else {
             self.waveformView.waveColor = self.playingTintColor;
@@ -152,7 +154,7 @@
 
 - (void)updatePlaybackProgress
 {
-    [self.playbackDurationView setCurrentTime:recorder.currentTime animated:YES];
+    [self.playbackDurationView setCurrentTime:self.recorder.currentTime animated:YES];
 }
 
 - (void)preparePlaybackDurationview
@@ -184,24 +186,24 @@
 
 - (void)playbackDurationView:(IQPlaybackDurationView *)playbackView didStartScrubbingAtTime:(NSTimeInterval)time
 {
-    wasPlaying = recorder.isPlaying;
+    wasPlaying = self.recorder.isPlaying;
     
-    if (recorder.isPlaying) {
-        [recorder pausePlayback];
+    if (self.recorder.isPlaying) {
+        [self.recorder pausePlayback];
     }
 }
 
 - (void)playbackDurationView:(IQPlaybackDurationView *)playbackView didScrubToTime:(NSTimeInterval)time
 {
-    recorder.currentTime = time;
+    self.recorder.currentTime = time;
 }
 
 - (void)playbackDurationView:(IQPlaybackDurationView *)playbackView didEndScrubbingAtTime:(NSTimeInterval)time
 {
-    recorder.currentTime = time;
+    self.recorder.currentTime = time;
     
     if (wasPlaying) {
-        [recorder resumePlayback];
+        [self.recorder resumePlayback];
     }
 }
 

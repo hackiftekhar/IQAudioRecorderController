@@ -38,6 +38,11 @@
 
 @interface IQAudioRecorder : NSObject
 
+// only to be changed from IB - has no effect if set after initialization
+@property (nonatomic) IBInspectable NSString *format;
+@property (nonatomic) IBInspectable CGFloat sampleRate;
+@property (nonatomic) IBInspectable int channels;
+
 @property (nonatomic, weak) id<IQAudioRecorderDelegate> delegate;
 
 @property (nonatomic, readonly) NSString *filePath;     // HINT: maybe change to URL?
@@ -46,7 +51,7 @@
 @property (nonatomic, readonly) NSTimeInterval playbackDuration;
 @property (nonatomic) NSTimeInterval currentTime;
 
-- (instancetype)init;   // uses default values
+- (instancetype)initWithDefaults;
 - (instancetype)initWithFormat:(AudioFormatID)format sampleRate:(CGFloat)sampleRate numberOfChannels:(int)channels;
 
 - (void)prepareForRecording;    // you may call this method to ensure the recording can start as quickly as possible. BEWARE: overwrites any previous recordings at the moment!
