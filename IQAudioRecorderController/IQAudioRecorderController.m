@@ -28,9 +28,6 @@
     if (self = [super init]) {
         recorder = [[IQAudioRecorder alloc] init];
         recorder.delegate = self;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-            [recorder prepareForRecording];
-        });
         
         self.normalTintColor = [UIColor whiteColor];
         self.recordingTintColor = [UIColor colorWithRed:0.0/255.0 green:128.0/255.0 blue:255.0/255.0 alpha:1.0];

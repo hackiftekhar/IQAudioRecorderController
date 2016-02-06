@@ -43,7 +43,9 @@
                                                            error:nil];
             audioRecorder.meteringEnabled = YES;
             
-            [self prepareForRecording];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+                [self prepareForRecording];
+            });
         }
 
     }
@@ -97,18 +99,26 @@
 // HINT: this method is likely (and should) to be called on a background thread -> ensure thread safety
 - (void)prepareForRecording
 {
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
-    [audioRecorder prepareToRecord];
-    recordingIsPrepared = YES;
+    @synchronized(self) {
+        if (recordingIsPrepared) {
+            return;
+        }
+        
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
+        [audioRecorder prepareToRecord];
+        recordingIsPrepared = YES;
+    }
 }
 
 - (void)startRecording
 {
-    if (!recordingIsPrepared) {
-        [self prepareForRecording];
-    }
+    [self prepareForRecording];
+
     [audioRecorder record];
-    recordingIsPrepared = NO;
+    
+    @synchronized(self) {
+        recordingIsPrepared = NO;
+    }
 }
 
 - (void)stopRecording
@@ -138,7 +148,10 @@
 {
     // TODO: prevent playback while recording is running and vice versa
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    recordingIsPrepared = NO;
+    
+    @synchronized(self) {
+        recordingIsPrepared = NO;
+    }
     
     audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:self.filePath] error:nil];
     audioPlayer.delegate = self;
