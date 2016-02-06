@@ -36,9 +36,12 @@
     [self preparePlaybackDurationview];
     
     if (!self.recorder) {
-        self.recorder = [[IQAudioRecorder alloc] initWithDefaults];
+        self.recorder = [[IQAudioRecorder alloc] init];
+        self.recorder.delegate = self;
+        [self.recorder setup];
+    } else {
+        self.recorder.delegate = self;
     }
-    self.recorder.delegate = self;
 }
 
 - (void)setPlaybackDurationView:(IQPlaybackDurationView *)playbackDurationView

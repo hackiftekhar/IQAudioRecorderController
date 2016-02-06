@@ -38,22 +38,12 @@
     return self;
 }
 
-- (instancetype)initWithDefaults
-{
-    if (self = [self init]) {
-        [self setup];
-    }
-    return self;
-}
-
 - (instancetype)initWithFormat:(AudioFormatID)format sampleRate:(CGFloat)sampleRate numberOfChannels:(int)channels
 {
     if (self = [self init]) {
         formatID = format;
         self.sampleRate = sampleRate;
         self.channels = channels;
-        
-        [self setup];
     }
     return self;
 }
