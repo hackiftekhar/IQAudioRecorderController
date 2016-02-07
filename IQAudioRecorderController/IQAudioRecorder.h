@@ -31,6 +31,7 @@
 
 @protocol IQAudioRecorderDelegate <NSObject>
 
+@optional
 - (void)audioRecorder:(IQAudioRecorder *)recorder didFinishPlaybackSuccessfully:(BOOL)successfully;
 
 @end

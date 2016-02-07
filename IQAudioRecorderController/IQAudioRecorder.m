@@ -211,7 +211,9 @@
 
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
-    [self.delegate audioRecorder:self didFinishPlaybackSuccessfully:flag];
+    if ([self.delegate respondsToSelector:@selector(audioRecorder:didFinishPlaybackSuccessfully:)]) {
+        [self.delegate audioRecorder:self didFinishPlaybackSuccessfully:flag];
+    }
 }
 
 
