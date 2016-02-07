@@ -231,6 +231,9 @@
                             <integer key="value" value="1"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <outlet property="delegate" destination="6ZP-IW-rIW" id="xPY-Ud-lUa"/>
+                    </connections>
                 </customObject>
             </objects>
             <point key="canvasLocation" x="1027" y="1036"/>

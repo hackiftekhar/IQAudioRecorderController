@@ -8,7 +8,7 @@
 
 #import "IQAudioRecorder.h"
 
-@interface IQAudioRecorder () <AVAudioPlayerDelegate>
+@interface IQAudioRecorder () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @end
 
@@ -69,10 +69,16 @@
                                     AVSampleRateKey: @(self.sampleRate),
                                     AVNumberOfChannelsKey: @(self.channels)};
     
-    // Initiate and prepare the recorder
+    NSError *error;
     audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:_filePath]
                                                 settings:recordSetting
-                                                   error:nil];
+                                                   error:&error];
+    if (error) {
+        [self notifyDelegateAboutError:error];
+        return;
+    }
+    
+    audioRecorder.delegate = self;
     audioRecorder.meteringEnabled = YES;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
@@ -82,7 +88,9 @@
 
 - (void)dealloc
 {
+    audioRecorder.delegate = nil;
     [audioRecorder stop];
+    audioPlayer.delegate = nil;
     [audioPlayer stop];
     
     [[AVAudioSession sharedInstance] setCategory:oldSessionCategory error:nil];
@@ -121,6 +129,13 @@
     }
 }
 
+- (void)notifyDelegateAboutError:(NSError *)error
+{
+    if ([self.delegate respondsToSelector:@selector(audioRecorder:didFailWithError:)]) {
+        [self.delegate audioRecorder:self didFailWithError:error];
+    }
+}
+
 #pragma mark Recording
 
 // HINT: at the moment this overwrites the current recording -> create new recorder with different URL?
@@ -131,7 +146,13 @@
             return;
         }
         
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
+        NSError *error;
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:&error];
+        if (error) {
+            [self notifyDelegateAboutError:error];
+            return;
+        }
+        
         [audioRecorder prepareToRecord];
         recordingIsPrepared = YES;
     }
@@ -155,7 +176,13 @@
 
 - (void)discardRecording
 {
-    [[NSFileManager defaultManager] removeItemAtPath:self.filePath error:nil];
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:self.filePath error:&error];
+    if (error) {
+        [self notifyDelegateAboutError:error];
+        return;
+    }
+    
     [self prepareForRecording];
 }
 
@@ -174,13 +201,22 @@
 - (void)startPlayback
 {
     // TODO: prevent playback while recording is running and vice versa
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    NSError *error;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error];
+    if (error) {
+        [self notifyDelegateAboutError:error];
+        return;
+    }
     
     @synchronized(self) {
         recordingIsPrepared = NO;
     }
     
-    audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:self.filePath] error:nil];
+    audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:self.filePath] error:&error];
+    if (error) {
+        [self notifyDelegateAboutError:error];
+        return;
+    }
     audioPlayer.delegate = self;
     audioPlayer.meteringEnabled = YES;
     [audioPlayer prepareToPlay];
@@ -209,12 +245,23 @@
 
 #pragma mark - AVAudioPlayerDelegate
 
--(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)successful
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorder:didFinishPlaybackSuccessfully:)]) {
-        [self.delegate audioRecorder:self didFinishPlaybackSuccessfully:flag];
+        [self.delegate audioRecorder:self didFinishPlaybackSuccessfully:successful];
     }
 }
 
+- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error
+{
+    [self notifyDelegateAboutError:error];
+}
+
+#pragma mark - AVAudioRecorderDelegate
+
+- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
+{
+    [self notifyDelegateAboutError:error];
+}
 
 @end

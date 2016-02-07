@@ -33,6 +33,7 @@
 
 @optional
 - (void)audioRecorder:(IQAudioRecorder *)recorder didFinishPlaybackSuccessfully:(BOOL)successfully;
+- (void)audioRecorder:(IQAudioRecorder *)recorder didFailWithError:(NSError *)error;
 
 @end
 
@@ -44,7 +45,7 @@
 @property (nonatomic) IBInspectable CGFloat sampleRate;
 @property (nonatomic) IBInspectable int channels;
 
-@property (nonatomic, weak) id<IQAudioRecorderDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id<IQAudioRecorderDelegate> delegate;
 
 @property (nonatomic, readonly) NSString *filePath;     // HINT: maybe change to URL?
 @property (nonatomic, readonly, getter=isRecording) BOOL recording;
