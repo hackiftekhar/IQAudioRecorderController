@@ -49,6 +49,11 @@
     NSLog(@"audioRecorderViewController:didFailWithError:%@", error);
 }
 
+- (void)microphoneAccessDeniedForAudioRecorderViewController:(IQAudioRecorderViewController *)controller
+{
+    NSLog(@"microphoneAccessDeniedForAudioRecorderController:");
+}
+
 - (IBAction)playAction:(UIButton *)sender
 {
     MPMoviePlayerViewController *controller = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:audioFilePath]];

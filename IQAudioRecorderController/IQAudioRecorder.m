@@ -81,9 +81,13 @@
     audioRecorder.delegate = self;
     audioRecorder.meteringEnabled = YES;
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-        [self prepareForRecording];
-    });
+    
+    if ([self isMicrophoneAccessGranted]) {
+        // only prepare now, if microphone access is aready granted (otherwise the user will be asked out of context)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+            [self prepareForRecording];
+        });
+    }
 }
 
 - (void)dealloc
@@ -94,6 +98,16 @@
     [audioPlayer stop];
     
     [[AVAudioSession sharedInstance] setCategory:oldSessionCategory error:nil];
+}
+
+- (BOOL)isMicrophoneAccessGranted
+{
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    if ([session respondsToSelector:@selector(recordPermission)]) {
+        return [session recordPermission] == AVAudioSessionRecordPermissionGranted;
+    } else {
+        return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusAuthorized;
+    }
 }
 
 - (CGFloat)updateMeters
@@ -160,6 +174,21 @@
 
 - (void)startRecording
 {
+    if (![self isMicrophoneAccessGranted]) {
+        __weak typeof(self) weakSelf = self;
+        [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (granted) {
+                [strongSelf startRecording];
+            } else {
+                if ([strongSelf.delegate respondsToSelector:@selector(microphoneAccessDeniedForAudioRecorder:)]) {
+                    [strongSelf.delegate microphoneAccessDeniedForAudioRecorder:strongSelf];
+                }
+            }
+        }];
+        return;
+    }
+    
     [self prepareForRecording];
 
     [audioRecorder record];

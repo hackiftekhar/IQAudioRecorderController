@@ -20,6 +20,7 @@
 - (void)audioRecorderControllerDidFinishPlayback:(IQAudioRecorderController *)controller;
 - (void)audioRecorderController:(IQAudioRecorderController *)controller didRecordTimeInterval:(NSTimeInterval)time;
 - (void)audioRecorderController:(IQAudioRecorderController *)controller didFailWithError:(NSError *)error;
+- (void)microphoneAccessDeniedForAudioRecorderController:(IQAudioRecorderController *)controller;
 
 @end
 

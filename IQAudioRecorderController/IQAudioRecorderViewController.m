@@ -313,6 +313,13 @@
     }
 }
 
+- (void)microphoneAccessDeniedForAudioRecorderController:(IQAudioRecorderController *)controller
+{
+    if ([self.delegate respondsToSelector:@selector(microphoneAccessDeniedForAudioRecorderViewController:)]) {
+        [self.delegate microphoneAccessDeniedForAudioRecorderViewController:self];
+    }
+}
+
 - (void)audioRecorderControllerDidFinishPlayback:(IQAudioRecorderController *)controller
 {
     //To update UI on stop playing

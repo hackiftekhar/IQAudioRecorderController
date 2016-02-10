@@ -31,6 +31,7 @@
 - (void)audioRecorderViewController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath;
 - (void)audioRecorderViewControllerDidCancel:(IQAudioRecorderViewController *)controller;
 - (void)audioRecorderViewController:(IQAudioRecorderViewController *)controller didFailWithError:(NSError *)error;
+- (void)microphoneAccessDeniedForAudioRecorderViewController:(IQAudioRecorderViewController *)controller;
 
 @end
 

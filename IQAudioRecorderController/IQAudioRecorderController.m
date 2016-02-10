@@ -194,6 +194,13 @@
     }
 }
 
+- (void)microphoneAccessDeniedForAudioRecorder:(IQAudioRecorder *)recorder
+{
+    if ([self.delegate respondsToSelector:@selector(microphoneAccessDeniedForAudioRecorderController:)]) {
+        [self.delegate microphoneAccessDeniedForAudioRecorderController:self];
+    }
+}
+
 #pragma mark - IQPlaybackDurationViewDelegate
 
 - (void)playbackDurationView:(IQPlaybackDurationView *)playbackView didStartScrubbingAtTime:(NSTimeInterval)time

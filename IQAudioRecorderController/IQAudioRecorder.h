@@ -34,6 +34,7 @@
 @optional
 - (void)audioRecorder:(IQAudioRecorder *)recorder didFinishPlaybackSuccessfully:(BOOL)successfully;
 - (void)audioRecorder:(IQAudioRecorder *)recorder didFailWithError:(NSError *)error;
+- (void)microphoneAccessDeniedForAudioRecorder:(IQAudioRecorder *)recorder;
 
 @end
 
