@@ -28,6 +28,11 @@
     [controller stopUpdatingWaveformView];
 }
 
+- (IBAction)close
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (IBAction)record
 {
     if (controller.isRecording) {
