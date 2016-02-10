@@ -276,8 +276,8 @@
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)successful
 {
-    if ([self.delegate respondsToSelector:@selector(audioRecorder:didFinishPlaybackSuccessfully:)]) {
-        [self.delegate audioRecorder:self didFinishPlaybackSuccessfully:successful];
+    if ([self.delegate respondsToSelector:@selector(audioRecorderDidFinishPlayback:successfully:)]) {
+        [self.delegate audioRecorderDidFinishPlayback:self successfully:successful];
     }
 }
 

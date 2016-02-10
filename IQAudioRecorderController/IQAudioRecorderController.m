@@ -180,7 +180,7 @@
 
 #pragma mark - IQAudioRecorderDelegate
 
-- (void)audioRecorder:(IQAudioRecorder *)recorder didFinishPlaybackSuccessfully:(BOOL)successfully
+- (void)audioRecorderDidFinishPlayback:(IQAudioRecorder *)recorder successfully:(BOOL)successfully
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorderControllerDidFinishPlayback:)]) {
         [self.delegate audioRecorderControllerDidFinishPlayback:self];

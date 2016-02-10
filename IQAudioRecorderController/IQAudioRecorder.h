@@ -32,7 +32,7 @@
 @protocol IQAudioRecorderDelegate <NSObject>
 
 @optional
-- (void)audioRecorder:(IQAudioRecorder *)recorder didFinishPlaybackSuccessfully:(BOOL)successfully;
+- (void)audioRecorderDidFinishPlayback:(IQAudioRecorder *)recorder successfully:(BOOL)successfully;
 - (void)audioRecorder:(IQAudioRecorder *)recorder didFailWithError:(NSError *)error;
 - (void)microphoneAccessDeniedForAudioRecorder:(IQAudioRecorder *)recorder;
 
