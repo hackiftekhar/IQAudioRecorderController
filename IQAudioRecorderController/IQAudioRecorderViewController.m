@@ -226,7 +226,7 @@
 
 #pragma mark - Button actions
 
--(void)cancelAction:(UIBarButtonItem*)item
+- (void)cancelAction:(UIBarButtonItem*)item
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorderViewControllerDidCancel:)]) {
         [self.delegate audioRecorderViewControllerDidCancel:self];
@@ -235,7 +235,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)doneAction:(UIBarButtonItem*)item
+- (void)doneAction:(UIBarButtonItem*)item
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorderViewController:didFinishWithAudioAtPath:)]) {
         [self.delegate audioRecorderViewController:self didFinishWithAudioAtPath:_controller.recordedFilePath];
@@ -274,7 +274,7 @@
     self.navigationItem.titleView = _viewPlayerDuration;
 }
 
--(void)pauseAction:(UIBarButtonItem*)item
+- (void)pauseAction:(UIBarButtonItem*)item
 {
     //UI Update
     {
@@ -287,7 +287,7 @@
     [_controller stopPlayback];
 }
 
--(void)deleteAction:(UIBarButtonItem*)item
+- (void)deleteAction:(UIBarButtonItem*)item
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete Recording" otherButtonTitles:nil];
     [actionSheet showInView:self.view];

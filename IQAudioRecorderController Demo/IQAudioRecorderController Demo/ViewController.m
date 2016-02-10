@@ -33,13 +33,13 @@
     }
 }
 
--(void)audioRecorderViewController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
+- (void)audioRecorderViewController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
 {
     audioFilePath = filePath;
     buttonPlayAudio.enabled = YES;
 }
 
--(void)audioRecorderViewControllerDidCancel:(IQAudioRecorderViewController *)controller
+- (void)audioRecorderViewControllerDidCancel:(IQAudioRecorderViewController *)controller
 {
     buttonPlayAudio.enabled = NO;
 }
