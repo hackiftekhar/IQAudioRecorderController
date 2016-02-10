@@ -21,6 +21,7 @@
     AVAudioPlayer *audioPlayer;
     
     BOOL recordingIsPrepared;
+    BOOL recordingStoppedManually;
     
     NSString *oldSessionCategory;
 }
@@ -174,6 +175,11 @@
 
 - (void)startRecording
 {
+    [self startRecordingForDuration:-1];
+}
+
+- (void)startRecordingForDuration:(NSTimeInterval)duration
+{
     if (![self isMicrophoneAccessGranted]) {
         __weak typeof(self) weakSelf = self;
         [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
@@ -190,8 +196,12 @@
     }
     
     [self prepareForRecording];
-
-    [audioRecorder record];
+    
+    if (duration <= 0) {
+        [audioRecorder record];
+    } else {
+        [audioRecorder recordForDuration:duration];
+    }
     
     @synchronized(self) {
         recordingIsPrepared = NO;
@@ -200,6 +210,7 @@
 
 - (void)stopRecording
 {
+    recordingStoppedManually = YES;
     [audioRecorder stop];
 }
 
@@ -287,6 +298,15 @@
 }
 
 #pragma mark - AVAudioRecorderDelegate
+
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)successfully
+{
+    if (!recordingStoppedManually && [self.delegate respondsToSelector:@selector(audioRecorderDidFinishRecording:successfully:)]) {
+        [self.delegate audioRecorderDidFinishRecording:self successfully:successfully];
+    }
+    
+    recordingStoppedManually = NO;
+}
 
 - (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
 {

@@ -32,7 +32,9 @@
 @protocol IQAudioRecorderDelegate <NSObject>
 
 @optional
+- (void)audioRecorderDidFinishRecording:(IQAudioRecorder *)recorder successfully:(BOOL)successfully;
 - (void)audioRecorderDidFinishPlayback:(IQAudioRecorder *)recorder successfully:(BOOL)successfully;
+
 - (void)audioRecorder:(IQAudioRecorder *)recorder didFailWithError:(NSError *)error;
 - (void)microphoneAccessDeniedForAudioRecorder:(IQAudioRecorder *)recorder;
 
@@ -60,6 +62,7 @@
 
 - (void)prepareForRecording;    // you may call this method to ensure the recording can start as quickly as possible. BEWARE: overwrites any previous recordings at the moment!
 - (void)startRecording;
+- (void)startRecordingForDuration:(NSTimeInterval)duration;
 - (void)stopRecording;
 - (void)discardRecording;
 

@@ -76,12 +76,17 @@
 
 - (void)startRecording
 {
+    [self.recorder startRecordingForDuration:-1];
+}
+
+- (void)startRecordingForDuration:(NSTimeInterval)duration
+{
     [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:NO];
     
     self.playbackDurationView.duration = 0;
     self.playbackDurationView.currentTime = 0;
     
-    [self.recorder startRecording];
+    [self.recorder startRecordingForDuration:duration];
 }
 
 - (void)stopRecording
@@ -178,6 +183,12 @@
 }
 
 #pragma mark - IQAudioRecorderDelegate
+
+- (void)audioRecorderDidFinishRecording:(IQAudioRecorder *)recorder successfully:(BOOL)successfully
+{
+    [self setObjects:@[self.playButton, self.trashButton] enabled:YES];
+    [self setObjects:@[self.pauseButton] enabled:NO];
+}
 
 - (void)audioRecorderDidFinishPlayback:(IQAudioRecorder *)recorder successfully:(BOOL)successfully
 {

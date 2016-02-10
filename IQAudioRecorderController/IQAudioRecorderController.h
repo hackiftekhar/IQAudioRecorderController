@@ -49,6 +49,7 @@
 - (void)stopUpdatingWaveformView;
 
 - (void)startRecording;
+- (void)startRecordingForDuration:(NSTimeInterval)duration;
 - (void)stopRecording;
 - (void)discardRecording;
 
