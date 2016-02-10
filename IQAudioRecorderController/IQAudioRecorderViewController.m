@@ -289,19 +289,51 @@
 
 - (void)deleteAction:(UIBarButtonItem*)item
 {
+    [self showDeletePrompt];
+}
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0
+
+- (void)showDeletePrompt {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete Recording" otherButtonTitles:nil];
     [actionSheet showInView:self.view];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == actionSheet.destructiveButtonIndex)
-    {
-        [_controller discardRecording];
-        
-        [self.navigationItem setRightBarButtonItem:nil animated:YES];
-        self.navigationItem.title = self.title;
+    if (buttonIndex == actionSheet.destructiveButtonIndex) {
+        [self performDelete];
     }
+}
+
+#else
+
+- (void)showDeletePrompt {
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:nil
+                                                                    message:nil
+                                                             preferredStyle:UIAlertControllerStyleActionSheet];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Delete Recording"
+                                              style:UIAlertActionStyleDestructive
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                // TODO: weak self
+                                                [self performDelete];
+                                            }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel"
+                                              style:UIAlertActionStyleCancel
+                                            handler:nil]];
+    [self presentViewController:alert
+                       animated:YES
+                     completion:nil];
+}
+
+#endif
+
+- (void)performDelete
+{
+    [_controller discardRecording];
+    
+    [self.navigationItem setRightBarButtonItem:nil animated:YES];
+    self.navigationItem.title = self.title;
 }
 
 #pragma mark - IQAudioRecorderControllerDelegate
