@@ -88,7 +88,8 @@
 {
     [self.recorder stopRecording];
     
-    [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:YES];
+    [self setObjects:@[self.playButton, self.trashButton] enabled:YES];
+    [self setObjects:@[self.pauseButton] enabled:NO];
 }
 
 - (void)discardRecording
@@ -98,7 +99,8 @@
     self.playbackDurationView.duration = 0;
     self.playbackDurationView.currentTime = 0;
     
-    [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:NO];
+    [self setObjects:@[self.playButton, self.trashButton] enabled:YES];
+    [self setObjects:@[self.pauseButton] enabled:NO];
 }
 
 - (void)startPlayback
@@ -122,6 +124,8 @@
     [playProgressDisplayLink invalidate];
     
     [self.recorder stopPlayback];    // TODO: no reason to stop (undoes the setup needed for playback) - pause shoud do the trick (+rewind)
+    
+    self.playbackDurationView.currentTime = 0;
     
     [self setObjects:@[self.recordButton, self.playButton, self.trashButton] enabled:YES];
     [self setObjects:@[self.pauseButton] enabled:NO];
