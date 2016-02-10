@@ -47,7 +47,7 @@
     [controller startPlayback];
 }
 
-- (IBAction)pause
+- (IBAction)stop
 {
     [controller stopPlayback];
 }

@@ -167,10 +167,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xWc-rw-YfP">
-                                        <rect key="frame" x="68" y="16" width="42" height="30"/>
-                                        <state key="normal" title="Pause"/>
+                                        <rect key="frame" x="68" y="16" width="32" height="30"/>
+                                        <state key="normal" title="Stop"/>
                                         <connections>
-                                            <action selector="pause" destination="ubj-1r-LTa" eventType="touchUpInside" id="mxR-ng-I9U"/>
+                                            <action selector="stop" destination="ubj-1r-LTa" eventType="touchUpInside" id="Z7Q-SP-2ae"/>
                                         </connections>
                                     </button>
                                 </subviews>
