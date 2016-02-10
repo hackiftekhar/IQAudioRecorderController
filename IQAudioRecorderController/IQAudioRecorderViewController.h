@@ -39,6 +39,10 @@
 
 @property (nonatomic, weak) IBOutlet id<IQAudioRecorderViewControllerDelegate> delegate;
 
+@property (nonatomic) IBInspectable UIColor *normalTintColor;
+@property (nonatomic) IBInspectable UIColor *recordingTintColor;
+@property (nonatomic) IBInspectable UIColor *playingTintColor;
+
 + (UINavigationController *)embeddedIQAudioRecorderViewControllerWithDelegate:(id<IQAudioRecorderViewControllerDelegate, UINavigationControllerDelegate>)delegate;
 
 - (void)setup;  // needs to be called before using the instance, if you alloc/init the view controller yourself

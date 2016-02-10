@@ -98,6 +98,15 @@
     
     _controller = [[IQAudioRecorderController alloc] init];
     _controller.delegate = self;
+    if (self.normalTintColor) {
+        _controller.normalTintColor = self.normalTintColor;
+    }
+    if (self.recordingTintColor) {
+        _controller.recordingTintColor = self.recordingTintColor;
+    }
+    if (self.playingTintColor) {
+        _controller.playingTintColor = self.playingTintColor;
+    }
     IQAudioRecorder *recorder = [[IQAudioRecorder alloc] init];
     recorder.delegate = _controller;
     _controller.recorder = recorder;
