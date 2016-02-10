@@ -30,6 +30,7 @@
 @optional
 - (void)audioRecorderViewController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath;
 - (void)audioRecorderViewControllerDidCancel:(IQAudioRecorderViewController *)controller;
+- (void)audioRecorderViewController:(IQAudioRecorderViewController *)controller didFailWithError:(NSError *)error;
 
 @end
 
@@ -39,5 +40,7 @@
 @property (nonatomic, weak) IBOutlet id<IQAudioRecorderViewControllerDelegate> delegate;
 
 + (UINavigationController *)embeddedIQAudioRecorderViewControllerWithDelegate:(id<IQAudioRecorderViewControllerDelegate, UINavigationControllerDelegate>)delegate;
+
+- (void)setup;  // needs to be called before using the instance, if you alloc/init the view controller yourself
 
 @end

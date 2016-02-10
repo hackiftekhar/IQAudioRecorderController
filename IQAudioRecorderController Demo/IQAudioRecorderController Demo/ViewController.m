@@ -44,6 +44,11 @@
     buttonPlayAudio.enabled = NO;
 }
 
+- (void)audioRecorderViewController:(IQAudioRecorderViewController *)controller didFailWithError:(NSError *)error
+{
+    NSLog(@"audioRecorderViewController:didFailWithError:%@", error);
+}
+
 - (IBAction)playAction:(UIButton *)sender
 {
     MPMoviePlayerViewController *controller = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:audioFilePath]];

@@ -9,7 +9,7 @@
 #import "IQAudioRecorderController.h"
 
 
-@interface IQAudioRecorderController () <IQAudioRecorderDelegate, IQPlaybackDurationViewDelegate>
+@interface IQAudioRecorderController () <IQPlaybackDurationViewDelegate>
 
 @end
 
@@ -39,8 +39,6 @@
         self.recorder = [[IQAudioRecorder alloc] init];
         self.recorder.delegate = self;
         [self.recorder setup];
-    } else {
-        self.recorder.delegate = self;
     }
 }
 
@@ -182,6 +180,13 @@
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorderControllerDidFinishPlayback:)]) {
         [self.delegate audioRecorderControllerDidFinishPlayback:self];
+    }
+}
+
+- (void)audioRecorder:(IQAudioRecorder *)recorder didFailWithError:(NSError *)error
+{
+    if ([self.delegate respondsToSelector:@selector(audioRecorderController:didFailWithError:)]) {
+        [self.delegate audioRecorderController:self didFailWithError:error];
     }
 }
 

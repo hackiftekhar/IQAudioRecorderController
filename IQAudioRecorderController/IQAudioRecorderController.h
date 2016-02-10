@@ -19,12 +19,13 @@
 @optional
 - (void)audioRecorderControllerDidFinishPlayback:(IQAudioRecorderController *)controller;
 - (void)audioRecorderController:(IQAudioRecorderController *)controller didRecordTimeInterval:(NSTimeInterval)time;
+- (void)audioRecorderController:(IQAudioRecorderController *)controller didFailWithError:(NSError *)error;
 
 @end
 
-@interface IQAudioRecorderController : NSObject
+@interface IQAudioRecorderController : NSObject <IQAudioRecorderDelegate>
 
-@property (weak) id<IQAudioRecorderControllerDelegate> delegate;
+@property (weak) IBOutlet id<IQAudioRecorderControllerDelegate> delegate;
 
 @property (nonatomic) IBOutlet IQAudioRecorder *recorder;
 @property (nonatomic) IBOutlet __weak SCSiriWaveformView *waveformView;

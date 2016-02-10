@@ -68,6 +68,7 @@
 {
     IQAudioRecorderViewController *viewController = [IQAudioRecorderViewController new];
     viewController.delegate = delegate;
+    [viewController setup];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     navigationController.delegate = delegate;
@@ -84,20 +85,9 @@
     return navigationController;
 }
 
-- (instancetype)init
+- (void)awakeFromNib
 {
-    if (self = [super init]) {
-        [self setup];
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    if (self = [super initWithCoder:aDecoder]) {
-        [self setup];
-    }
-    return self;
+    [self setup];
 }
 
 - (void)setup
@@ -109,9 +99,9 @@
     _controller = [[IQAudioRecorderController alloc] init];
     _controller.delegate = self;
     IQAudioRecorder *recorder = [[IQAudioRecorder alloc] init];
-    // set delegate and forward errors
-    [recorder setup];
+    recorder.delegate = _controller;
     _controller.recorder = recorder;
+    [recorder setup];
 }
 
 - (void)viewDidLoad
@@ -306,6 +296,13 @@
 }
 
 #pragma mark - IQAudioRecorderControllerDelegate
+
+- (void)audioRecorderController:(IQAudioRecorderController *)controller didFailWithError:(NSError *)error
+{
+    if ([self.delegate respondsToSelector:@selector(audioRecorderViewController:didFailWithError:)]) {
+        [self.delegate audioRecorderViewController:self didFailWithError:error];
+    }
+}
 
 - (void)audioRecorderControllerDidFinishPlayback:(IQAudioRecorderController *)controller
 {
