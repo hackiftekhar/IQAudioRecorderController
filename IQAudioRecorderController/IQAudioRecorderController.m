@@ -76,59 +76,58 @@
 
 - (void)startRecording
 {
-    [self.recorder startRecording];
+    [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:NO];
     
     self.playbackDurationView.duration = 0;
     self.playbackDurationView.currentTime = 0;
     
-    [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:NO];
+    [self.recorder startRecording];
 }
 
 - (void)stopRecording
 {
-    [self.recorder stopRecording];
-    
     [self setObjects:@[self.playButton, self.trashButton] enabled:YES];
     [self setObjects:@[self.pauseButton] enabled:NO];
+    
+    [self.recorder stopRecording];
 }
 
 - (void)discardRecording
 {
-    [self.recorder discardRecording];
+    [self setObjects:@[self.playButton, self.trashButton] enabled:YES];
+    [self setObjects:@[self.pauseButton] enabled:NO];
     
     self.playbackDurationView.duration = 0;
     self.playbackDurationView.currentTime = 0;
     
-    [self setObjects:@[self.playButton, self.trashButton] enabled:YES];
-    [self setObjects:@[self.pauseButton] enabled:NO];
+    [self.recorder discardRecording];
 }
 
 - (void)startPlayback
 {
-    [self.recorder startPlayback];
+    [self setObjects:@[self.recordButton, self.playButton, self.trashButton] enabled:NO];
+    [self setObjects:@[self.pauseButton] enabled:YES];
     
     self.playbackDurationView.duration = self.recorder.playbackDuration;
     self.playbackDurationView.currentTime = self.recorder.currentTime;
     
+    [self.recorder startPlayback];
+    
     [playProgressDisplayLink invalidate];
     playProgressDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updatePlaybackProgress)];
     [playProgressDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-    
-    
-    [self setObjects:@[self.recordButton, self.playButton, self.trashButton] enabled:NO];
-    [self setObjects:@[self.pauseButton] enabled:YES];
 }
 
 - (void)stopPlayback
 {
-    [playProgressDisplayLink invalidate];
-    
-    [self.recorder stopPlayback];    // TODO: no reason to stop (undoes the setup needed for playback) - pause shoud do the trick (+rewind)
+    [self setObjects:@[self.recordButton, self.playButton, self.trashButton] enabled:YES];
+    [self setObjects:@[self.pauseButton] enabled:NO];
     
     self.playbackDurationView.currentTime = 0;
     
-    [self setObjects:@[self.recordButton, self.playButton, self.trashButton] enabled:YES];
-    [self setObjects:@[self.pauseButton] enabled:NO];
+    [playProgressDisplayLink invalidate];
+    
+    [self.recorder stopPlayback];    // TODO: no reason to stop (undoes the setup needed for playback) - pause shoud do the trick (+rewind)
 }
 
 // TODO: add pausePlayback
@@ -196,6 +195,8 @@
 
 - (void)microphoneAccessDeniedForAudioRecorder:(IQAudioRecorder *)recorder
 {
+    [self setObjects:@[self.recordButton] enabled:NO];
+    
     if ([self.delegate respondsToSelector:@selector(microphoneAccessDeniedForAudioRecorderController:)]) {
         [self.delegate microphoneAccessDeniedForAudioRecorderController:self];
     }
