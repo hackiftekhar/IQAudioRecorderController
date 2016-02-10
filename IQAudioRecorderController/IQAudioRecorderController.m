@@ -99,8 +99,7 @@
 
 - (void)discardRecording
 {
-    [self setObjects:@[self.playButton, self.trashButton] enabled:YES];
-    [self setObjects:@[self.pauseButton] enabled:NO];
+    [self setObjects:@[self.playButton, self.pauseButton, self.trashButton] enabled:NO];
     
     self.playbackDurationView.duration = 0;
     self.playbackDurationView.currentTime = 0;
