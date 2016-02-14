@@ -28,8 +28,8 @@
     IQAudioRecorderController *controller = [[IQAudioRecorderController alloc] init];
     controller.delegate = self;
     controller.barStyle = UIBarStyleDefault;
-    controller.normalTintColor = [UIColor orangeColor];
-    controller.highlightedTintColor = [UIColor purpleColor];
+//    controller.normalTintColor = [UIColor magentaColor];
+//    controller.highlightedTintColor = [UIColor orangeColor];
     [self presentViewController:controller animated:YES completion:nil];
 }
 
@@ -38,8 +38,8 @@
     IQAudioRecorderController *controller = [[IQAudioRecorderController alloc] init];
     controller.delegate = self;
     controller.barStyle = UIBarStyleBlackTranslucent;
-    controller.normalTintColor = [UIColor purpleColor];
-    controller.highlightedTintColor = [UIColor orangeColor];
+//    controller.normalTintColor = [UIColor cyanColor];
+//    controller.highlightedTintColor = [UIColor orangeColor];
     [self presentViewController:controller animated:YES completion:nil];
 }
 
