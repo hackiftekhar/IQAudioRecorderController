@@ -251,9 +251,19 @@
         viewMicrophoneDenied.translatesAutoresizingMaskIntoConstraints = NO;
         viewMicrophoneDenied.delegate = self;
         viewMicrophoneDenied.alpha = 0.0;
-        viewMicrophoneDenied.image = [UIImage imageNamed:@"microphone_access"];
+        
+        if (self.barStyle == UIBarStyleDefault)
+        {
+            viewMicrophoneDenied.tintColor = [UIColor darkGrayColor];
+        }
+        else
+        {
+            viewMicrophoneDenied.tintColor = [UIColor whiteColor];
+        }
+        
+        viewMicrophoneDenied.image = [[UIImage imageNamed:@"microphone_access"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         viewMicrophoneDenied.title = @"Microphone Access Denied!";
-        viewMicrophoneDenied.message = @"Unable to access microphone. Please enable microphone access in Settings";
+        viewMicrophoneDenied.message = @"Unable to access microphone. Please enable microphone access in Settings.";
         viewMicrophoneDenied.buttonTitle = @"Go to Settings";
         [view addSubview:viewMicrophoneDenied];
         
@@ -374,6 +384,7 @@
         self.view.backgroundColor = [UIColor darkGrayColor];
     }
 
+    viewMicrophoneDenied.tintColor = [self _normalTintColor];
     self.view.tintColor = [self _normalTintColor];
     self.highlightedTintColor = self.highlightedTintColor;
     self.normalTintColor = self.normalTintColor;

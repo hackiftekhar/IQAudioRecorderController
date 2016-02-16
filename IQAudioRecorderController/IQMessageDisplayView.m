@@ -25,7 +25,7 @@
 
 #import "IQMessageDisplayView.h"
 
-IB_DESIGNABLE
+//IB_DESIGNABLE
 @implementation IQMessageDisplayView
 {
     UIImageView *imageView;
@@ -62,7 +62,7 @@ IB_DESIGNABLE
     labelTitle = [[UILabel alloc] init];
     labelTitle.translatesAutoresizingMaskIntoConstraints = NO;
     labelTitle.font = [UIFont boldSystemFontOfSize:20.0];
-    labelTitle.textColor = [UIColor grayColor];
+    labelTitle.textColor = [UIColor lightGrayColor];
     labelTitle.numberOfLines = 0;
     labelTitle.textAlignment = NSTextAlignmentCenter;
     [self addSubview:labelTitle];
@@ -100,7 +100,7 @@ IB_DESIGNABLE
         
         NSLayoutConstraint *constraint8 = [NSLayoutConstraint constraintWithItem:labelMessage attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTrailing multiplier:1 constant:0];
         
-        NSLayoutConstraint *constraint9 = [NSLayoutConstraint constraintWithItem:buttonAction attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:labelMessage attribute:NSLayoutAttributeBottom multiplier:1 constant:5];
+        NSLayoutConstraint *constraint9 = [NSLayoutConstraint constraintWithItem:buttonAction attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:labelMessage attribute:NSLayoutAttributeBottom multiplier:1 constant:15];
         
         NSLayoutConstraint *constraint10 = [NSLayoutConstraint constraintWithItem:buttonAction attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
         
@@ -113,7 +113,7 @@ IB_DESIGNABLE
 -(void)setImage:(UIImage *)image
 {
     _image = image;
-    imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    imageView.image = image;
 }
 
 -(void)setTitle:(NSString *)title
