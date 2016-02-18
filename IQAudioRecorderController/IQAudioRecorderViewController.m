@@ -23,7 +23,7 @@
 // THE SOFTWARE.
 
 
-#import "IQAudioRecorderController.h"
+#import "IQAudioRecorderViewController.h"
 #import "NSString+IQTimeIntervalFormatter.h"
 #import "IQPlaybackDurationView.h"
 #import "IQMessageDisplayView.h"
@@ -33,13 +33,12 @@
 
 /************************************/
 
-@interface IQInternalAudioRecorderController : UIViewController <AVAudioRecorderDelegate,AVAudioPlayerDelegate,IQPlaybackDurationViewDelegate,IQMessageDisplayViewDelegate>
+@interface IQAudioRecorderViewController() <AVAudioRecorderDelegate,AVAudioPlayerDelegate,IQPlaybackDurationViewDelegate,IQMessageDisplayViewDelegate>
 {
     //Recording...
     AVAudioRecorder *_audioRecorder;
     SCSiriWaveformView *musicFlowView;
     NSString *_recordingFilePath;
-    BOOL _isRecording;
     CADisplayLink *meterUpdateDisplayLink;
     
     //Playing
@@ -56,13 +55,17 @@
     //Toolbar
     UIBarButtonItem *_flexItem;
 
+    //Playing controls
     UIBarButtonItem *_playButton;
     UIBarButtonItem *_pauseButton;
     UIBarButtonItem *_stopPlayButton;
 
-    UIBarButtonItem *_recordButton;
-    UIBarButtonItem *_stopRecordButton;
+    //Recording controls
+    UIBarButtonItem *_cancelRecordingButton;
+    UIBarButtonItem *_startRecordingButton;
+    UIBarButtonItem *_stopRecordingButton;
     
+    //Delete controls
     UIBarButtonItem *_trashButton;
     
     //Access
@@ -70,118 +73,12 @@
     
     //Private variables
     NSString *_oldSessionCategory;
-}
-
-@property (nonatomic, weak) id<IQAudioRecorderControllerDelegate> delegate;
-
-@property(nonatomic,assign) UIBarStyle barStyle;
-@property (nonatomic, weak) UIColor *normalTintColor;
-@property (nonatomic, weak) UIColor *highlightedTintColor;
-
-@end
-
-/************************************/
-
-@implementation IQAudioRecorderController
-{
-    IQInternalAudioRecorderController *_internalController;
-}
-@synthesize delegate = _delegate;
-
--(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
-    if (self)
-    {
-        self.barStyle = UIBarStyleBlackTranslucent;
-    }
-    
-    return self;
-}
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    _internalController = [[IQInternalAudioRecorderController alloc] init];
-    _internalController.delegate = self.delegate;
-    _internalController.normalTintColor = self.normalTintColor;
-    _internalController.highlightedTintColor = self.highlightedTintColor;
-    self.viewControllers = @[_internalController];
-    
-    self.toolbarHidden = NO;
-}
-
--(void)setBarStyle:(UIBarStyle)barStyle
-{
-    _barStyle = barStyle;
-    
-    self.navigationBar.barStyle = barStyle;
-    _internalController.barStyle = barStyle;
-    
-    if (self.barStyle == UIBarStyleDefault)
-    {
-        self.navigationBar.translucent = YES;
-        self.view.backgroundColor = [UIColor whiteColor];
-    }
-    else
-    {
-        self.navigationBar.translucent = YES;
-        self.view.backgroundColor = [UIColor darkGrayColor];
-    }
-
-    self.navigationBar.tintColor = [self _normalTintColor];
-    self.toolbar.barStyle = self.navigationBar.barStyle;
-    self.toolbar.tintColor = self.navigationBar.tintColor;
-    self.toolbar.translucent = self.navigationBar.translucent;
-}
-
--(void)setNormalTintColor:(UIColor *)normalTintColor
-{
-    _normalTintColor = normalTintColor;
-    
-    self.navigationBar.tintColor = [self _normalTintColor];
-    _internalController.normalTintColor = self.normalTintColor;
-}
-
--(void)setHighlightedTintColor:(UIColor *)highlightedTintColor
-{
-    _highlightedTintColor = highlightedTintColor;
-    
-    _internalController.highlightedTintColor = self.highlightedTintColor;
-}
-
--(UIColor*)_normalTintColor
-{
-    if (_normalTintColor)
-    {
-        return _normalTintColor;
-    }
-    else
-    {
-        if (self.barStyle == UIBarStyleDefault)
-        {
-            return [UIColor colorWithRed:0 green:0.5 blue:1.0 alpha:1.0];
-        }
-        else
-        {
-            return [UIColor whiteColor];
-        }
-    }
-}
-
--(void)setDelegate:(id<IQAudioRecorderControllerDelegate,UINavigationControllerDelegate>)delegate
-{
-    _delegate = delegate;
-    _internalController.delegate = delegate;
+    BOOL _wasIdleTimerDisabled;
 }
 
 @end
 
-/************************************/
-
-@implementation IQInternalAudioRecorderController
+@implementation IQAudioRecorderViewController
 
 #pragma mark - Private Helper
 
@@ -192,7 +89,7 @@
     _playButton.tintColor = [self _normalTintColor];
     _pauseButton.tintColor = [self _normalTintColor];
     _stopPlayButton.tintColor = [self _normalTintColor];
-    _recordButton.tintColor = [self _normalTintColor];
+    _startRecordingButton.tintColor = [self _normalTintColor];
     _trashButton.tintColor = [self _normalTintColor];
 }
 
@@ -219,6 +116,7 @@
 {
     _highlightedTintColor = highlightedTintColor;
     _viewPlayerDuration.tintColor = [self _highlightedTintColor];
+    _cancelRecordingButton.tintColor = [self _highlightedTintColor];
 }
 
 -(UIColor *)_highlightedTintColor
@@ -305,19 +203,18 @@
 
     _navigationTitle = @"Audio Recorder";
 
-//    musicFlowView.idleAmplitude = 0;
-
-    //Unique recording URL
-    NSString *fileName = [NSProcessInfo processInfo].globallyUniqueString;
-    _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",fileName]];
-
     {
         _flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
-        _recordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
-        _recordButton.tintColor = [self _normalTintColor];
-        _stopRecordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_recording"] style:UIBarButtonItemStylePlain target:self action:@selector(stopRecordingButtonAction:)];
-        _stopRecordButton.tintColor = [UIColor redColor];
+        //Recording controls
+        _startRecordingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
+        _startRecordingButton.tintColor = [self _normalTintColor];
+        _stopRecordingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_recording"] style:UIBarButtonItemStylePlain target:self action:@selector(stopRecordingButtonAction:)];
+        _stopRecordingButton.tintColor = [UIColor redColor];
+        _cancelRecordingButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelRecordingAction:)];
+        _cancelRecordingButton.tintColor = [self _highlightedTintColor];
+        
+        //Playing controls
         _stopPlayButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_playing"] style:UIBarButtonItemStylePlain target:self action:@selector(stopPlayingButtonAction:)];
         _stopPlayButton.tintColor = [self _normalTintColor];
         _playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
@@ -325,10 +222,11 @@
 
         _pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
         _pauseButton.tintColor = [self _normalTintColor];
-        
+
+        //delete control
         _trashButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAction:)];
         _trashButton.tintColor = [self _normalTintColor];
-        [self setToolbarItems:@[_playButton,_flexItem, _recordButton,_flexItem, _trashButton] animated:NO];
+        [self setToolbarItems:@[_playButton,_flexItem, _startRecordingButton,_flexItem, _trashButton] animated:NO];
 
         _playButton.enabled = NO;
         _trashButton.enabled = NO;
@@ -336,14 +234,59 @@
     
     // Define the recorder setting
     {
-        NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *recordSettings = [[NSMutableDictionary alloc] init];
+
+        NSString *globallyUniqueString = [NSProcessInfo processInfo].globallyUniqueString;
+
+        if (self.audioFormat == IQAudioFormatDefault || self.audioFormat == IQAudioFormat_m4a)
+        {
+            _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",globallyUniqueString]];
+
+            recordSettings[AVFormatIDKey] = @(kAudioFormatMPEG4AAC);
+        }
+        else if (self.audioFormat == IQAudioFormat_caf)
+        {
+            _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf",globallyUniqueString]];
+
+            recordSettings[AVFormatIDKey] = @(kAudioFormatAppleLossless);
+        }
         
-        [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-        [recordSetting setValue:@44100.0f forKey:AVSampleRateKey];
-        [recordSetting setValue:@2 forKey:AVNumberOfChannelsKey];
+        if (self.sampleRate > 0.0f)
+        {
+            recordSettings[AVSampleRateKey] = @(self.sampleRate);
+        }
+        else
+        {
+            recordSettings[AVSampleRateKey] = @44100.0f;
+        }
         
+        if (self.numberOfChannels >0)
+        {
+            recordSettings[AVNumberOfChannelsKey] = @(self.numberOfChannels);
+        }
+        else
+        {
+            recordSettings[AVNumberOfChannelsKey] = @1;
+        }
+
+        if (self.audioQuality != IQAudioQualityDefault)
+        {
+            recordSettings[AVEncoderAudioQualityKey] = @(self.audioQuality);
+        }
+
+        if (self.bitRate > 0)
+        {
+            recordSettings[AVEncoderBitRateKey] = @(self.bitRate);
+        }
+        
+//        NSDictionary *recordSettings =
+//        [[NSDictionary alloc] initWithObjectsAndKeys:
+//         [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
+//         AVEncoderAudioQualityKey,
+//         nil];
+
         // Initiate and prepare the recorder
-        _audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:_recordingFilePath] settings:recordSetting error:nil];
+        _audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:_recordingFilePath] settings:recordSettings error:nil];
         _audioRecorder.delegate = self;
         _audioRecorder.meteringEnabled = YES;
         
@@ -353,7 +296,11 @@
 
     //Navigation Bar Settings
     {
-        self.navigationItem.title = @"Audio Recorder";
+        if (self.title.length == 0 && self.navigationItem.title.length == 0)
+        {
+            self.navigationItem.title = @"Audio Recorder";
+        }
+
         _cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
         self.navigationItem.leftBarButtonItem = _cancelButton;
         _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
@@ -377,10 +324,18 @@
     
     if (self.barStyle == UIBarStyleDefault)
     {
+        self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+        self.navigationController.toolbar.barStyle = UIBarStyleDefault;
+        self.navigationController.navigationBar.tintColor = [self _normalTintColor];
+        self.navigationController.toolbar.tintColor = [self _normalTintColor];
         self.view.backgroundColor = [UIColor whiteColor];
     }
     else
     {
+        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+        self.navigationController.toolbar.barStyle = UIBarStyleBlack;
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+        self.navigationController.toolbar.tintColor = [UIColor whiteColor];
         self.view.backgroundColor = [UIColor darkGrayColor];
     }
 
@@ -395,6 +350,8 @@
     [super viewWillAppear:animated];
     
     [self startUpdatingMeter];
+    
+    _wasIdleTimerDisabled = [[UIApplication sharedApplication] isIdleTimerDisabled];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActiveNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [self validateMicrophoneAccess];
@@ -415,6 +372,8 @@
     _audioRecorder = nil;
     
     [self stopUpdatingMeter];
+    
+    [UIApplication sharedApplication].idleTimerDisabled = _wasIdleTimerDisabled;
 }
 
 #pragma mark - Update Meters
@@ -496,7 +455,8 @@
 {
     _oldSessionCategory = [AVAudioSession sharedInstance].category;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+
     if (_audioPlayer == nil)
     {
         _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:_recordingFilePath] error:nil];
@@ -548,13 +508,14 @@
     [_audioPlayer pause];
     
     [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
+    [UIApplication sharedApplication].idleTimerDisabled = _wasIdleTimerDisabled;
 }
 
 -(void)stopPlayingButtonAction:(UIBarButtonItem*)item
 {
     //UI Update
     {
-        [self setToolbarItems:@[_playButton,_flexItem, _recordButton,_flexItem, _trashButton] animated:YES];
+        [self setToolbarItems:@[_playButton,_flexItem, _startRecordingButton,_flexItem, _trashButton] animated:YES];
         _trashButton.enabled = YES;
     }
     
@@ -575,6 +536,7 @@
     _audioPlayer = nil;
     
     [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
+    [UIApplication sharedApplication].idleTimerDisabled = _wasIdleTimerDisabled;
 }
 
 #pragma mark - AVAudioPlayerDelegate
@@ -594,16 +556,14 @@
 
 - (void)recordingButtonAction:(UIBarButtonItem *)item
 {
-    if (_isRecording == NO)
+    if (_audioRecorder.isRecording == NO)
     {
-        _isRecording = YES;
-
         //UI Update
         {
-            [self setToolbarItems:@[_playButton,_flexItem, _stopRecordButton,_flexItem, _trashButton] animated:YES];
+            [self setToolbarItems:@[_playButton,_flexItem, _stopRecordingButton,_flexItem, _trashButton] animated:YES];
             _playButton.enabled = NO;
             _trashButton.enabled = NO;
-            _cancelButton.tintColor = [self _highlightedTintColor];
+            [self.navigationItem setLeftBarButtonItem:_cancelRecordingButton animated:YES];
             _doneButton.enabled = NO;
         }
         
@@ -617,28 +577,36 @@
         
         _oldSessionCategory = [AVAudioSession sharedInstance].category;
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
+        [UIApplication sharedApplication].idleTimerDisabled = YES;
         [_audioRecorder prepareToRecord];
-        [_audioRecorder record];
+        
+        if (self.maximumRecordDuration <=0)
+        {
+            [_audioRecorder record];
+        }
+        else
+        {
+            [_audioRecorder recordForDuration:self.maximumRecordDuration];
+        }
     }
 }
 
 -(void)stopRecordingButtonAction:(UIBarButtonItem*)item
 {
-    if (_isRecording == YES)
+    if (_audioRecorder.isRecording == YES)
     {
-        _isRecording = NO;
-        
-        //UI Update
-        {
-            [self setToolbarItems:@[_playButton,_flexItem, _recordButton,_flexItem, _trashButton] animated:YES];
-            _playButton.enabled = YES;
-            _trashButton.enabled = YES;
-            _cancelButton.tintColor = [self _normalTintColor];
-            _doneButton.enabled = YES;
-        }
-        
         [_audioRecorder stop];
-        [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
+    }
+}
+
+-(void)cancelRecordingAction:(UIBarButtonItem*)item
+{
+    if (_audioRecorder.isRecording == YES)
+    {
+        [_audioRecorder stop];
+
+        [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
+        self.navigationItem.title = _navigationTitle;
     }
 }
 
@@ -646,7 +614,34 @@
 
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag
 {
-    
+    if (flag)
+    {
+        //UI Update
+        {
+            [self setToolbarItems:@[_playButton,_flexItem, _startRecordingButton,_flexItem, _trashButton] animated:YES];
+            [self.navigationItem setLeftBarButtonItem:_cancelButton animated:YES];
+            
+            if ([[NSFileManager defaultManager] fileExistsAtPath:_recordingFilePath])
+            {
+                _playButton.enabled = YES;
+                _trashButton.enabled = YES;
+                _doneButton.enabled = YES;
+            }
+            else
+            {
+                _playButton.enabled = NO;
+                _trashButton.enabled = NO;
+                _doneButton.enabled = NO;
+            }
+        }
+
+        [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
+        [UIApplication sharedApplication].idleTimerDisabled = _wasIdleTimerDisabled;
+    }
+    else
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
+    }
 }
 
 - (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
@@ -659,42 +654,19 @@
 
 -(void)cancelAction:(UIBarButtonItem*)item
 {
-    if (_isRecording)
+    if ([self.delegate respondsToSelector:@selector(audioRecorderControllerDidCancel:)])
     {
-        _isRecording = NO;
-        
-        //UI Update
-        {
-            [self setToolbarItems:@[_playButton,_flexItem, _recordButton,_flexItem, _trashButton] animated:YES];
-            _playButton.enabled = NO;
-            _trashButton.enabled = NO;
-            _cancelButton.tintColor = [self _normalTintColor];
-            _doneButton.enabled = NO;
-        }
-        
-        [_audioRecorder stop];
-        [[AVAudioSession sharedInstance] setCategory:_oldSessionCategory error:nil];
-        [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
-        self.navigationItem.title = _navigationTitle;
+        [self.delegate audioRecorderControllerDidCancel:self];
     }
-    else
-    {
-        if ([self.delegate respondsToSelector:@selector(audioRecorderControllerDidCancel:)])
-        {
-            IQAudioRecorderController *controller = (IQAudioRecorderController*)self.navigationController;
-            [self.delegate audioRecorderControllerDidCancel:controller];
-        }
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)doneAction:(UIBarButtonItem*)item
 {
     if ([self.delegate respondsToSelector:@selector(audioRecorderController:didFinishWithAudioAtPath:)])
     {
-        IQAudioRecorderController *controller = (IQAudioRecorderController*)self.navigationController;
-        [self.delegate audioRecorderController:controller didFinishWithAudioAtPath:_recordingFilePath];
+        [self.delegate audioRecorderController:self didFinishWithAudioAtPath:_recordingFilePath];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -736,6 +708,11 @@
 
 #pragma mark - Private helper
 
+-(void)updateUI
+{
+
+}
+
 -(void)showNavigationButton:(BOOL)show
 {
     if (show)
@@ -753,16 +730,16 @@
 - (void)validateMicrophoneAccess
 {
     AVAudioSession *session = [AVAudioSession sharedInstance];
-
+    
     [session requestRecordPermission:^(BOOL granted) {
-
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             viewMicrophoneDenied.alpha = !granted;
             musicFlowView.alpha = granted;
-            _recordButton.enabled = granted;
+            _startRecordingButton.enabled = granted;
         });
-}];
+    }];
 }
 
 -(void)didBecomeActiveNotification:(NSNotification*)notification
@@ -773,3 +750,17 @@
 
 @end
 
+
+@implementation UIViewController (IQAudioRecorderViewController)
+
+- (void)presentAudioRecorderViewControllerAnimated:(nonnull IQAudioRecorderViewController *)audioRecorderViewController
+{
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:audioRecorderViewController];
+    navigationController.toolbarHidden = NO;
+    navigationController.toolbar.translucent = YES;
+    navigationController.navigationBar.translucent = YES;
+    audioRecorderViewController.barStyle = audioRecorderViewController.barStyle;        //This line is used to refresh UI of Audio Recorder View Controller
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+@end

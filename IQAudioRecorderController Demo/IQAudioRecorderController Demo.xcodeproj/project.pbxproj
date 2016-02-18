@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C0BEDF61C70EF8F003BC43A /* IQMessageDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0BEDF51C70EF8F003BC43A /* IQMessageDisplayView.m */; };
+		4C2E46871C759C4E005E2015 /* IQAudioRecorderConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E46861C759C4E005E2015 /* IQAudioRecorderConstraints.m */; };
 		4CF397171C6F9A460036C8CE /* IQPlaybackDurationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF397161C6F9A460036C8CE /* IQPlaybackDurationView.m */; };
 		4CF3971A1C6F9BE90036C8CE /* NSString+IQTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF397191C6F9BE90036C8CE /* NSString+IQTimeIntervalFormatter.m */; };
 		4CF397221C6FB4C90036C8CE /* audio_record.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF3971C1C6FB4C90036C8CE /* audio_record.png */; };
@@ -28,7 +29,7 @@
 		B5D4741D1A6A2EF200771B83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D4741B1A6A2EF200771B83 /* Main.storyboard */; };
 		B5D4741F1A6A2EF200771B83 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5D4741E1A6A2EF200771B83 /* Images.xcassets */; };
 		B5D474221A6A2EF200771B83 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D474201A6A2EF200771B83 /* LaunchScreen.xib */; };
-		B5D4743B1A6A2F4800771B83 /* IQAudioRecorderController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474391A6A2F4800771B83 /* IQAudioRecorderController.m */; };
+		B5D4743B1A6A2F4800771B83 /* IQAudioRecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474391A6A2F4800771B83 /* IQAudioRecorderViewController.m */; };
 		EE424EE440838B61F2FACDD3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30CB9E576D87DD5C1F6995FD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,8 @@
 		30CB9E576D87DD5C1F6995FD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C0BEDF41C70EF8F003BC43A /* IQMessageDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQMessageDisplayView.h; sourceTree = "<group>"; };
 		4C0BEDF51C70EF8F003BC43A /* IQMessageDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQMessageDisplayView.m; sourceTree = "<group>"; };
+		4C2E46851C759C4E005E2015 /* IQAudioRecorderConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorderConstraints.h; sourceTree = "<group>"; };
+		4C2E46861C759C4E005E2015 /* IQAudioRecorderConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorderConstraints.m; sourceTree = "<group>"; };
 		4CF397151C6F9A460036C8CE /* IQPlaybackDurationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQPlaybackDurationView.h; sourceTree = "<group>"; };
 		4CF397161C6F9A460036C8CE /* IQPlaybackDurationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQPlaybackDurationView.m; sourceTree = "<group>"; };
 		4CF397181C6F9BE90036C8CE /* NSString+IQTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IQTimeIntervalFormatter.h"; sourceTree = "<group>"; };
@@ -63,8 +66,8 @@
 		B5D4741C1A6A2EF200771B83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B5D4741E1A6A2EF200771B83 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B5D474211A6A2EF200771B83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		B5D474381A6A2F4800771B83 /* IQAudioRecorderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorderController.h; sourceTree = "<group>"; };
-		B5D474391A6A2F4800771B83 /* IQAudioRecorderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorderController.m; sourceTree = "<group>"; };
+		B5D474381A6A2F4800771B83 /* IQAudioRecorderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorderViewController.h; sourceTree = "<group>"; };
+		B5D474391A6A2F4800771B83 /* IQAudioRecorderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorderViewController.m; sourceTree = "<group>"; };
 		C6A1915A910D0321075889F2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,12 +149,14 @@
 			isa = PBXGroup;
 			children = (
 				B53594111A6A531100A81727 /* Resources */,
-				B5D474381A6A2F4800771B83 /* IQAudioRecorderController.h */,
-				B5D474391A6A2F4800771B83 /* IQAudioRecorderController.m */,
+				B5D474381A6A2F4800771B83 /* IQAudioRecorderViewController.h */,
+				B5D474391A6A2F4800771B83 /* IQAudioRecorderViewController.m */,
 				4CF397151C6F9A460036C8CE /* IQPlaybackDurationView.h */,
 				4CF397161C6F9A460036C8CE /* IQPlaybackDurationView.m */,
 				4C0BEDF41C70EF8F003BC43A /* IQMessageDisplayView.h */,
 				4C0BEDF51C70EF8F003BC43A /* IQMessageDisplayView.m */,
+				4C2E46851C759C4E005E2015 /* IQAudioRecorderConstraints.h */,
+				4C2E46861C759C4E005E2015 /* IQAudioRecorderConstraints.m */,
 				4CF397181C6F9BE90036C8CE /* NSString+IQTimeIntervalFormatter.h */,
 				4CF397191C6F9BE90036C8CE /* NSString+IQTimeIntervalFormatter.m */,
 			);
@@ -310,9 +315,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D4741A1A6A2EF200771B83 /* ViewController.m in Sources */,
+				4C2E46871C759C4E005E2015 /* IQAudioRecorderConstraints.m in Sources */,
 				B5D474171A6A2EF200771B83 /* AppDelegate.m in Sources */,
 				4CF3971A1C6F9BE90036C8CE /* NSString+IQTimeIntervalFormatter.m in Sources */,
-				B5D4743B1A6A2F4800771B83 /* IQAudioRecorderController.m in Sources */,
+				B5D4743B1A6A2F4800771B83 /* IQAudioRecorderViewController.m in Sources */,
 				B5D474141A6A2EF200771B83 /* main.m in Sources */,
 				4CF397171C6F9A460036C8CE /* IQPlaybackDurationView.m in Sources */,
 				4C0BEDF61C70EF8F003BC43A /* IQMessageDisplayView.m in Sources */,

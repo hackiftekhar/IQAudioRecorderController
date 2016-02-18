@@ -24,30 +24,44 @@
 
 
 #import <UIKit/UIKit.h>
+#import "IQAudioRecorderConstraints.h"
 
-@class IQAudioRecorderController;
+@class IQAudioRecorderViewController;
 
-@protocol IQAudioRecorderControllerDelegate <UINavigationControllerDelegate>
+@protocol IQAudioRecorderViewControllerDelegate <NSObject>
 
 @required
 /**
  Returns the temporary recorded filePath, you need to copy the recorded file to your own location and don't rely on the filePath anymore. You don't need to dismiss controller from here, library does this for you.
  */
--(void)audioRecorderController:(IQAudioRecorderController*)controller didFinishWithAudioAtPath:(NSString*)filePath;
+-(void)audioRecorderController:(nonnull IQAudioRecorderViewController*)controller didFinishWithAudioAtPath:(nonnull NSString*)filePath;
 
 @optional
 /**
  Optional method to determine if user taps on Cancel button. You don't need to dismiss controller from here, library does this for you.
  */
--(void)audioRecorderControllerDidCancel:(IQAudioRecorderController*)controller;
+-(void)audioRecorderControllerDidCancel:(nonnull IQAudioRecorderViewController*)controller;
 
 @end
 
 
 
-@interface IQAudioRecorderController : UINavigationController
+@interface IQAudioRecorderViewController : UIViewController
 
-@property(nonatomic, weak) id<IQAudioRecorderControllerDelegate,UINavigationControllerDelegate> delegate;
+
+///--------------------------
+/// @name Delegate callback
+///--------------------------
+
+/**
+ IQAudioRecorderController delegate.
+ */
+@property(nullable, nonatomic, weak) id<IQAudioRecorderViewControllerDelegate> delegate;
+
+
+///--------------------------
+/// @name User Interface
+///--------------------------
 
 /**
  Support light and dark style UI for the user interface. If you would like to present light style then you may need to set barStyle to UIBarStyleDefault, otherwise dark style UI is the default.
@@ -57,11 +71,54 @@
 /**
  normalTintColor is used for showing wave tintColor while not recording, it is also used for navigationBar and toolbar tintColor.
  */
-@property (nonatomic, strong) UIColor *normalTintColor;
+@property (nullable, nonatomic, strong) UIColor *normalTintColor;
 
 /**
  Highlighted tintColor is used when playing the recorded audio file or when recording the audio file.
  */
-@property (nonatomic, strong) UIColor *highlightedTintColor;
+@property (nullable, nonatomic, strong) UIColor *highlightedTintColor;
+
+
+///--------------------------
+/// @name Audio Settings
+///--------------------------
+
+
+/**
+ Maximum duration of the audio file to be recorded.
+ */
+@property(nonatomic) NSTimeInterval maximumRecordDuration;
+
+/**
+ Audio format. default is IQAudioFormat_m4a.
+ */
+@property(nonatomic,assign) IQAudioFormat audioFormat;
+
+/**
+ sampleRate should be floating point in Hertz.
+ */
+@property(nonatomic,assign) CGFloat sampleRate;
+
+/**
+ Number of channels.
+ */
+@property(nonatomic,assign) NSInteger numberOfChannels;
+
+/**
+ Audio quality.
+ */
+@property(nonatomic,assign) IQAudioQuality audioQuality;
+
+/**
+ bitRate.
+ */
+@property(nonatomic,assign) NSInteger bitRate;
+
+@end
+
+
+@interface UIViewController (IQAudioRecorderViewController)
+
+- (void)presentAudioRecorderViewControllerAnimated:(nonnull IQAudioRecorderViewController *)audioRecorderViewController;
 
 @end

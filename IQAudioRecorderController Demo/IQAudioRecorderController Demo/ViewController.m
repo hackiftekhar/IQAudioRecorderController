@@ -4,10 +4,10 @@
 
 
 #import "ViewController.h"
-#import "IQAudioRecorderController.h"
+#import "IQAudioRecorderViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface ViewController ()<IQAudioRecorderControllerDelegate>
+@interface ViewController ()<IQAudioRecorderViewControllerDelegate>
 {
     IBOutlet UIButton *buttonPlayAudio;
     NSString *audioFilePath;
@@ -25,31 +25,32 @@
 
 - (IBAction)recordWhiteAction:(UIButton *)sender
 {
-    IQAudioRecorderController *controller = [[IQAudioRecorderController alloc] init];
+    IQAudioRecorderViewController *controller = [[IQAudioRecorderViewController alloc] init];
     controller.delegate = self;
     controller.barStyle = UIBarStyleDefault;
+    controller.maximumRecordDuration = 10;
 //    controller.normalTintColor = [UIColor magentaColor];
 //    controller.highlightedTintColor = [UIColor orangeColor];
-    [self presentViewController:controller animated:YES completion:nil];
+    [self presentAudioRecorderViewControllerAnimated:controller];
 }
 
 - (IBAction)recordAction:(UIButton *)sender
 {
-    IQAudioRecorderController *controller = [[IQAudioRecorderController alloc] init];
+    IQAudioRecorderViewController *controller = [[IQAudioRecorderViewController alloc] init];
     controller.delegate = self;
     controller.barStyle = UIBarStyleBlackTranslucent;
 //    controller.normalTintColor = [UIColor cyanColor];
 //    controller.highlightedTintColor = [UIColor orangeColor];
-    [self presentViewController:controller animated:YES completion:nil];
+    [self presentAudioRecorderViewControllerAnimated:controller];
 }
 
--(void)audioRecorderController:(IQAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath
+-(void)audioRecorderController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
 {
     audioFilePath = filePath;
     buttonPlayAudio.enabled = YES;
 }
 
--(void)audioRecorderControllerDidCancel:(IQAudioRecorderController *)controller
+-(void)audioRecorderControllerDidCancel:(IQAudioRecorderViewController *)controller
 {
     buttonPlayAudio.enabled = NO;
 }

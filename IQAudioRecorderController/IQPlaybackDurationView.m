@@ -133,8 +133,8 @@
 
 - (void)prepareForInterfaceBuilder
 {
-    [self setDuration:60];
-    [self setCurrentTime:17];
+    self.duration = 60;
+    self.currentTime = 17;
     [self updateRemainingTimeLabel];
 }
 

@@ -19,27 +19,21 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qyx-zC-ewW">
                                 <rect key="frame" x="233" y="285" width="134" height="30"/>
-                                <state key="normal" title="Record Audio Black">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" title="Record Audio Black"/>
                                 <connections>
                                     <action selector="recordAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="I6K-VP-szU"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wc8-6V-hBI">
                                 <rect key="frame" x="264" y="345" width="72" height="30"/>
-                                <state key="normal" title="Play Audio">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" title="Play Audio"/>
                                 <connections>
                                     <action selector="playAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="yGU-ed-J8q"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NIy-jj-6xy">
                                 <rect key="frame" x="232" y="225" width="136" height="30"/>
-                                <state key="normal" title="Record Audio White">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" title="Record Audio White"/>
                                 <connections>
                                     <action selector="recordWhiteAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="E2D-vM-Bcf"/>
                                 </connections>
@@ -65,4 +59,5 @@
             <point key="canvasLocation" x="457" y="368"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.0039215686269999999" green="0.80000000000000004" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
 </document>
