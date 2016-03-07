@@ -137,7 +137,9 @@
 
 - (void)prepareForInterfaceBuilder
 {
-    self.image = [UIImage imageNamed:@"microphone_access"];
+    NSBundle* bundle = [NSBundle bundleForClass:self.class];
+
+    self.image = [UIImage imageNamed:@"microphone_access" inBundle:bundle compatibleWithTraitCollection:nil];
     self.title = @"Access Denied!";
     self.message = @"We are unable to access microphone due to privacy restrictions. Please enable access for microphone in Settings->Privacy Settings->Microphone";
     self.buttonTitle = @"Go to Settings";

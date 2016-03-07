@@ -241,11 +241,13 @@
     }
     
     {
+        NSBundle* bundle = [NSBundle bundleForClass:self.class];
+
         self.navigationController.toolbarHidden = NO;
         
         _flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
-        _stopPlayButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_playing"] style:UIBarButtonItemStylePlain target:self action:@selector(stopPlayingButtonAction:)];
+        _stopPlayButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_playing" inBundle:bundle compatibleWithTraitCollection:nil] style:UIBarButtonItemStylePlain target:self action:@selector(stopPlayingButtonAction:)];
         _stopPlayButton.enabled = NO;
         _stopPlayButton.tintColor = [self _normalTintColor];
         _playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
@@ -254,7 +256,7 @@
         _pauseButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseAction:)];
         _pauseButton.tintColor = [self _normalTintColor];
 
-        _cropButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"scissor"] style:UIBarButtonItemStylePlain target:self action:@selector(cropAction:)];
+        _cropButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"scissor" inBundle:bundle compatibleWithTraitCollection:nil] style:UIBarButtonItemStylePlain target:self action:@selector(cropAction:)];
         _cropButton.tintColor = [self _normalTintColor];
         _cropButton.enabled = NO;
         

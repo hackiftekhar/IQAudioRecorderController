@@ -191,7 +191,9 @@
             viewMicrophoneDenied.tintColor = [UIColor whiteColor];
         }
         
-        viewMicrophoneDenied.image = [[UIImage imageNamed:@"microphone_access"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        NSBundle* bundle = [NSBundle bundleForClass:self.class];
+
+        viewMicrophoneDenied.image = [[UIImage imageNamed:@"microphone_access" inBundle:bundle compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         viewMicrophoneDenied.title = @"Microphone Access Denied!";
         viewMicrophoneDenied.message = @"Unable to access microphone. Please enable microphone access in Settings.";
         viewMicrophoneDenied.buttonTitle = @"Go to Settings";
@@ -232,20 +234,22 @@
     {
         _flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
+        NSBundle* bundle = [NSBundle bundleForClass:self.class];
         //Recording controls
-        _startRecordingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
+        _startRecordingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record" inBundle:bundle compatibleWithTraitCollection:nil] style:UIBarButtonItemStylePlain target:self action:@selector(recordingButtonAction:)];
         _startRecordingButton.tintColor = [self _normalTintColor];
         _pauseRecordingButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pauseRecordingButtonAction:)];
         _pauseRecordingButton.tintColor = [UIColor redColor];
-        _continueRecordingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record"] style:UIBarButtonItemStylePlain target:self action:@selector(continueRecordingButtonAction:)];
+        _continueRecordingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audio_record" inBundle:bundle compatibleWithTraitCollection:nil] style:UIBarButtonItemStylePlain target:self action:@selector(continueRecordingButtonAction:)];
         _continueRecordingButton.tintColor = [UIColor redColor];
-        _stopRecordingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_recording"] style:UIBarButtonItemStylePlain target:self action:@selector(stopRecordingButtonAction:)];
+        _stopRecordingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_recording" inBundle:bundle compatibleWithTraitCollection:nil] style:UIBarButtonItemStylePlain target:self action:@selector(stopRecordingButtonAction:)];
+        
         _stopRecordingButton.tintColor = [UIColor redColor];
         _cancelRecordingButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelRecordingAction:)];
         _cancelRecordingButton.tintColor = [self _highlightedTintColor];
         
         //Playing controls
-        _stopPlayButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_playing"] style:UIBarButtonItemStylePlain target:self action:@selector(stopPlayingButtonAction:)];
+        _stopPlayButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_playing" inBundle:bundle compatibleWithTraitCollection:nil] style:UIBarButtonItemStylePlain target:self action:@selector(stopPlayingButtonAction:)];
         _stopPlayButton.tintColor = [self _normalTintColor];
         _playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playAction:)];
         _playButton.tintColor = [self _normalTintColor];
@@ -257,7 +261,7 @@
         
         if (self.allowCropping)
         {
-            _cropOrDeleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"scissor"] style:UIBarButtonItemStylePlain target:self action:@selector(cropAction:)];
+            _cropOrDeleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"scissor" inBundle:bundle compatibleWithTraitCollection:nil] style:UIBarButtonItemStylePlain target:self action:@selector(cropAction:)];
         }
         else
         {
