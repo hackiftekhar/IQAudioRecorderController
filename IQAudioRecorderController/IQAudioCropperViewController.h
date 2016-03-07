@@ -1,5 +1,5 @@
 //
-// IQAudioRecorderController.h
+//  IQAudioCropperViewController.h
 // https://github.com/hackiftekhar/IQAudioRecorderController
 // Created by Iftekhar Qurashi
 // Copyright (c) 2015-16 Iftekhar Qurashi
@@ -22,31 +22,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 #import <UIKit/UIKit.h>
-#import "IQAudioRecorderConstraints.h"
 
-@class IQAudioRecorderViewController;
+@class IQAudioCropperViewController;
 
-@protocol IQAudioRecorderViewControllerDelegate <NSObject>
+@protocol IQAudioCropperViewControllerDelegate <NSObject>
 
 @required
 /**
  Returns the temporary recorded filePath, you need to copy the recorded file to your own location and don't rely on the filePath anymore. You don't need to dismiss controller from here, library does this for you.
  */
--(void)audioRecorderController:(nonnull IQAudioRecorderViewController*)controller didFinishWithAudioAtPath:(nonnull NSString*)filePath;
+-(void)audioCropperController:(nonnull IQAudioCropperViewController*)controller didFinishWithAudioAtPath:(nonnull NSString*)filePath;
 
 @optional
 /**
  Optional method to determine if user taps on Cancel button. You don't need to dismiss controller from here, library does this for you.
  */
--(void)audioRecorderControllerDidCancel:(nonnull IQAudioRecorderViewController*)controller;
+-(void)audioCropperControllerDidCancel:(nonnull IQAudioCropperViewController*)controller;
 
 @end
 
 
+@interface IQAudioCropperViewController : UIViewController
 
-@interface IQAudioRecorderViewController : UIViewController
+/**
+ Initialise with audio file path
+ */
+-(nonnull instancetype)initWithFilePath:(nonnull NSString*)audioFilePath;
+
+/**
+ Original audio file path
+ */
+@property(nonnull, nonatomic, strong, readonly) NSString *originalAudioFilePath;
+
+/**
+ Original audio file path
+ */
+@property(nonnull, nonatomic, strong, readonly) NSString *currentAudioFilePath;
 
 /**
  Title to show on navigationBar
@@ -58,9 +70,9 @@
 ///--------------------------
 
 /**
- IQAudioRecorderController delegate.
+ IQAudioCropperViewController delegate.
  */
-@property(nullable, nonatomic, weak) id<IQAudioRecorderViewControllerDelegate> delegate;
+@property(nullable, nonatomic, weak) id<IQAudioCropperViewControllerDelegate> delegate;
 
 
 ///--------------------------
@@ -82,53 +94,12 @@
  */
 @property (nullable, nonatomic, strong) UIColor *highlightedTintColor;
 
-/**
- Allows to crop audio files.
- */
-@property (nonatomic, assign) BOOL allowCropping;
-
-
-///--------------------------
-/// @name Audio Settings
-///--------------------------
-
-
-/**
- Maximum duration of the audio file to be recorded.
- */
-@property(nonatomic) NSTimeInterval maximumRecordDuration;
-
-/**
- Audio format. default is IQAudioFormat_m4a.
- */
-@property(nonatomic,assign) IQAudioFormat audioFormat;
-
-/**
- sampleRate should be floating point in Hertz.
- */
-@property(nonatomic,assign) CGFloat sampleRate;
-
-/**
- Number of channels.
- */
-@property(nonatomic,assign) NSInteger numberOfChannels;
-
-/**
- Audio quality.
- */
-@property(nonatomic,assign) IQAudioQuality audioQuality;
-
-/**
- bitRate.
- */
-@property(nonatomic,assign) NSInteger bitRate;
-
 @end
 
 
-@interface UIViewController (IQAudioRecorderViewController)
+@interface UIViewController (IQAudioCropperViewController)
 
-- (void)presentAudioRecorderViewControllerAnimated:(nonnull IQAudioRecorderViewController *)audioRecorderViewController;
-- (void)presentBlurredAudioRecorderViewControllerAnimated:(nonnull IQAudioRecorderViewController *)audioRecorderViewController;
+- (void)presentAudioCropperViewControllerAnimated:(nonnull IQAudioCropperViewController *)audioCropperViewController;
+- (void)presentBlurredAudioCropperViewControllerAnimated:(nonnull IQAudioCropperViewController *)audioCropperViewController;
 
 @end

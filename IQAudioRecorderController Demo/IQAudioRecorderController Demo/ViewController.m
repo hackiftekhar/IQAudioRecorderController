@@ -5,12 +5,21 @@
 
 #import "ViewController.h"
 #import "IQAudioRecorderViewController.h"
+
 #import <MediaPlayer/MediaPlayer.h>
 
-@interface ViewController ()<IQAudioRecorderViewControllerDelegate>
+@interface ViewController ()<IQAudioRecorderViewControllerDelegate,UITextFieldDelegate>
 {
-    IBOutlet UIButton *buttonPlayAudio;
+    IBOutlet UIBarButtonItem *buttonPlayAudio;
     NSString *audioFilePath;
+
+    IBOutlet UITextField *textFieldTitle;
+    IBOutlet UISwitch *switchDarkUserInterface;
+    IBOutlet UISwitch *switchAllowsCropping;
+    IBOutlet UISwitch *switchBlurEnabled;
+    
+    IBOutlet UILabel *labelMaxDuration;
+    IBOutlet UIStepper *stepperMaxDuration;
 }
 
 @end
@@ -23,25 +32,52 @@
     buttonPlayAudio.enabled = NO;
 }
 
-- (IBAction)recordWhiteAction:(UIButton *)sender
+- (IBAction)switchThemeAction:(UISwitch *)sender
 {
-    IQAudioRecorderViewController *controller = [[IQAudioRecorderViewController alloc] init];
-    controller.delegate = self;
-    controller.barStyle = UIBarStyleDefault;
-    controller.maximumRecordDuration = 10;
-//    controller.normalTintColor = [UIColor magentaColor];
-//    controller.highlightedTintColor = [UIColor orangeColor];
-    [self presentAudioRecorderViewControllerAnimated:controller];
+    if (sender.on)
+    {
+        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+        self.navigationController.toolbar.barStyle = UIBarStyleBlack;
+    }
+    else
+    {
+        self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+        self.navigationController.toolbar.barStyle = UIBarStyleDefault;
+    }
 }
 
-- (IBAction)recordAction:(UIButton *)sender
+- (IBAction)stepperDurationChanged:(UIStepper *)sender {
+    labelMaxDuration.text = [NSString stringWithFormat:@"%.0f",sender.value];
+}
+
+- (IBAction)recordAction:(UIBarButtonItem *)sender
 {
     IQAudioRecorderViewController *controller = [[IQAudioRecorderViewController alloc] init];
     controller.delegate = self;
-    controller.barStyle = UIBarStyleBlackTranslucent;
-//    controller.normalTintColor = [UIColor cyanColor];
+    controller.title = textFieldTitle.text;
+    controller.maximumRecordDuration = stepperMaxDuration.value;
+    controller.allowCropping = switchAllowsCropping.on;
+    
+//    controller.normalTintColor = [UIColor magentaColor];
 //    controller.highlightedTintColor = [UIColor orangeColor];
-    [self presentAudioRecorderViewControllerAnimated:controller];
+    
+    if (switchDarkUserInterface.on)
+    {
+        controller.barStyle = UIBarStyleBlack;
+    }
+    else
+    {
+        controller.barStyle = UIBarStyleDefault;
+    }
+
+    if (switchBlurEnabled.on)
+    {
+        [self presentBlurredAudioRecorderViewControllerAnimated:controller];
+    }
+    else
+    {
+        [self presentAudioRecorderViewControllerAnimated:controller];
+    }
 }
 
 -(void)audioRecorderController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
@@ -55,10 +91,16 @@
     buttonPlayAudio.enabled = NO;
 }
 
-- (IBAction)playAction:(UIButton *)sender
+- (IBAction)playAction:(UIBarButtonItem *)sender
 {
     MPMoviePlayerViewController *controller = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:audioFilePath]];
     [self presentMoviePlayerViewControllerAnimated:controller];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

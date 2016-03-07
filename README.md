@@ -3,20 +3,20 @@
 </p>
 <H1 align="center">IQAudioRecorderController</H1>
 
-`IQAudioRecorderController` is a drop-in universal library allows to record audio within the app with a nice User Interface. There are also optional callback delegate methods to return recorded file path.
+`IQAudioRecorderController` is a drop-in universal library allows to record and crop audio within the app with a nice User Interface. There are also optional callback delegate methods to return recorded file path.
 
 ## Screenshot
 ![Idle](./Screenshot/Screenshot_Idle.jpeg)
-![Recording](./Screenshot/Screenshot_Recording.jpeg)
+![Recording](./Screenshot/Screenshot_Recording.jpg)
 ![Playing](./Screenshot/Screenshot_Playing.jpeg)
-![No Access](./Screenshot/Screenshot_No_Access.jpeg)
+![No Access](./Screenshot/Screenshot_Cropping.jpg)
 
 ## Cocoapod:-
 
 pod 'IQAudioRecorderController'
 
 ## Supported format
-Currently `IQAudioRecorderController` only support **.m4a** file format.
+Currently `IQAudioRecorderController` library only support **.m4a** file format.
 
 ## Customisation
 There are optional properties to customise the appearance according to your app theme.
@@ -32,36 +32,80 @@ Highlighted tintColor is used when playing recorded audio file or when recording
 
 
 ## How to use
-```
-#import "IQAudioRecorderController.h"
 
-@interface ViewController ()<IQAudioRecorderControllerDelegate>
+There are two seprate classes to Record and Crop Audio files.
+
+To Record audio file, try something like this:-
+
+```
+#import "IQAudioRecorderViewController.h"
+
+@interface ViewController ()<IQAudioRecorderViewControllerDelegate>
 @end
 
 @implementation ViewController
 
 - (void)recordAction:(id)sender
 {
-    IQAudioRecorderController *controller = [[IQAudioRecorderController alloc] init];
+    IQAudioRecorderViewController *controller = [[IQAudioRecorderViewController alloc] init];
     controller.delegate = self;
+    controller.title = "Recorder";
+    controller.maximumRecordDuration = 10;
+    controller.allowCropping = YES;
 //    controller.barStyle = UIBarStyleDefault;
 //    controller.normalTintColor = [UIColor magentaColor];
 //    controller.highlightedTintColor = [UIColor orangeColor];
-    [self presentViewController:controller animated:YES completion:nil];
+    [self presentBlurredAudioRecorderViewControllerAnimated:controller];
 }
 
--(void)audioRecorderController:(IQAudioRecorderController *)controller didFinishWithAudioAtPath:(NSString *)filePath
+-(void)audioRecorderController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
 {
   //Do your custom work with file at filePath.
 }
 
--(void)audioRecorderControllerDidCancel:(IQAudioRecorderController *)controller
+-(void)audioRecorderControllerDidCancel:(IQAudioRecorderViewController *)controller
 {
   //Notifying that user has clicked cancel.
 }
 
 @end
 ```
+
+To Crop audio file, try something like this:-
+
+```
+#import "IQAudioCropperViewController.h"
+
+@interface ViewController ()<IQAudioCropperViewControllerDelegate>
+@end
+
+@implementation ViewController
+
+-(void)cropAction:(id)item
+{
+    IQAudioCropperViewController *controller = [[IQAudioCropperViewController alloc] initWithFilePath:filePath];
+    controller.delegate = self;
+    controller.title = "Edit";
+//    controller.barStyle = UIBarStyleDefault;
+//    controller.normalTintColor = [UIColor magentaColor];
+//    controller.highlightedTintColor = [UIColor orangeColor];
+    [self presentBlurredAudioCropperViewControllerAnimated:controller];
+}
+
+-(void)audioCropperController:(IQAudioCropperViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
+{
+//Do your custom work with file at filePath.
+}
+
+-(void)audioCropperControllerDidCancel:(IQAudioCropperViewController *)controller
+{
+//Notifying that user has clicked cancel.
+}
+
+@end
+```
+
+
 
 ## Attributions
 

@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>FDWaveformView-FDWaveformView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FDWaveformView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>6CEE7188AB1062F4ECEAC33217B4CCDE</key>
+		<key>03A7A5CD5B996B207F87A2EB9091C6DC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8362F8C6A2509EBB00C68C386105C99A</key>
+		<key>14539F172633B67775AAE4520B9459DD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4938D25D702A60D5B83CA4CDD035A9CF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DE80D5DC74EF65FAF446E09A589DE38D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
