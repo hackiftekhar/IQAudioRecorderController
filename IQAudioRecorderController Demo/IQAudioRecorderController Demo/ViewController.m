@@ -84,11 +84,13 @@
 {
     audioFilePath = filePath;
     buttonPlayAudio.enabled = YES;
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)audioRecorderControllerDidCancel:(IQAudioRecorderViewController *)controller
 {
     buttonPlayAudio.enabled = NO;
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)playAction:(UIBarButtonItem *)sender

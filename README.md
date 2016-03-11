@@ -60,12 +60,14 @@ To Record audio file, try something like this:-
 
 -(void)audioRecorderController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
 {
-  //Do your custom work with file at filePath.
+    //Do your custom work with file at filePath.
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)audioRecorderControllerDidCancel:(IQAudioRecorderViewController *)controller
 {
-  //Notifying that user has clicked cancel.
+    //Notifying that user has clicked cancel.
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
@@ -94,12 +96,14 @@ To Crop audio file, try something like this:-
 
 -(void)audioCropperController:(IQAudioCropperViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
 {
-//Do your custom work with file at filePath.
+    //Do your custom work with file at filePath.
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)audioCropperControllerDidCancel:(IQAudioCropperViewController *)controller
 {
-//Notifying that user has clicked cancel.
+    //Notifying that user has clicked cancel.
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

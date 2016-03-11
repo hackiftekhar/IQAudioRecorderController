@@ -30,13 +30,13 @@
 
 @required
 /**
- Returns the temporary recorded filePath, you need to copy the recorded file to your own location and don't rely on the filePath anymore. You don't need to dismiss controller from here, library does this for you.
+ Returns the temporary audio filePath, you need to copy the audio file to your own location and don't rely on the filePath anymore. You need to dismiss controller from yourself.
  */
 -(void)audioCropperController:(nonnull IQAudioCropperViewController*)controller didFinishWithAudioAtPath:(nonnull NSString*)filePath;
 
 @optional
 /**
- Optional method to determine if user taps on Cancel button. You don't need to dismiss controller from here, library does this for you.
+ Optional method to determine if user taps on Cancel button. If you implement this delegate then you need to dismiss controller yourself.
  */
 -(void)audioCropperControllerDidCancel:(nonnull IQAudioCropperViewController*)controller;
 
