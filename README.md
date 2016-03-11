@@ -115,6 +115,8 @@ To Crop audio file, try something like this:-
 
 Thanks to [Stefan Ceriu](https://github.com/stefanceriu) for his brilliant [SCSiriWaveformView](https://github.com/stefanceriu/SCSiriWaveformView) library.
 
+Thanks to [William Entriken](https://github.com/fulldecent) for his [FDWaveformView](https://github.com/fulldecent/FDWaveformView) library.
+
 ## LICENSE
 
 Distributed under the MIT License.
