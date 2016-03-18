@@ -9,7 +9,8 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/hackiftekhar/IQAudioRecorderController.git", :tag => "v1.1.0" }
   s.source_files = 'IQAudioRecorderController/**/*.{h,m}'
   s.frameworks = 'UIKit', 'AVFoundation'
-  s.dependency 'SCSiriWaveformView', 'FDWaveformView'
+  s.dependency 'SCSiriWaveformView' 
+  s.dependency 'FDWaveformView'
   s.resources    = "IQAudioRecorderController/Resources/*.{png}"
   s.requires_arc = true
 end
