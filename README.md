@@ -37,7 +37,7 @@ There are two seprate classes to Record and Crop Audio files.
 
 To Record audio file, try something like this:-
 
-```
+```objc
 #import "IQAudioRecorderViewController.h"
 
 @interface ViewController ()<IQAudioRecorderViewControllerDelegate>
@@ -75,7 +75,7 @@ To Record audio file, try something like this:-
 
 To Crop audio file, try something like this:-
 
-```
+```objc
 #import "IQAudioCropperViewController.h"
 
 @interface ViewController ()<IQAudioCropperViewControllerDelegate>
