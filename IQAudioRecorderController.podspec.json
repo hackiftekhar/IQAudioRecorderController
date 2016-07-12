@@ -11,10 +11,9 @@
     "ios": "7.0"
   },
   "source": {
-    "git": "https://github.com/hackiftekhar/IQAudioRecorderController.git",
-    "tag": "v1.1.0"
+    "git": "https://github.com/hackiftekhar/IQAudioRecorderController.git"
   },
-  "source_files": "IQAudioRecorderController/**/*.{h,m}",
+  "source_files": "IQAudioRecorderController/*.{h,m}",
   "frameworks": [
     "UIKit",
     "AVFoundation"
