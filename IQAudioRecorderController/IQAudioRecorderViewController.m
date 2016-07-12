@@ -784,7 +784,7 @@
 
 -(void)audioCropperControllerDidCancel:(IQAudioCropperViewController *)controller
 {
-
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Delete Audio
