@@ -26,8 +26,7 @@
 #import "NSString+IQTimeIntervalFormatter.h"
 #import "IQCropSelectionBeginView.h"
 #import "IQCropSelectionEndView.h"
-
-@import FDWaveformView;
+#import "FDWaveformView.h"
 
 @interface IQAudioCropperViewController ()<FDWaveformViewDelegate,AVAudioPlayerDelegate>
 {
