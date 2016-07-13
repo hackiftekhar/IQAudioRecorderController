@@ -5,31 +5,47 @@
 
 `IQAudioRecorderController` is a drop-in universal library allows to record and crop audio within the app with a nice User Interface. There are also optional callback delegate methods to return recorded file path.
 
-## Screenshot
 ![Idle](./Screenshot/Screenshot_Idle.jpeg)
 ![Recording](./Screenshot/Screenshot_Recording.jpg)
 ![Playing](./Screenshot/Screenshot_Playing.jpeg)
 ![No Access](./Screenshot/Screenshot_Cropping.jpg)
 
-## Cocoapod:-
+## Installation
 
+#### CocoaPods
+You can use [CocoaPods](http://cocoapods.org/) to install `IQAudioRecorderController` by adding it to your `Podfile`:
+
+```ruby
+platform :ios, '8.0'
+use_frameworks!
 pod 'IQAudioRecorderController'
+```
+
+To get the full benefits import `IQAudioRecorderController` wherever you import UIKit
+
+``` swift
+import UIKit
+import IQAudioRecorderController
+```
+
+#### Manually
+1. Download and drop ```/IQAudioRecorderController```folder in your project.  
+2. Congratulations!
 
 ## Supported format
 Currently `IQAudioRecorderController` library only support **.m4a** file format.
 
-## Customisation
-There are optional properties to customise the appearance according to your app theme.
+## Customization
+There are optional properties to customize the appearance according to your app theme.
 
-***UIBarStyle barStyle***
+***barStyle: UIBarStyle:***
 Library support light and dark style UI for user interface. If you would like to present light style UI then you need to set barStyle to UIBarStyleDefault, otherwise dark style UI is the default.
 
-***UIColor *normalTintColor***
+***normalTintColor: UIColor:***
 This tintColor is used for showing wave tintColor while not recording, it is also used for top navigationBar and bottom toolbar tintColor.
 
-***UIColor *highlightedTintColor***
+***highlightedTintColor: UIColor:***
 Highlighted tintColor is used when playing recorded audio file or when recording audio file.
-
 
 ## How to use
 
@@ -37,7 +53,7 @@ There are two seprate classes to Record and Crop Audio files.
 
 To Record audio file, try something like this:-
 
-```
+```objc
 #import "IQAudioRecorderViewController.h"
 
 @interface ViewController ()<IQAudioRecorderViewControllerDelegate>
@@ -45,8 +61,7 @@ To Record audio file, try something like this:-
 
 @implementation ViewController
 
-- (void)recordAction:(id)sender
-{
+- (void)recordAction:(id)sender {
     IQAudioRecorderViewController *controller = [[IQAudioRecorderViewController alloc] init];
     controller.delegate = self;
     controller.title = "Recorder";
@@ -58,14 +73,14 @@ To Record audio file, try something like this:-
     [self presentBlurredAudioRecorderViewControllerAnimated:controller];
 }
 
--(void)audioRecorderController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
-{
-  //Do your custom work with file at filePath.
+-(void)audioRecorderController:(IQAudioRecorderViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath {
+    //Do your custom work with file at filePath.
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)audioRecorderControllerDidCancel:(IQAudioRecorderViewController *)controller
-{
-  //Notifying that user has clicked cancel.
+-(void)audioRecorderControllerDidCancel:(IQAudioRecorderViewController *)controller {
+    //Notifying that user has clicked cancel.
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
@@ -73,7 +88,7 @@ To Record audio file, try something like this:-
 
 To Crop audio file, try something like this:-
 
-```
+```objc
 #import "IQAudioCropperViewController.h"
 
 @interface ViewController ()<IQAudioCropperViewControllerDelegate>
@@ -81,8 +96,7 @@ To Crop audio file, try something like this:-
 
 @implementation ViewController
 
--(void)cropAction:(id)item
-{
+-(void)cropAction:(id)item {
     IQAudioCropperViewController *controller = [[IQAudioCropperViewController alloc] initWithFilePath:filePath];
     controller.delegate = self;
     controller.title = "Edit";
@@ -92,28 +106,28 @@ To Crop audio file, try something like this:-
     [self presentBlurredAudioCropperViewControllerAnimated:controller];
 }
 
--(void)audioCropperController:(IQAudioCropperViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
-{
-//Do your custom work with file at filePath.
+-(void)audioCropperController:(IQAudioCropperViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath {
+    //Do your custom work with file at filePath.
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)audioCropperControllerDidCancel:(IQAudioCropperViewController *)controller
-{
-//Notifying that user has clicked cancel.
+-(void)audioCropperControllerDidCancel:(IQAudioCropperViewController *)controller {
+    //Notifying that user has clicked cancel.
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
 ```
 
-
-
 ## Attributions
 
 Thanks to [Stefan Ceriu](https://github.com/stefanceriu) for his brilliant [SCSiriWaveformView](https://github.com/stefanceriu/SCSiriWaveformView) library.
 
+Thanks to [William Entriken](https://github.com/fulldecent) for his [FDWaveformView](https://github.com/fulldecent/FDWaveformView) library.
+
 ## LICENSE
 
-Distributed under the MIT License.
+Distributed under the MIT license. See ``LICENSE`` for more information.
 
 ## Contributions
 

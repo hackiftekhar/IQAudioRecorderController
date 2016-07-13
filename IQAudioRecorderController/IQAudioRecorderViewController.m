@@ -734,8 +734,10 @@
     {
         [self.delegate audioRecorderControllerDidCancel:self];
     }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 -(void)doneAction:(UIBarButtonItem*)item
@@ -744,8 +746,10 @@
     {
         [self.delegate audioRecorderController:self didFinishWithAudioAtPath:_recordingFilePath];
     }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - Crop Audio
@@ -780,7 +784,7 @@
 
 -(void)audioCropperControllerDidCancel:(IQAudioCropperViewController *)controller
 {
-
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Delete Audio
