@@ -807,6 +807,7 @@
     
     [alert addAction:action1];
     [alert addAction:action2];
+    alert.popoverPresentationController.barButtonItem = item;
     [self presentViewController:alert animated:YES completion:nil];
 }
 

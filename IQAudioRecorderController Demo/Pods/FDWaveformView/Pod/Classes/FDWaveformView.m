@@ -37,9 +37,9 @@
 @property (nonatomic, strong) UIView *clipping;
 @property (nonatomic, strong) AVAsset *asset;
 @property (nonatomic, strong) AVAssetTrack *assetTrack;
-@property (nonatomic, assign) unsigned long int totalSamples;
-@property (nonatomic, assign) unsigned long int cachedStartSamples;
-@property (nonatomic, assign) unsigned long int cachedEndSamples;
+@property (nonatomic, assign) long int totalSamples;
+@property (nonatomic, assign) long int cachedStartSamples;
+@property (nonatomic, assign) long int cachedEndSamples;
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchRecognizer;
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
@@ -135,7 +135,7 @@
     }];
 }
 
-- (void)setProgressSamples:(unsigned long)progressSamples
+- (void)setProgressSamples:(long)progressSamples
 {
     _progressSamples = progressSamples;
     if (self.totalSamples) {
@@ -145,14 +145,14 @@
     }
 }
 
-- (void)setZoomStartSamples:(unsigned long)startSamples
+- (void)setZoomStartSamples:(long)startSamples
 {
     _zoomStartSamples = startSamples;
     [self setNeedsDisplay];
     [self setNeedsLayout];
 }
 
-- (void)setZoomEndSamples:(unsigned long)endSamples
+- (void)setZoomEndSamples:(long)endSamples
 {
     _zoomEndSamples = endSamples;
     [self setNeedsDisplay];
@@ -340,17 +340,26 @@
     CGSize imageSize = CGSizeMake(sampleCount, imageHeight);
     UIGraphicsBeginImageContext(imageSize);
     CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetShouldAntialias(context, NO);
     CGContextSetAlpha(context,1.0);
     CGContextSetLineWidth(context, 1.0);
     CGContextSetStrokeColorWithColor(context, [self.wavesColor CGColor]);
     
     float halfGraphHeight = (imageHeight / 2);
     float centerLeft = halfGraphHeight;
-    float sampleAdjustmentFactor = imageHeight / (normalizeMax - noiseFloor) / 2;
-    
+    float sampleAdjustmentFactor;
+    if(normalizeMax - noiseFloor == 0){
+        sampleAdjustmentFactor = imageHeight / 2;
+    }else{
+        sampleAdjustmentFactor = imageHeight / (normalizeMax - noiseFloor) / 2;
+    }
+
     for (NSInteger intSample=0; intSample<sampleCount; intSample++) {
         Float32 sample = *samples++;
         float pixels = (sample - noiseFloor) * sampleAdjustmentFactor;
+        if (pixels == 0) {
+            pixels = 1;
+        }
         CGContextMoveToPoint(context, intSample, centerLeft-pixels);
         CGContextAddLineToPoint(context, intSample, centerLeft+pixels);
         CGContextStrokePath(context);
