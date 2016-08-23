@@ -1,25 +1,12 @@
 PODS:
-  - FDWaveformView (1.0.0)
   - SCSiriWaveformView (1.0.3)
 
 DEPENDENCIES:
-  - FDWaveformView (from `https://github.com/hackiftekhar/FDWaveformView.git`, commit `65369f6729bec964db984b7f7439a915342237de`)
   - SCSiriWaveformView
 
-EXTERNAL SOURCES:
-  FDWaveformView:
-    :commit: 65369f6729bec964db984b7f7439a915342237de
-    :git: https://github.com/hackiftekhar/FDWaveformView.git
-
-CHECKOUT OPTIONS:
-  FDWaveformView:
-    :commit: 65369f6729bec964db984b7f7439a915342237de
-    :git: https://github.com/hackiftekhar/FDWaveformView.git
-
 SPEC CHECKSUMS:
-  FDWaveformView: 77d5d68c5a37153e32f5b703cad5f8a50ec2ed6a
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
 
-PODFILE CHECKSUM: 15f13eba1bf1bf011c0c930bfbc3de3f70b8c311
+PODFILE CHECKSUM: e3eb1ef934821f6ca82f661f6a0c0092e565b633
 
 COCOAPODS: 1.0.1

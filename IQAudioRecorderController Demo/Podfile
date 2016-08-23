@@ -1,5 +1,4 @@
 
 target 'IQAudioRecorderController Demo' do
     pod 'SCSiriWaveformView'
-    pod 'FDWaveformView', :git => 'https://github.com/hackiftekhar/FDWaveformView.git', :commit => '65369f6729bec964db984b7f7439a915342237de'
 end

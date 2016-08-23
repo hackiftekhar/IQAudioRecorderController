@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/hackiftekhar/IQAudioRecorderController.git",
-    "tag": "v1.1.0"
+    "tag": "v1.2.0"
   },
   "source_files": "IQAudioRecorderController/**/*.{h,m}",
   "frameworks": [
@@ -20,8 +20,7 @@
     "AVFoundation"
   ],
   "dependencies": {
-    "SCSiriWaveformView": [],
-	"FDWaveformView":[]
+    "SCSiriWaveformView": []
   },
   "resources": "IQAudioRecorderController/Resources/*.{png}",
   "requires_arc": true

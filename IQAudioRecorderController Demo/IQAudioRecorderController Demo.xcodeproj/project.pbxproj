@@ -31,6 +31,7 @@
 		4CF397381C6FC7D30036C8CE /* microphone_access@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF397351C6FC7D30036C8CE /* microphone_access@3x.png */; };
 		4CF397391C6FC7D30036C8CE /* microphone_access@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF397361C6FC7D30036C8CE /* microphone_access@2x.png */; };
 		4CF3973A1C6FC7D30036C8CE /* microphone_access.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF397371C6FC7D30036C8CE /* microphone_access.png */; };
+		4CF4C9471D6CD9CA00BD8D54 /* IQ_FDWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF4C9451D6CD9CA00BD8D54 /* IQ_FDWaveformView.m */; };
 		B5D474141A6A2EF200771B83 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474131A6A2EF200771B83 /* main.m */; };
 		B5D474171A6A2EF200771B83 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474161A6A2EF200771B83 /* AppDelegate.m */; };
 		B5D4741A1A6A2EF200771B83 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474191A6A2EF200771B83 /* ViewController.m */; };
@@ -73,6 +74,8 @@
 		4CF397351C6FC7D30036C8CE /* microphone_access@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "microphone_access@3x.png"; sourceTree = "<group>"; };
 		4CF397361C6FC7D30036C8CE /* microphone_access@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "microphone_access@2x.png"; sourceTree = "<group>"; };
 		4CF397371C6FC7D30036C8CE /* microphone_access.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = microphone_access.png; sourceTree = "<group>"; };
+		4CF4C9441D6CD9CA00BD8D54 /* IQ_FDWaveformView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQ_FDWaveformView.h; sourceTree = "<group>"; };
+		4CF4C9451D6CD9CA00BD8D54 /* IQ_FDWaveformView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQ_FDWaveformView.m; sourceTree = "<group>"; };
 		B5142A6FB6D1BB49A7B3A76B /* Pods-IQAudioRecorderController Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IQAudioRecorderController Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IQAudioRecorderController Demo/Pods-IQAudioRecorderController Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		B5D4740E1A6A2EF200771B83 /* IQAudioRecorderController Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IQAudioRecorderController Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D474121A6A2EF200771B83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -110,7 +113,7 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		4CAD55CF1C8D5B31001CBDD0 /* AudioRecorderViewController */ = {
+		4CAD55CF1C8D5B31001CBDD0 /* AudioCropperViewController */ = {
 			isa = PBXGroup;
 			children = (
 				4C148FB91C788A1E00688005 /* IQAudioCropperViewController.h */,
@@ -122,10 +125,10 @@
 				4CAD55D71C8D5DCE001CBDD0 /* IQCropSelectionEndView.h */,
 				4CAD55D81C8D5DCE001CBDD0 /* IQCropSelectionEndView.m */,
 			);
-			name = AudioRecorderViewController;
+			name = AudioCropperViewController;
 			sourceTree = "<group>";
 		};
-		4CAD55D01C8D5B40001CBDD0 /* AudioCropperViewController */ = {
+		4CAD55D01C8D5B40001CBDD0 /* AudioRecorderViewController */ = {
 			isa = PBXGroup;
 			children = (
 				B5D474381A6A2F4800771B83 /* IQAudioRecorderViewController.h */,
@@ -133,7 +136,16 @@
 				4CF397151C6F9A460036C8CE /* IQPlaybackDurationView.h */,
 				4CF397161C6F9A460036C8CE /* IQPlaybackDurationView.m */,
 			);
-			name = AudioCropperViewController;
+			name = AudioRecorderViewController;
+			sourceTree = "<group>";
+		};
+		4CF4C9421D6CD9CA00BD8D54 /* FDWaveformView */ = {
+			isa = PBXGroup;
+			children = (
+				4CF4C9441D6CD9CA00BD8D54 /* IQ_FDWaveformView.h */,
+				4CF4C9451D6CD9CA00BD8D54 /* IQ_FDWaveformView.m */,
+			);
+			path = FDWaveformView;
 			sourceTree = "<group>";
 		};
 		9FB013BEC106672D8C3177AD /* Frameworks */ = {
@@ -212,8 +224,9 @@
 		B5D474371A6A2F4800771B83 /* IQAudioRecorderController */ = {
 			isa = PBXGroup;
 			children = (
-				4CAD55D01C8D5B40001CBDD0 /* AudioCropperViewController */,
-				4CAD55CF1C8D5B31001CBDD0 /* AudioRecorderViewController */,
+				4CF4C9421D6CD9CA00BD8D54 /* FDWaveformView */,
+				4CAD55D01C8D5B40001CBDD0 /* AudioRecorderViewController */,
+				4CAD55CF1C8D5B31001CBDD0 /* AudioCropperViewController */,
 				B53594111A6A531100A81727 /* Resources */,
 				4C0BEDF41C70EF8F003BC43A /* IQMessageDisplayView.h */,
 				4C0BEDF51C70EF8F003BC43A /* IQMessageDisplayView.m */,
@@ -374,6 +387,7 @@
 				4CAD55D61C8D5DBF001CBDD0 /* IQCropSelectionBeginView.m in Sources */,
 				4C0BEDF61C70EF8F003BC43A /* IQMessageDisplayView.m in Sources */,
 				4CAD55D31C8D5C55001CBDD0 /* IQCropSelectionView.m in Sources */,
+				4CF4C9471D6CD9CA00BD8D54 /* IQ_FDWaveformView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

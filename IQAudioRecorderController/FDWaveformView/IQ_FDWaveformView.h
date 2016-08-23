@@ -9,22 +9,45 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
 
-@protocol FDWaveformViewDelegate;
+@protocol IQ_FDWaveformViewDelegate;
 
 /// A view for rendering audio waveforms
-@interface FDWaveformView : UIView
+@interface IQ_FDWaveformView : UIView
 
 /// A delegate to accept progress reporting
-@property (nonatomic, weak) id<FDWaveformViewDelegate> delegate;
+@property (nonatomic, weak) id<IQ_FDWaveformViewDelegate> delegate;
 
 /// The audio file to render
 @property (nonatomic, strong) NSURL *audioURL;
 
+/****************************************************************/
+
 /// The total number of audio samples in the file
 @property (nonatomic, assign, readonly) long int totalSamples;
 
+/// The color of the waveform
+@property (nonatomic, copy) UIColor *wavesColor;
+
+/****************************************************************/
+
 /// A portion of the waveform rendering to be highlighted
 @property (nonatomic, assign) long int progressSamples;
+
+/// The color of the highlighted waveform (see `progressSamples`
+@property (nonatomic, copy) UIColor *progressColor;
+
+/****************************************************************/
+
+/// The color of the cropped waveform
+@property (nonatomic, copy) UIColor *cropColor;
+
+/// crop start samples
+@property (nonatomic, assign) long int cropStartSamples;
+
+/// crop end samples
+@property (nonatomic, assign) long int cropEndSamples;
+
+/****************************************************************/
 
 /// The first sample to render
 @property (nonatomic, assign) long int zoomStartSamples;
@@ -41,32 +64,27 @@
 /// Whether to allow the scroll gesture
 @property (nonatomic) BOOL doesAllowScroll;
 
-/// The color of the waveform
-@property (nonatomic, copy) UIColor *wavesColor;
-
-/// The corol of the highlighted waveform (see `progressSamples`
-@property (nonatomic, copy) UIColor *progressColor;
 @end
 
 /// To receive progress updates from FDWaveformView
-@protocol FDWaveformViewDelegate <NSObject>
+@protocol IQ_FDWaveformViewDelegate <NSObject>
 @optional
 
 /// Rendering will begin
-- (void)waveformViewWillRender:(FDWaveformView *)waveformView;
+- (void)waveformViewWillRender:(IQ_FDWaveformView *)waveformView;
 
 /// Rendering did complete
-- (void)waveformViewDidRender:(FDWaveformView *)waveformView;
+- (void)waveformViewDidRender:(IQ_FDWaveformView *)waveformView;
 
 /// An audio file will be loaded
-- (void)waveformViewWillLoad:(FDWaveformView *)waveformView;
+- (void)waveformViewWillLoad:(IQ_FDWaveformView *)waveformView;
 
 /// An audio file was loaded
-- (void)waveformViewDidLoad:(FDWaveformView *)waveformView;
+- (void)waveformViewDidLoad:(IQ_FDWaveformView *)waveformView;
 
 /// The panning gesture did begin
-- (void)waveformDidBeginPanning:(FDWaveformView *)waveformView;
+- (void)waveformDidBeginPanning:(IQ_FDWaveformView *)waveformView;
 
 /// The panning gesture did end
-- (void)waveformDidEndPanning:(FDWaveformView *)waveformView;
+- (void)waveformDidEndPanning:(IQ_FDWaveformView *)waveformView;
 @end

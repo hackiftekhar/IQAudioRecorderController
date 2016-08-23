@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>FDWaveformView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-IQAudioRecorderController Demo.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4B83A8F5A909BCB80A9D2FE028E35DE5</key>
+		<key>8AFA212D4228F8B4669C9174703E7B0F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>733481229447FADD268A19538E6355EC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EDEAEDC50A23D25157C74AE949FAA76E</key>
+		<key>D3841380DB3CE50F4709E74F55597589</key>
 		<dict>
 			<key>primary</key>
 			<true/>
