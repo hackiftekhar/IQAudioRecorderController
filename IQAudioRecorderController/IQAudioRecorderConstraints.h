@@ -24,7 +24,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreAudio/CoreAudioTypes.h>
-#import <AVFoundation/AVAudioSettings.h>
+#import <AVFoundation/AVFoundation.h>
 
 typedef NS_ENUM(NSUInteger, IQAudioFormat) {
     IQAudioFormatDefault,  //   kAudioFormatMPEG4AAC    .m4a
