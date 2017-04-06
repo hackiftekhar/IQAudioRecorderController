@@ -11,7 +11,6 @@
 // see http://stackoverflow.com/questions/3514066/how-to-tint-a-transparent-png-image-in-iphone
 
 #import "IQ_FDWaveformView.h"
-#import <UIKit/UIKit.h>
 
 #define absX(x) ((x)<0?0-(x):(x))
 #define minMaxX(x,mn,mx) ((x)<=(mn)?(mn):((x)>=(mx)?(mx):(x)))

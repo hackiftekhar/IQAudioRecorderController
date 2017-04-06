@@ -23,14 +23,14 @@
 // THE SOFTWARE.
 
 
+@import AVFoundation;
+
 #import "IQAudioRecorderViewController.h"
 #import "NSString+IQTimeIntervalFormatter.h"
 #import "IQPlaybackDurationView.h"
 #import "IQMessageDisplayView.h"
 #import "SCSiriWaveformView.h"
 #import "IQAudioCropperViewController.h"
-
-#import <AVFoundation/AVFoundation.h>
 
 /************************************/
 

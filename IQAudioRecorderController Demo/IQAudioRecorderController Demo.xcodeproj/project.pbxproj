@@ -11,6 +11,7 @@
 		4C0BEDF61C70EF8F003BC43A /* IQMessageDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0BEDF51C70EF8F003BC43A /* IQMessageDisplayView.m */; };
 		4C148FBB1C788A1E00688005 /* IQAudioCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C148FBA1C788A1E00688005 /* IQAudioCropperViewController.m */; };
 		4C2E46871C759C4E005E2015 /* IQAudioRecorderConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E46861C759C4E005E2015 /* IQAudioRecorderConstraints.m */; };
+		4C5E9ABB1E963A1200963C8D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5E9ABA1E963A1200963C8D /* AVFoundation.framework */; };
 		4CAD55D31C8D5C55001CBDD0 /* IQCropSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD55D21C8D5C55001CBDD0 /* IQCropSelectionView.m */; };
 		4CAD55D61C8D5DBF001CBDD0 /* IQCropSelectionBeginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD55D51C8D5DBF001CBDD0 /* IQCropSelectionBeginView.m */; };
 		4CAD55D91C8D5DCE001CBDD0 /* IQCropSelectionEndView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD55D81C8D5DCE001CBDD0 /* IQCropSelectionEndView.m */; };
@@ -49,6 +50,7 @@
 		4C148FBA1C788A1E00688005 /* IQAudioCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioCropperViewController.m; sourceTree = "<group>"; };
 		4C2E46851C759C4E005E2015 /* IQAudioRecorderConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorderConstraints.h; sourceTree = "<group>"; };
 		4C2E46861C759C4E005E2015 /* IQAudioRecorderConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorderConstraints.m; sourceTree = "<group>"; };
+		4C5E9ABA1E963A1200963C8D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4CAD55D11C8D5C55001CBDD0 /* IQCropSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQCropSelectionView.h; sourceTree = "<group>"; };
 		4CAD55D21C8D5C55001CBDD0 /* IQCropSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQCropSelectionView.m; sourceTree = "<group>"; };
 		4CAD55D41C8D5DBF001CBDD0 /* IQCropSelectionBeginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQCropSelectionBeginView.h; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C5E9ABB1E963A1200963C8D /* AVFoundation.framework in Frameworks */,
 				07B7D65A5935B76BCFB37257 /* libPods-IQAudioRecorderController Demo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +154,7 @@
 		9FB013BEC106672D8C3177AD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C5E9ABA1E963A1200963C8D /* AVFoundation.framework */,
 				EB8CAE405301A095C5B87A71 /* libPods-IQAudioRecorderController Demo.a */,
 			);
 			name = Frameworks;
