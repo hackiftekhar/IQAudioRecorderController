@@ -26,6 +26,6 @@
 
 @interface NSString (IQTimeIntervalFormatter)
 
-+(NSString*)timeStringForTimeInterval:(NSTimeInterval)timeInterval;
++(nonnull NSString*)timeStringForTimeInterval:(NSTimeInterval)timeInterval;
 
 @end

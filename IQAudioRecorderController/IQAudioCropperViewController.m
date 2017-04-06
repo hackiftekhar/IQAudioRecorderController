@@ -244,6 +244,11 @@
     {
         NSBundle* bundle = [NSBundle bundleForClass:self.class];
 
+        if (bundle == nil)
+        {
+            bundle = [NSBundle mainBundle];
+        }
+        
         self.navigationController.toolbarHidden = NO;
         
         _flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
