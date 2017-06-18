@@ -11,27 +11,13 @@
 		4C0BEDF61C70EF8F003BC43A /* IQMessageDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0BEDF51C70EF8F003BC43A /* IQMessageDisplayView.m */; };
 		4C148FBB1C788A1E00688005 /* IQAudioCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C148FBA1C788A1E00688005 /* IQAudioCropperViewController.m */; };
 		4C2E46871C759C4E005E2015 /* IQAudioRecorderConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E46861C759C4E005E2015 /* IQAudioRecorderConstraints.m */; };
+		4C3889CE1EF6CE53001F91B1 /* IQAudioRecorderController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4C3889CD1EF6CE53001F91B1 /* IQAudioRecorderController.bundle */; };
 		4C5E9ABB1E963A1200963C8D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5E9ABA1E963A1200963C8D /* AVFoundation.framework */; };
 		4CAD55D31C8D5C55001CBDD0 /* IQCropSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD55D21C8D5C55001CBDD0 /* IQCropSelectionView.m */; };
 		4CAD55D61C8D5DBF001CBDD0 /* IQCropSelectionBeginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD55D51C8D5DBF001CBDD0 /* IQCropSelectionBeginView.m */; };
 		4CAD55D91C8D5DCE001CBDD0 /* IQCropSelectionEndView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD55D81C8D5DCE001CBDD0 /* IQCropSelectionEndView.m */; };
-		4CAD55DD1C8D7A92001CBDD0 /* scissor.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CAD55DA1C8D7A92001CBDD0 /* scissor.png */; };
-		4CAD55DE1C8D7A92001CBDD0 /* scissor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CAD55DB1C8D7A92001CBDD0 /* scissor@2x.png */; };
-		4CAD55DF1C8D7A92001CBDD0 /* scissor@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CAD55DC1C8D7A92001CBDD0 /* scissor@3x.png */; };
 		4CF397171C6F9A460036C8CE /* IQPlaybackDurationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF397161C6F9A460036C8CE /* IQPlaybackDurationView.m */; };
 		4CF3971A1C6F9BE90036C8CE /* NSString+IQTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF397191C6F9BE90036C8CE /* NSString+IQTimeIntervalFormatter.m */; };
-		4CF397221C6FB4C90036C8CE /* audio_record.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF3971C1C6FB4C90036C8CE /* audio_record.png */; };
-		4CF397241C6FB4C90036C8CE /* audio_record@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF3971E1C6FB4C90036C8CE /* audio_record@2x.png */; };
-		4CF397281C6FB7180036C8CE /* audio_record@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF397271C6FB7180036C8CE /* audio_record@3x.png */; };
-		4CF3972F1C6FBE580036C8CE /* stop_recording@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF397291C6FBE580036C8CE /* stop_recording@3x.png */; };
-		4CF397301C6FBE580036C8CE /* stop_playing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF3972A1C6FBE580036C8CE /* stop_playing@3x.png */; };
-		4CF397311C6FBE580036C8CE /* stop_recording@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF3972B1C6FBE580036C8CE /* stop_recording@2x.png */; };
-		4CF397321C6FBE580036C8CE /* stop_playing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF3972C1C6FBE580036C8CE /* stop_playing@2x.png */; };
-		4CF397331C6FBE580036C8CE /* stop_recording.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF3972D1C6FBE580036C8CE /* stop_recording.png */; };
-		4CF397341C6FBE580036C8CE /* stop_playing.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF3972E1C6FBE580036C8CE /* stop_playing.png */; };
-		4CF397381C6FC7D30036C8CE /* microphone_access@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF397351C6FC7D30036C8CE /* microphone_access@3x.png */; };
-		4CF397391C6FC7D30036C8CE /* microphone_access@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF397361C6FC7D30036C8CE /* microphone_access@2x.png */; };
-		4CF3973A1C6FC7D30036C8CE /* microphone_access.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CF397371C6FC7D30036C8CE /* microphone_access.png */; };
 		4CF4C9471D6CD9CA00BD8D54 /* IQ_FDWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF4C9451D6CD9CA00BD8D54 /* IQ_FDWaveformView.m */; };
 		B5D474141A6A2EF200771B83 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474131A6A2EF200771B83 /* main.m */; };
 		B5D474171A6A2EF200771B83 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D474161A6A2EF200771B83 /* AppDelegate.m */; };
@@ -50,6 +36,7 @@
 		4C148FBA1C788A1E00688005 /* IQAudioCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioCropperViewController.m; sourceTree = "<group>"; };
 		4C2E46851C759C4E005E2015 /* IQAudioRecorderConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorderConstraints.h; sourceTree = "<group>"; };
 		4C2E46861C759C4E005E2015 /* IQAudioRecorderConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorderConstraints.m; sourceTree = "<group>"; };
+		4C3889CD1EF6CE53001F91B1 /* IQAudioRecorderController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQAudioRecorderController.bundle; sourceTree = "<group>"; };
 		4C5E9ABA1E963A1200963C8D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4CAD55D11C8D5C55001CBDD0 /* IQCropSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQCropSelectionView.h; sourceTree = "<group>"; };
 		4CAD55D21C8D5C55001CBDD0 /* IQCropSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQCropSelectionView.m; sourceTree = "<group>"; };
@@ -57,25 +44,10 @@
 		4CAD55D51C8D5DBF001CBDD0 /* IQCropSelectionBeginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQCropSelectionBeginView.m; sourceTree = "<group>"; };
 		4CAD55D71C8D5DCE001CBDD0 /* IQCropSelectionEndView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQCropSelectionEndView.h; sourceTree = "<group>"; };
 		4CAD55D81C8D5DCE001CBDD0 /* IQCropSelectionEndView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQCropSelectionEndView.m; sourceTree = "<group>"; };
-		4CAD55DA1C8D7A92001CBDD0 /* scissor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scissor.png; sourceTree = "<group>"; };
-		4CAD55DB1C8D7A92001CBDD0 /* scissor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scissor@2x.png"; sourceTree = "<group>"; };
-		4CAD55DC1C8D7A92001CBDD0 /* scissor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scissor@3x.png"; sourceTree = "<group>"; };
 		4CF397151C6F9A460036C8CE /* IQPlaybackDurationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQPlaybackDurationView.h; sourceTree = "<group>"; };
 		4CF397161C6F9A460036C8CE /* IQPlaybackDurationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQPlaybackDurationView.m; sourceTree = "<group>"; };
 		4CF397181C6F9BE90036C8CE /* NSString+IQTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IQTimeIntervalFormatter.h"; sourceTree = "<group>"; };
 		4CF397191C6F9BE90036C8CE /* NSString+IQTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IQTimeIntervalFormatter.m"; sourceTree = "<group>"; };
-		4CF3971C1C6FB4C90036C8CE /* audio_record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audio_record.png; sourceTree = "<group>"; };
-		4CF3971E1C6FB4C90036C8CE /* audio_record@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_record@2x.png"; sourceTree = "<group>"; };
-		4CF397271C6FB7180036C8CE /* audio_record@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_record@3x.png"; sourceTree = "<group>"; };
-		4CF397291C6FBE580036C8CE /* stop_recording@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop_recording@3x.png"; sourceTree = "<group>"; };
-		4CF3972A1C6FBE580036C8CE /* stop_playing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop_playing@3x.png"; sourceTree = "<group>"; };
-		4CF3972B1C6FBE580036C8CE /* stop_recording@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop_recording@2x.png"; sourceTree = "<group>"; };
-		4CF3972C1C6FBE580036C8CE /* stop_playing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop_playing@2x.png"; sourceTree = "<group>"; };
-		4CF3972D1C6FBE580036C8CE /* stop_recording.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop_recording.png; sourceTree = "<group>"; };
-		4CF3972E1C6FBE580036C8CE /* stop_playing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop_playing.png; sourceTree = "<group>"; };
-		4CF397351C6FC7D30036C8CE /* microphone_access@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "microphone_access@3x.png"; sourceTree = "<group>"; };
-		4CF397361C6FC7D30036C8CE /* microphone_access@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "microphone_access@2x.png"; sourceTree = "<group>"; };
-		4CF397371C6FC7D30036C8CE /* microphone_access.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = microphone_access.png; sourceTree = "<group>"; };
 		4CF4C9441D6CD9CA00BD8D54 /* IQ_FDWaveformView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQ_FDWaveformView.h; sourceTree = "<group>"; };
 		4CF4C9451D6CD9CA00BD8D54 /* IQ_FDWaveformView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQ_FDWaveformView.m; sourceTree = "<group>"; };
 		B5142A6FB6D1BB49A7B3A76B /* Pods-IQAudioRecorderController Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IQAudioRecorderController Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IQAudioRecorderController Demo/Pods-IQAudioRecorderController Demo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -163,21 +135,7 @@
 		B53594111A6A531100A81727 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4CF397371C6FC7D30036C8CE /* microphone_access.png */,
-				4CF397361C6FC7D30036C8CE /* microphone_access@2x.png */,
-				4CF397351C6FC7D30036C8CE /* microphone_access@3x.png */,
-				4CF3972E1C6FBE580036C8CE /* stop_playing.png */,
-				4CF3972C1C6FBE580036C8CE /* stop_playing@2x.png */,
-				4CF3972A1C6FBE580036C8CE /* stop_playing@3x.png */,
-				4CF3972D1C6FBE580036C8CE /* stop_recording.png */,
-				4CF3972B1C6FBE580036C8CE /* stop_recording@2x.png */,
-				4CF397291C6FBE580036C8CE /* stop_recording@3x.png */,
-				4CF3971C1C6FB4C90036C8CE /* audio_record.png */,
-				4CF3971E1C6FB4C90036C8CE /* audio_record@2x.png */,
-				4CF397271C6FB7180036C8CE /* audio_record@3x.png */,
-				4CAD55DA1C8D7A92001CBDD0 /* scissor.png */,
-				4CAD55DB1C8D7A92001CBDD0 /* scissor@2x.png */,
-				4CAD55DC1C8D7A92001CBDD0 /* scissor@3x.png */,
+				4C3889CD1EF6CE53001F91B1 /* IQAudioRecorderController.bundle */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -305,24 +263,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CF397221C6FB4C90036C8CE /* audio_record.png in Resources */,
-				4CF397321C6FBE580036C8CE /* stop_playing@2x.png in Resources */,
-				4CF397331C6FBE580036C8CE /* stop_recording.png in Resources */,
 				B5D4741D1A6A2EF200771B83 /* Main.storyboard in Resources */,
-				4CF397381C6FC7D30036C8CE /* microphone_access@3x.png in Resources */,
-				4CF397341C6FBE580036C8CE /* stop_playing.png in Resources */,
-				4CAD55DD1C8D7A92001CBDD0 /* scissor.png in Resources */,
-				4CF397301C6FBE580036C8CE /* stop_playing@3x.png in Resources */,
 				B5D474221A6A2EF200771B83 /* LaunchScreen.xib in Resources */,
-				4CF3973A1C6FC7D30036C8CE /* microphone_access.png in Resources */,
-				4CF397391C6FC7D30036C8CE /* microphone_access@2x.png in Resources */,
-				4CF397241C6FB4C90036C8CE /* audio_record@2x.png in Resources */,
-				4CF397311C6FBE580036C8CE /* stop_recording@2x.png in Resources */,
-				4CF397281C6FB7180036C8CE /* audio_record@3x.png in Resources */,
-				4CAD55DE1C8D7A92001CBDD0 /* scissor@2x.png in Resources */,
+				4C3889CE1EF6CE53001F91B1 /* IQAudioRecorderController.bundle in Resources */,
 				B5D4741F1A6A2EF200771B83 /* Images.xcassets in Resources */,
-				4CAD55DF1C8D7A92001CBDD0 /* scissor@3x.png in Resources */,
-				4CF3972F1C6FBE580036C8CE /* stop_recording@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
