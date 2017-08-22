@@ -202,7 +202,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
     {
         if (self.title.length == 0)
         {
-            self.navigationItem.title = @"Edit";
+            self.navigationItem.title = NSLocalizedString(@"Edit",nil);
         }
     }
     
@@ -796,11 +796,11 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
 {
     if ([self.originalAudioFilePath isEqualToString:self.currentAudioFilePath] == NO)
     {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Discard changes?" message:@"You have some unsaved changes. Audio will not be saved. Are you sure you want to discard?" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Discard changes?",nil) message:NSLocalizedString(@"You have some unsaved changes. Audio will not be saved. Are you sure you want to discard?",nil) preferredStyle:UIAlertControllerStyleAlert];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleDefault handler:nil]];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Discard" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Discard",nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             
             if ([self.delegate respondsToSelector:@selector(audioCropperControllerDidCancel:)])
             {

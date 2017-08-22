@@ -168,7 +168,7 @@
     
     if (self.title.length == 0)
     {
-        _navigationTitle = @"Audio Recorder";
+        _navigationTitle = NSLocalizedString(@"Audio Recorder",nil);
     }
     else
     {
@@ -196,9 +196,9 @@
         }
         
         viewMicrophoneDenied.image = [[UIImage imageNamed:@"microphone_access" inBundle:resourcesBundle compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        viewMicrophoneDenied.title = @"Microphone Access Denied!";
-        viewMicrophoneDenied.message = @"Unable to access microphone. Please enable microphone access in Settings.";
-        viewMicrophoneDenied.buttonTitle = @"Go to Settings";
+        viewMicrophoneDenied.title = NSLocalizedString(@"Microphone Access Denied!",nil);
+        viewMicrophoneDenied.message = NSLocalizedString(@"Unable to access microphone. Please enable microphone access in Settings.",nil);
+        viewMicrophoneDenied.buttonTitle = NSLocalizedString(@"Go to Settings",nil);
         [visualEffectView.contentView addSubview:viewMicrophoneDenied];
         
     }
@@ -337,7 +337,7 @@
     {
         if (self.title.length == 0 && self.navigationItem.title.length == 0)
         {
-            self.navigationItem.title = @"Audio Recorder";
+            self.navigationItem.title = NSLocalizedString(@"Audio Recorder",nil);
         }
 
         _cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
@@ -794,7 +794,7 @@
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"Delete Recording"
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:NSLocalizedString(@"Delete Recording",nil)
                                                       style:UIAlertActionStyleDestructive
                                                     handler:^(UIAlertAction *action){
 
@@ -806,7 +806,7 @@
                                                         self.navigationItem.title = _navigationTitle;
                                                     }];
     
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"Cancel"
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil)
                                                       style:UIAlertActionStyleCancel
                                                     handler:nil];
     

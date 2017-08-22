@@ -143,9 +143,9 @@
     if (resourcesBundle == nil) resourcesBundle = bundle;
 
     self.image = [UIImage imageNamed:@"microphone_access" inBundle:resourcesBundle compatibleWithTraitCollection:nil];
-    self.title = @"Access Denied!";
-    self.message = @"We are unable to access microphone due to privacy restrictions. Please enable access for microphone in Settings->Privacy Settings->Microphone";
-    self.buttonTitle = @"Go to Settings";
+    self.title = NSLocalizedString(@"Access Denied!",nil);
+    self.message = NSLocalizedString(@"We are unable to access microphone due to privacy restrictions. Please enable access for microphone in Settings->Privacy Settings->Microphone",nil);
+    self.buttonTitle = NSLocalizedString(@"Go to Settings",nil);
 }
 
 -(void)buttonAction:(UIButton*)button
