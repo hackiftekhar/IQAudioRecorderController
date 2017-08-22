@@ -198,7 +198,7 @@
     NSURL *audioURL = [NSURL fileURLWithPath:self.currentAudioFilePath];
     
     CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, 200);
-    frame = CGRectInset(frame, 16, 0);
+//    frame = CGRectInset(frame, 16, 0);
     
     middleContainerView = [[UIView alloc] initWithFrame:frame];
     middleContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
@@ -207,6 +207,8 @@
     
     {
         waveformView = [[IQ_FDWaveformView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(middleContainerView.frame), 150)];
+            waveformView.frame = CGRectInset(frame, 16, 0);
+
         waveformView.delegate = self;
         waveformView.center = CGPointMake(CGRectGetMidX(middleContainerView.bounds), CGRectGetMidY(middleContainerView.bounds));
         waveformView.audioURL = audioURL;
@@ -272,11 +274,18 @@
     
     {
         CGFloat margin = 30;
-        
-        leftCropView = [[IQCropSelectionBeginView alloc] initWithFrame:CGRectMake(CGRectGetMinX(waveformView.frame)-22, CGRectGetMinY(waveformView.frame)-margin, 45, CGRectGetHeight(waveformView.frame)+margin*2)];
+        CGFloat leftX = waveformView.frame.origin.x;
+
+        leftCropView = [[IQCropSelectionBeginView alloc] initWithFrame:CGRectMake(leftX-30, CGRectGetMinY(waveformView.frame)-margin, 60, CGRectGetHeight(waveformView.frame)+margin*2)];
         leftCropView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-        rightCropView = [[IQCropSelectionEndView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(waveformView.frame)-22, CGRectGetMinY(waveformView.frame)-margin, 45, CGRectGetHeight(waveformView.frame)+margin*2)];
+        
+        CGFloat rightX = waveformView.frame.origin.x + waveformView.frame.size.width;
+        
+        rightCropView = [[IQCropSelectionEndView alloc] initWithFrame:CGRectMake(rightX-30, CGRectGetMinY(waveformView.frame)-margin, 60, CGRectGetHeight(waveformView.frame)+margin*2)];
+        
         rightCropView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+        
+
         leftCropView.cropTime = 0;
         rightCropView.cropTime = _audioPlayer.duration;
         waveformView.cropStartSamples = waveformView.totalSamples*(leftCropView.cropTime/_audioPlayer.duration);
@@ -695,11 +704,11 @@
 {
     if ([self.originalAudioFilePath isEqualToString:self.currentAudioFilePath] == NO)
     {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Discard changes?" message:@"You have some unsaved changes. Audio will not be saved. Are you sure you want to discard?" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Discard changes?",nil) message:NSLocalizedString(@"Unsaved Audio Changes",nil) preferredStyle:UIAlertControllerStyleAlert];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleDefault handler:nil]];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Discard" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Discard",nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             
             if ([self.delegate respondsToSelector:@selector(audioCropperControllerDidCancel:)])
             {
