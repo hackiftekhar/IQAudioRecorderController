@@ -128,16 +128,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../IQAudioRecorderController/FDWaveformView/IQ_FDWaveformView.m"
-            timestampString = "519490611.283169"
+            filePath = "../IQAudioRecorderController/IQAudioCropperViewController.m"
+            timestampString = "525122759.011791"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "472"
-            endingLineNumber = "472"
-            landmarkName = "-handlePanGesture:"
+            startingLineNumber = "682"
+            endingLineNumber = "682"
+            landmarkName = "-cropAction:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

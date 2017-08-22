@@ -28,6 +28,12 @@
 #import "IQCropSelectionBeginView.h"
 #import "IQCropSelectionEndView.h"
 
+typedef NS_ENUM(NSUInteger, IQCropGestureState) {
+    IQCropGestureStateNone,
+    IQCropGestureStateLeft,
+    IQCropGestureStateRight,
+};
+
 @interface IQAudioCropperViewController ()<IQ_FDWaveformViewDelegate,AVAudioPlayerDelegate>
 {
     //BlurrView
@@ -73,9 +79,14 @@
 
 @property(nonatomic, assign) BOOL blurrEnabled;
 
+@property(nonatomic, readonly) IQCropGestureState gestureState;
+@property(nonatomic, readonly) UIPanGestureRecognizer *cropPanGesture;
+@property(nonatomic, readonly) UITapGestureRecognizer *cropTapGesture;
+
 @end
 
 @implementation IQAudioCropperViewController
+@synthesize gestureState = _gestureState;
 @dynamic title;
 
 -(instancetype)initWithFilePath:(NSString*)audioFilePath
@@ -197,18 +208,19 @@
     
     NSURL *audioURL = [NSURL fileURLWithPath:self.currentAudioFilePath];
     
-    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, 200);
-    frame = CGRectInset(frame, 16, 0);
-    
-    middleContainerView = [[UIView alloc] initWithFrame:frame];
+    middleContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+    middleContainerView.alpha = 0.0;
     middleContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
     middleContainerView.center = self.view.center;
     [visualEffectView.contentView addSubview:middleContainerView];
     
+    UIEdgeInsets waveformInset = UIEdgeInsetsMake(25, 22, 25, 22);
+
     {
-        waveformView = [[IQ_FDWaveformView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(middleContainerView.frame), 150)];
+        CGRect waveformFrame = UIEdgeInsetsInsetRect(middleContainerView.bounds, waveformInset);
+        waveformView = [[IQ_FDWaveformView alloc] initWithFrame:waveformFrame];
+        waveformView.userInteractionEnabled = NO;
         waveformView.delegate = self;
-        waveformView.center = CGPointMake(CGRectGetMidX(middleContainerView.bounds), CGRectGetMidY(middleContainerView.bounds));
         waveformView.audioURL = audioURL;
         waveformView.wavesColor = [self _normalTintColor];
         waveformView.progressColor = [self _highlightedTintColor];
@@ -273,9 +285,12 @@
     {
         CGFloat margin = 30;
         
-        leftCropView = [[IQCropSelectionBeginView alloc] initWithFrame:CGRectMake(CGRectGetMinX(waveformView.frame)-22, CGRectGetMinY(waveformView.frame)-margin, 45, CGRectGetHeight(waveformView.frame)+margin*2)];
+        leftCropView = [[IQCropSelectionBeginView alloc] initWithFrame:CGRectMake(0, 0, 45, CGRectGetHeight(waveformView.frame)+margin*2)];
+        leftCropView.center = CGPointMake(CGRectGetMinX(waveformView.frame), CGRectGetMidY(waveformView.frame));
         leftCropView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-        rightCropView = [[IQCropSelectionEndView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(waveformView.frame)-22, CGRectGetMinY(waveformView.frame)-margin, 45, CGRectGetHeight(waveformView.frame)+margin*2)];
+        
+        rightCropView = [[IQCropSelectionEndView alloc] initWithFrame:CGRectMake(0, 0, 45, CGRectGetHeight(waveformView.frame)+margin*2)];
+        rightCropView.center = CGPointMake(CGRectGetMaxX(waveformView.frame), CGRectGetMidY(waveformView.frame));
         rightCropView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
         leftCropView.cropTime = 0;
         rightCropView.cropTime = _audioPlayer.duration;
@@ -285,10 +300,12 @@
         [middleContainerView addSubview:leftCropView];
         [middleContainerView addSubview:rightCropView];
         
-        UIPanGestureRecognizer *leftCropPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(leftCropPanRecognizer:)];
-        UIPanGestureRecognizer *rightCropPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(rightCropPanRecognizer:)];
-        [leftCropView addGestureRecognizer:leftCropPanRecognizer];
-        [rightCropView addGestureRecognizer:rightCropPanRecognizer];
+        _cropPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(cropPanRecognizer:)];
+        [middleContainerView addGestureRecognizer:self.cropPanGesture];
+
+        _cropTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cropTapRecognizer:)];
+        [_cropTapGesture requireGestureRecognizerToFail:self.cropPanGesture];
+        [middleContainerView addGestureRecognizer:self.cropTapGesture];
     }
 }
 
@@ -325,44 +342,75 @@
     }
 }
 
--(void)leftCropPanRecognizer:(UIPanGestureRecognizer*)panRecognizer
+-(void)cropTapRecognizer:(UITapGestureRecognizer*)tapRecognizer
 {
-    static CGPoint beginPoint;
-    static CGPoint beginCenter;
-    
-    if (panRecognizer.state == UIGestureRecognizerStateBegan)
+    if (tapRecognizer.state == UIGestureRecognizerStateEnded)
     {
-        beginPoint = [panRecognizer translationInView:middleContainerView];
-        beginCenter = leftCropView.center;
-
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[_stopPlayButton.target methodSignatureForSelector:_stopPlayButton.action]];
         invocation.target = _stopPlayButton.target;
         invocation.selector = _stopPlayButton.action;
         [invocation invoke];
-    }
-    else if (panRecognizer.state == UIGestureRecognizerStateChanged)
-    {
-        CGPoint newPoint = [panRecognizer translationInView:middleContainerView];
         
-        //Left Margin
-        CGFloat pointX = MAX(CGRectGetMinX(waveformView.frame), beginCenter.x+(newPoint.x-beginPoint.x));
+        CGPoint tappedLocation = [tapRecognizer locationInView:middleContainerView];
         
-        //Right Margin from right cropper
-        pointX = MIN(CGRectGetMinX(rightCropView.frame), pointX);
+        CGFloat leftDistance = ABS(leftCropView.center.x-tappedLocation.x);
+        CGFloat rightDistance = ABS(rightCropView.center.x-tappedLocation.x);
         
-        leftCropView.center = CGPointMake(pointX, beginCenter.y);
+        IQCropGestureState state = leftDistance > rightDistance ? IQCropGestureStateRight : IQCropGestureStateLeft;
         
+        switch (state)
         {
-            leftCropView.cropTime = (leftCropView.center.x/waveformView.frame.size.width)*_audioPlayer.duration;
-            _audioPlayer.currentTime = leftCropView.cropTime;
-            waveformView.progressSamples = waveformView.totalSamples*(_audioPlayer.currentTime/_audioPlayer.duration);
-            waveformView.cropStartSamples = waveformView.totalSamples*(leftCropView.cropTime/_audioPlayer.duration);
+            case IQCropGestureStateLeft:
+            {
+                //Left Margin
+                CGFloat pointX = MAX(CGRectGetMinX(waveformView.frame), tappedLocation.x);
+                
+                //Right Margin from right cropper
+                pointX = MIN(CGRectGetMinX(rightCropView.frame), pointX);
+                
+                CGPoint leftCropViewCenter = CGPointMake(pointX, leftCropView.center.y);
+                
+                [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
+                    leftCropView.center = leftCropViewCenter;
+                } completion:NULL];
+
+                {
+                    CGPoint centerInWaveform = [leftCropView.superview convertPoint:leftCropViewCenter toView:waveformView];
+                    
+                    leftCropView.cropTime = (centerInWaveform.x/waveformView.frame.size.width)*_audioPlayer.duration;
+                    _audioPlayer.currentTime = leftCropView.cropTime;
+                    waveformView.progressSamples = waveformView.totalSamples*(_audioPlayer.currentTime/_audioPlayer.duration);
+                    waveformView.cropStartSamples = waveformView.totalSamples*(leftCropView.cropTime/_audioPlayer.duration);
+                }
+            }
+                break;
+            case IQCropGestureStateRight:
+            {
+                //Right Margin
+                CGFloat pointX = MIN(CGRectGetMaxX(waveformView.frame), tappedLocation.x);
+                
+                //Left Margin from left cropper
+                pointX = MAX(CGRectGetMaxX(leftCropView.frame), pointX);
+                
+                CGPoint rightCropViewCenter = CGPointMake(pointX, rightCropView.center.y);
+                
+                [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
+                    rightCropView.center = rightCropViewCenter;
+                } completion:NULL];
+                
+                {
+                    CGPoint centerInWaveform = [rightCropView.superview convertPoint:rightCropViewCenter toView:waveformView];
+                    
+                    rightCropView.cropTime = (centerInWaveform.x/waveformView.frame.size.width)*_audioPlayer.duration;
+                    waveformView.cropEndSamples = waveformView.totalSamples*(rightCropView.cropTime/_audioPlayer.duration);
+                }
+            }
+                break;
+                
+            default:
+                break;
         }
-    }
-    else if (panRecognizer.state == UIGestureRecognizerStateEnded|| panRecognizer.state == UIGestureRecognizerStateFailed)
-    {
-        beginPoint = CGPointZero;
-        beginCenter = CGPointZero;
+
         
         if (leftCropView.cropTime == 0 && rightCropView.cropTime == _audioPlayer.duration)
         {
@@ -375,43 +423,102 @@
     }
 }
 
--(void)rightCropPanRecognizer:(UIPanGestureRecognizer*)panRecognizer
+
+-(void)cropPanRecognizer:(UIPanGestureRecognizer*)panRecognizer
 {
-    static CGPoint beginPoint;
     static CGPoint beginCenter;
+    CGPoint currentLocation = [panRecognizer locationInView:middleContainerView];
     
     if (panRecognizer.state == UIGestureRecognizerStateBegan)
     {
-        beginPoint = [panRecognizer translationInView:middleContainerView];
-        beginCenter = rightCropView.center;
-        
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[_stopPlayButton.target methodSignatureForSelector:_stopPlayButton.action]];
         invocation.target = _stopPlayButton.target;
         invocation.selector = _stopPlayButton.action;
         [invocation invoke];
-    }
-    else if (panRecognizer.state == UIGestureRecognizerStateChanged)
-    {
-        CGPoint newPoint = [panRecognizer translationInView:middleContainerView];
         
-        //Right Margin
-        CGFloat pointX = MIN(CGRectGetMaxX(waveformView.frame), beginCenter.x+(newPoint.x-beginPoint.x));
+        CGFloat leftDistance = ABS(leftCropView.center.x-currentLocation.x);
+        CGFloat rightDistance = ABS(rightCropView.center.x-currentLocation.x);
         
-        //Left Margin from left cropper
-        pointX = MAX(CGRectGetMaxX(leftCropView.frame), pointX);
+        _gestureState = leftDistance > rightDistance ? IQCropGestureStateRight : IQCropGestureStateLeft;
 
-        rightCropView.center = CGPointMake(pointX, beginCenter.y);
-        
+        switch (_gestureState)
         {
-            rightCropView.cropTime = (rightCropView.center.x/waveformView.frame.size.width)*_audioPlayer.duration;
-            waveformView.cropEndSamples = waveformView.totalSamples*(rightCropView.cropTime/_audioPlayer.duration);
+            case IQCropGestureStateLeft:
+            {
+                beginCenter = leftCropView.center;
+            }
+                break;
+            case IQCropGestureStateRight:
+            {
+                beginCenter = rightCropView.center;
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    if (panRecognizer.state == UIGestureRecognizerStateBegan ||
+        panRecognizer.state == UIGestureRecognizerStateChanged)
+    {
+        switch (_gestureState)
+        {
+            case IQCropGestureStateLeft:
+            {
+                //Left Margin
+                CGFloat pointX = MAX(CGRectGetMinX(waveformView.frame), currentLocation.x);
+                
+                //Right Margin from right cropper
+                pointX = MIN(CGRectGetMinX(rightCropView.frame), pointX);
+                
+                CGPoint leftCropViewCenter = CGPointMake(pointX, beginCenter.y);
+
+                [UIView animateWithDuration:(panRecognizer.state == UIGestureRecognizerStateBegan ? 0.2:0) delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
+                    leftCropView.center = leftCropViewCenter;
+                } completion:NULL];
+
+                {
+                    CGPoint centerInWaveform = [leftCropView.superview convertPoint:leftCropViewCenter toView:waveformView];
+                    
+                    leftCropView.cropTime = (centerInWaveform.x/waveformView.frame.size.width)*_audioPlayer.duration;
+                    _audioPlayer.currentTime = leftCropView.cropTime;
+                    waveformView.progressSamples = waveformView.totalSamples*(_audioPlayer.currentTime/_audioPlayer.duration);
+                    waveformView.cropStartSamples = waveformView.totalSamples*(leftCropView.cropTime/_audioPlayer.duration);
+                }
+            }
+                break;
+                case IQCropGestureStateRight:
+            {
+                //Right Margin
+                CGFloat pointX = MIN(CGRectGetMaxX(waveformView.frame), currentLocation.x);
+                
+                //Left Margin from left cropper
+                pointX = MAX(CGRectGetMaxX(leftCropView.frame), pointX);
+                
+                CGPoint rightCropViewCenter = CGPointMake(pointX, beginCenter.y);
+                
+                [UIView animateWithDuration:(panRecognizer.state == UIGestureRecognizerStateBegan ? 0.2:0) delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
+                    rightCropView.center = rightCropViewCenter;
+                } completion:NULL];
+                
+                {
+                    CGPoint centerInWaveform = [rightCropView.superview convertPoint:rightCropViewCenter toView:waveformView];
+                    
+                    rightCropView.cropTime = (centerInWaveform.x/waveformView.frame.size.width)*_audioPlayer.duration;
+                    waveformView.cropEndSamples = waveformView.totalSamples*(rightCropView.cropTime/_audioPlayer.duration);
+                }
+            }
+                break;
+                
+            default:
+                break;
         }
     }
     else if (panRecognizer.state == UIGestureRecognizerStateEnded|| panRecognizer.state == UIGestureRecognizerStateFailed)
     {
-        beginPoint = CGPointZero;
         beginCenter = CGPointZero;
-        
+
         if (leftCropView.cropTime == 0 && rightCropView.cropTime == _audioPlayer.duration)
         {
             _cropButton.enabled = NO;
@@ -420,6 +527,8 @@
         {
             _cropButton.enabled = YES;
         }
+        
+        _gestureState = IQCropGestureStateNone;
     }
 }
 
@@ -533,10 +642,6 @@
         self.view.userInteractionEnabled = NO;
     }
 
-    [[NSOperationQueue new] addOperationWithBlock:^{
-
-//        [NSThread sleepForTimeInterval:5];
-        
         {
             NSURL *audioURL = [NSURL fileURLWithPath:self.currentAudioFilePath];
 
@@ -602,14 +707,11 @@
                                 _audioPlayer.delegate = self;
                                 _audioPlayer.meteringEnabled = YES;
 
-                                CGFloat margin = 30;
+                                [UIView animateWithDuration:0.2 animations:^{
 
-                                [UIView animateWithDuration:0.1 animations:^{
-
-                                    leftCropView.frame = CGRectMake(CGRectGetMinX(waveformView.frame)-22, CGRectGetMinY(waveformView.frame)-margin, 45, CGRectGetHeight(waveformView.frame)+margin*2);
+                                    leftCropView.center = CGPointMake(CGRectGetMinX(waveformView.frame), CGRectGetMidY(waveformView.frame));
+                                    rightCropView.center = CGPointMake(CGRectGetMaxX(waveformView.frame), CGRectGetMidY(waveformView.frame));
                                     leftCropView.cropTime = 0;
-                                    
-                                    rightCropView.frame = CGRectMake(CGRectGetMaxX(waveformView.frame)-22, CGRectGetMinY(waveformView.frame)-margin, 45, CGRectGetHeight(waveformView.frame)+margin*2);
                                     rightCropView.cropTime = _audioPlayer.duration;
                                 }];
                             }
@@ -631,7 +733,6 @@
                 }
             }];
         }
-    }];
 }
 
 #pragma mark - AVAudioPlayerDelegate
@@ -742,11 +843,29 @@
 {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 
-        leftCropView.center = CGPointMake((leftCropView.cropTime/_audioPlayer.duration)*CGRectGetWidth(middleContainerView.frame),leftCropView.center.y);
-        rightCropView.center = CGPointMake((rightCropView.cropTime/_audioPlayer.duration)*CGRectGetWidth(middleContainerView.frame),rightCropView.center.y);
+        CGPoint leftCropViewCenter = CGPointMake(CGRectGetMinX(waveformView.frame)+((leftCropView.cropTime/_audioPlayer.duration)*CGRectGetWidth(waveformView.frame)),leftCropView.center.y);
+        CGPoint rightCropViewCenter = CGPointMake(CGRectGetMinX(waveformView.frame)+((rightCropView.cropTime/_audioPlayer.duration)*CGRectGetWidth(waveformView.frame)),rightCropView.center.y);
+
+        leftCropView.center = leftCropViewCenter;
+        rightCropView.center = rightCropViewCenter;
         
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+
+         {
+             CGPoint centerInWaveform = [leftCropView.superview convertPoint:leftCropView.center toView:waveformView];
+             
+             leftCropView.cropTime = (centerInWaveform.x/waveformView.frame.size.width)*_audioPlayer.duration;
+             _audioPlayer.currentTime = leftCropView.cropTime;
+             waveformView.progressSamples = waveformView.totalSamples*(_audioPlayer.currentTime/_audioPlayer.duration);
+             waveformView.cropStartSamples = waveformView.totalSamples*(leftCropView.cropTime/_audioPlayer.duration);
+         }
          
+         {
+             CGPoint centerInWaveform = [rightCropView.superview convertPoint:rightCropView.center toView:waveformView];
+             
+             rightCropView.cropTime = (centerInWaveform.x/waveformView.frame.size.width)*_audioPlayer.duration;
+             waveformView.cropEndSamples = waveformView.totalSamples*(rightCropView.cropTime/_audioPlayer.duration);
+         }
      }];
 }
 
