@@ -1,0 +1,19 @@
+PODS:
+  - IQAudioRecorderController (1.2.1):
+    - SCSiriWaveformView
+  - SCSiriWaveformView (1.1.1)
+
+DEPENDENCIES:
+  - IQAudioRecorderController (from `.`)
+
+EXTERNAL SOURCES:
+  IQAudioRecorderController:
+    :path: .
+
+SPEC CHECKSUMS:
+  IQAudioRecorderController: 4db6e53d6b4e7134d156c4d4b7822a8595632a1d
+  SCSiriWaveformView: 15b9dd6f94c7536e2032b34a35c6ff74d38c7411
+
+PODFILE CHECKSUM: 8f86a9bff719fe87000669f4d4dd77ed3b5cd532
+
+COCOAPODS: 1.2.1

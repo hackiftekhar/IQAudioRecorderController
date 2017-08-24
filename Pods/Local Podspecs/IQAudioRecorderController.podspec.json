@@ -21,7 +21,9 @@
     "AVFoundation"
   ],
   "dependencies": {
-    "SCSiriWaveformView": []
+    "SCSiriWaveformView": [
+
+    ]
   },
   "requires_arc": true
 }

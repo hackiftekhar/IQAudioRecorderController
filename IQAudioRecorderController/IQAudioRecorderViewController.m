@@ -377,7 +377,7 @@
     }
 
     viewMicrophoneDenied.tintColor = [self _normalTintColor];
-    self.view.tintColor = [self _normalTintColor];
+    visualEffectView.tintColor = [self _normalTintColor];
     self.highlightedTintColor = self.highlightedTintColor;
     self.normalTintColor = self.normalTintColor;
 }
@@ -399,6 +399,7 @@
 
         if (self.blurrEnabled)
         {
+            [UIView animateWithDuration:0.3 animations:^{
                 if (self.barStyle == UIBarStyleDefault)
                 {
                     visualEffectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
@@ -407,16 +408,17 @@
                 {
                     visualEffectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
                 }
+            }];
         }
         else
         {
             if (self.barStyle == UIBarStyleDefault)
             {
-                self.view.backgroundColor = [UIColor whiteColor];
+                visualEffectView.backgroundColor = [UIColor whiteColor];
             }
             else
             {
-                self.view.backgroundColor = [UIColor darkGrayColor];
+                visualEffectView.backgroundColor = [UIColor darkGrayColor];
             }
         }
     }
@@ -731,25 +733,71 @@
 
 -(void)cancelAction:(UIBarButtonItem*)item
 {
-    if ([self.delegate respondsToSelector:@selector(audioRecorderControllerDidCancel:)])
-    {
-        [self.delegate audioRecorderControllerDidCancel:self];
-    }
-    else
-    {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
+    [self notifyCancelDelegate];
 }
 
 -(void)doneAction:(UIBarButtonItem*)item
 {
-    if ([self.delegate respondsToSelector:@selector(audioRecorderController:didFinishWithAudioAtPath:)])
+    [self notifySuccessDelegate];
+}
+
+-(void)notifyCancelDelegate
+{
+    void (^notifyDelegateBlock)(void) = ^{
+        if ([self.delegate respondsToSelector:@selector(audioRecorderControllerDidCancel:)])
+        {
+            [self.delegate audioRecorderControllerDidCancel:self];
+        }
+        else
+        {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    };
+    
+    if (self.blurrEnabled)
     {
-        [self.delegate audioRecorderController:self didFinishWithAudioAtPath:_recordingFilePath];
+        [self.navigationController setToolbarHidden:YES animated:YES];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [UIView animateWithDuration:0.3 animations:^{
+            visualEffectView.effect = nil;
+            musicFlowView.alpha = 0;
+        } completion:^(BOOL finished) {
+            notifyDelegateBlock();
+        }];
     }
     else
     {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        notifyDelegateBlock();
+    }
+}
+
+-(void)notifySuccessDelegate
+{
+    void (^notifyDelegateBlock)(void) = ^{
+        if ([self.delegate respondsToSelector:@selector(audioRecorderController:didFinishWithAudioAtPath:)])
+        {
+            [self.delegate audioRecorderController:self didFinishWithAudioAtPath:_recordingFilePath];
+        }
+        else
+        {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    };
+    
+    if (self.blurrEnabled)
+    {
+        [self.navigationController setToolbarHidden:YES animated:YES];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [UIView animateWithDuration:0.3 animations:^{
+            visualEffectView.effect = nil;
+            musicFlowView.alpha = 0;
+        } completion:^(BOOL finished) {
+            notifyDelegateBlock();
+        }];
+    }
+    else
+    {
+        notifyDelegateBlock();
     }
 }
 
@@ -785,14 +833,14 @@
 
 -(void)audioCropperControllerDidCancel:(IQAudioCropperViewController *)controller
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Delete Audio
 
 -(void)deleteAction:(UIBarButtonItem*)item
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:NSLocalizedString(@"Delete Recording",nil)
                                                       style:UIAlertActionStyleDestructive
@@ -810,10 +858,10 @@
                                                       style:UIAlertActionStyleCancel
                                                     handler:nil];
     
-    [alert addAction:action1];
-    [alert addAction:action2];
-    alert.popoverPresentationController.barButtonItem = item;
-    [self presentViewController:alert animated:YES completion:nil];
+    [alertController addAction:action1];
+    [alertController addAction:action2];
+    alertController.popoverPresentationController.barButtonItem = item;
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - Message Display View
@@ -903,7 +951,7 @@
     navigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
     audioRecorderViewController.barStyle = audioRecorderViewController.barStyle;        //This line is used to refresh UI of Audio Recorder View Controller
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self presentViewController:navigationController animated:NO completion:nil];
 }
 
 @end

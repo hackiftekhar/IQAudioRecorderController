@@ -1,4 +1,0 @@
-
-target 'IQAudioRecorderController Demo' do
-    pod 'SCSiriWaveformView'
-end

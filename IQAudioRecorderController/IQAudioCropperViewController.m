@@ -180,7 +180,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
         waveLoadiingIndicatorView.color = [UIColor whiteColor];
     }
     
-    self.view.tintColor = [self _normalTintColor];
+    visualEffectView.tintColor = [self _normalTintColor];
     self.highlightedTintColor = self.highlightedTintColor;
     self.normalTintColor = self.normalTintColor;
 }
@@ -208,10 +208,10 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
     
     NSURL *audioURL = [NSURL fileURLWithPath:self.currentAudioFilePath];
     
-    middleContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+    middleContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, visualEffectView.frame.size.width, 200)];
     middleContainerView.alpha = 0.0;
     middleContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
-    middleContainerView.center = self.view.center;
+    middleContainerView.center = visualEffectView.center;
     [visualEffectView.contentView addSubview:middleContainerView];
     
     UIEdgeInsets waveformInset = UIEdgeInsetsMake(25, 22, 25, 22);
@@ -319,24 +319,27 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
         
         if (self.blurrEnabled)
         {
-            if (self.barStyle == UIBarStyleDefault)
-            {
-                visualEffectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-            }
-            else
-            {
-                visualEffectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-            }
+            [UIView animateWithDuration:0.3 animations:^{
+                
+                if (self.barStyle == UIBarStyleDefault)
+                {
+                    visualEffectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+                }
+                else
+                {
+                    visualEffectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+                }
+            }];
         }
         else
         {
             if (self.barStyle == UIBarStyleDefault)
             {
-                self.view.backgroundColor = [UIColor whiteColor];
+                visualEffectView.backgroundColor = [UIColor whiteColor];
             }
             else
             {
-                self.view.backgroundColor = [UIColor darkGrayColor];
+                visualEffectView.backgroundColor = [UIColor darkGrayColor];
             }
         }
     }
@@ -639,7 +642,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
         _playButton.enabled = NO;
         _cancelButton.enabled = NO;
         _doneButton.enabled = NO;
-        self.view.userInteractionEnabled = NO;
+        visualEffectView.userInteractionEnabled = NO;
     }
 
         {
@@ -723,7 +726,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
                             _cancelButton.enabled = YES;
                             _doneButton.enabled = YES;
                             _cropButton.enabled = NO;
-                            self.view.userInteractionEnabled = YES;
+                            visualEffectView.userInteractionEnabled = YES;
                         }];
                     }
                         break;
@@ -802,20 +805,26 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
         
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Discard",nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             
-            if ([self.delegate respondsToSelector:@selector(audioCropperControllerDidCancel:)])
-            {
-                [self.delegate audioCropperControllerDidCancel:self];
-            }
-            else
-            {
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
+            [self notifyCancelDelegate];
         }]];
         
+        alertController.popoverPresentationController.barButtonItem = item;
         [self presentViewController:alertController animated:YES completion:nil];
     }
     else
     {
+        [self notifyCancelDelegate];
+    }
+}
+
+-(void)doneAction:(UIBarButtonItem*)item
+{
+    [self notifySuccessDelegate];
+}
+
+-(void)notifyCancelDelegate
+{
+    void (^notifyDelegateBlock)(void) = ^{
         if ([self.delegate respondsToSelector:@selector(audioCropperControllerDidCancel:)])
         {
             [self.delegate audioCropperControllerDidCancel:self];
@@ -824,17 +833,51 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
         {
             [self dismissViewControllerAnimated:YES completion:nil];
         }
+    };
+    
+    if (self.blurrEnabled)
+    {
+        [self.navigationController setToolbarHidden:YES animated:YES];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [UIView animateWithDuration:0.3 animations:^{
+            visualEffectView.effect = nil;
+            middleContainerView.alpha = 0;
+        } completion:^(BOOL finished) {
+            notifyDelegateBlock();
+        }];
+    }
+    else
+    {
+        notifyDelegateBlock();
     }
 }
 
--(void)doneAction:(UIBarButtonItem*)item
+-(void)notifySuccessDelegate
 {
-    if ([self.delegate respondsToSelector:@selector(audioCropperController:didFinishWithAudioAtPath:)])
-    {
-        [self.delegate audioCropperController:self didFinishWithAudioAtPath:_currentAudioFilePath];
-    }
+    void (^notifyDelegateBlock)(void) = ^{
+        if ([self.delegate respondsToSelector:@selector(audioCropperController:didFinishWithAudioAtPath:)])
+        {
+            [self.delegate audioCropperController:self didFinishWithAudioAtPath:_currentAudioFilePath];
+        }
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    };
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.blurrEnabled)
+    {
+        [self.navigationController setToolbarHidden:YES animated:YES];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [UIView animateWithDuration:0.3 animations:^{
+            visualEffectView.effect = nil;
+            middleContainerView.alpha = 0;
+        } completion:^(BOOL finished) {
+            notifyDelegateBlock();
+        }];
+    }
+    else
+    {
+        notifyDelegateBlock();
+    }
 }
 
 #pragma mark - Orientation
@@ -907,7 +950,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
     navigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
     audioCropperViewController.barStyle = audioCropperViewController.barStyle;        //This line is used to refresh UI of Audio Recorder View Controller
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self presentViewController:navigationController animated:NO completion:nil];
 }
 
 @end
