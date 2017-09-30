@@ -118,9 +118,20 @@
         AVKeyValueStatus durationStatus = [self.asset statusOfValueForKey:@"duration" error:&error];
         switch (durationStatus) {
             case AVKeyValueStatusLoaded:{
-                self.image.image = nil;
-                self.highlightedImage.image = nil;
-                self.croppedImage.image = nil;
+                
+                void (^threadSafeNilImage)(void) = ^{
+                    self.image.image = nil;
+                    self.highlightedImage.image = nil;
+                    self.croppedImage.image = nil;
+                };
+                
+                if ([NSThread isMainThread]) {
+                    threadSafeNilImage();
+                } else {
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        threadSafeNilImage();
+                    });
+                }
                 
                 NSArray *formatDesc = self.assetTrack.formatDescriptions;
                 CMAudioFormatDescriptionRef item = (__bridge CMAudioFormatDescriptionRef)formatDesc[0];
@@ -129,8 +140,20 @@
                 self.totalSamples = self.zoomEndSamples = self.cropEndSamples = samples;
                 self.progressSamples = self.zoomStartSamples = self.cropStartSamples = 0;
 
-                [self setNeedsDisplay];
-                [self performSelectorOnMainThread:@selector(setNeedsLayout) withObject:nil waitUntilDone:NO];
+                void (^threadSafeUpdate)(void) = ^{
+                    
+                    [self setNeedsDisplay];
+                    [self setNeedsLayout];
+                };
+                
+                if ([NSThread isMainThread]) {
+                    threadSafeUpdate();
+                } else {
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        threadSafeUpdate();
+                    });
+                }
+
                 break;
             }
             case AVKeyValueStatusUnknown:
@@ -151,11 +174,22 @@
     if (self.totalSamples) {
         float progress = (float)self.progressSamples / self.totalSamples;
         
-        CALayer *layer = [[CALayer alloc] init];
-        layer.frame = CGRectMake(0,0,self.frame.size.width*progress,self.frame.size.height);
-        layer.backgroundColor = [[UIColor blackColor] CGColor];
-        self.highlightedImage.layer.mask = layer;
-        [self setNeedsLayout];
+        void (^threadSafeUpdate)(void) = ^{
+            
+            CALayer *layer = [[CALayer alloc] init];
+            layer.frame = CGRectMake(0,0,self.frame.size.width*progress,self.frame.size.height);
+            layer.backgroundColor = [[UIColor blackColor] CGColor];
+            self.highlightedImage.layer.mask = layer;
+            [self setNeedsLayout];
+        };
+        
+        if ([NSThread isMainThread]) {
+            threadSafeUpdate();
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                threadSafeUpdate();
+            });
+        }
     }
 }
 
@@ -167,18 +201,29 @@
         float startProgress = (float)self.cropStartSamples / self.totalSamples;
         float endProgress = (float)self.cropEndSamples / self.totalSamples;
 
-        CGRect visibleRect = CGRectMake(self.frame.size.width*startProgress,0,self.frame.size.width*(endProgress-startProgress),self.frame.size.height);;
-        UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:self.croppedImage.bounds];
-        [bezierPath appendPath:[UIBezierPath bezierPathWithRect:visibleRect]];
+        void (^threadSafeUpdate)(void) = ^{
+            
+            CGRect visibleRect = CGRectMake(self.frame.size.width*startProgress,0,self.frame.size.width*(endProgress-startProgress),self.frame.size.height);;
+            UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:self.croppedImage.bounds];
+            [bezierPath appendPath:[UIBezierPath bezierPathWithRect:visibleRect]];
+            
+            CAShapeLayer *layer = [[CAShapeLayer alloc] init];
+            layer.frame = self.croppedImage.bounds;
+            layer.fillRule = kCAFillRuleEvenOdd;
+            layer.fillColor = [UIColor blackColor].CGColor;
+            layer.path = bezierPath.CGPath;
+            
+            self.croppedImage.layer.mask = layer;
+            [self setNeedsLayout];
+        };
         
-        CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-        layer.frame = self.croppedImage.bounds;
-        layer.fillRule = kCAFillRuleEvenOdd;
-        layer.fillColor = [UIColor blackColor].CGColor;
-        layer.path = bezierPath.CGPath;
-
-        self.croppedImage.layer.mask = layer;
-        [self setNeedsLayout];
+        if ([NSThread isMainThread]) {
+            threadSafeUpdate();
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                threadSafeUpdate();
+            });
+        }
     }
 }
 
@@ -208,15 +253,39 @@
 - (void)setZoomStartSamples:(long)startSamples
 {
     _zoomStartSamples = startSamples;
-    [self setNeedsDisplay];
-    [self setNeedsLayout];
+
+    void (^threadSafeUpdate)(void) = ^{
+        
+        [self setNeedsDisplay];
+        [self setNeedsLayout];
+    };
+    
+    if ([NSThread isMainThread]) {
+        threadSafeUpdate();
+    } else {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            threadSafeUpdate();
+        });
+    }
 }
 
 - (void)setZoomEndSamples:(long)endSamples
 {
     _zoomEndSamples = endSamples;
-    [self setNeedsDisplay];
-    [self setNeedsLayout];
+    
+    void (^threadSafeUpdate)(void) = ^{
+        
+        [self setNeedsDisplay];
+        [self setNeedsLayout];
+    };
+    
+    if ([NSThread isMainThread]) {
+        threadSafeUpdate();
+    } else {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            threadSafeUpdate();
+        });
+    }
 }
 
 - (void)layoutSubviews
@@ -278,8 +347,21 @@
     unsigned long int renderStartSamples = minMaxX((long)self.zoomStartSamples - displayRange * horizontalTargetBleed, 0, self.totalSamples);
     unsigned long int renderEndSamples = minMaxX((long)self.zoomEndSamples + displayRange * horizontalTargetBleed, 0, self.totalSamples);
     
-    CGFloat widthInPixels = self.frame.size.width * [UIScreen mainScreen].scale * horizontalTargetOverdraw;
-    CGFloat heightInPixels = self.frame.size.height * [UIScreen mainScreen].scale * verticalTargetOverdraw;
+    __block CGFloat widthInPixels = 0;
+    __block CGFloat heightInPixels = 0;
+    
+    if ([NSThread isMainThread])
+    {
+        widthInPixels = self.frame.size.width * [UIScreen mainScreen].scale * horizontalTargetOverdraw;
+        heightInPixels = self.frame.size.height * [UIScreen mainScreen].scale * verticalTargetOverdraw;
+    }
+    else
+    {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            widthInPixels = self.frame.size.width * [UIScreen mainScreen].scale * horizontalTargetOverdraw;
+            heightInPixels = self.frame.size.height * [UIScreen mainScreen].scale * verticalTargetOverdraw;
+        });
+    }
     
     [IQ_FDWaveformView sliceAndDownsampleAsset:self.asset track:self.assetTrack startSamples:renderStartSamples endSamples:renderEndSamples targetSamples:widthInPixels done:^(NSData *samples, NSInteger sampleCount, Float32 sampleMax) {
         

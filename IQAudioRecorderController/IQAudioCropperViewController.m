@@ -43,7 +43,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
     UIView *middleContainerView;
     
     IQ_FDWaveformView *waveformView;
-    UIActivityIndicatorView *waveLoadiingIndicatorView;
+    UIActivityIndicatorView *waveLoadingIndicatorView;
     
     //Navigation Bar
     UIBarButtonItem *_cancelButton;
@@ -168,7 +168,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
         self.navigationController.navigationBar.tintColor = [self _normalTintColor];
         self.navigationController.toolbar.tintColor = [self _normalTintColor];
         _cropActivityIndicatorView.color = [UIColor lightGrayColor];
-        waveLoadiingIndicatorView.color = [UIColor lightGrayColor];
+        waveLoadingIndicatorView.color = [UIColor lightGrayColor];
     }
     else
     {
@@ -177,7 +177,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
         self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
         self.navigationController.toolbar.tintColor = [UIColor whiteColor];
         _cropActivityIndicatorView.color = [UIColor whiteColor];
-        waveLoadiingIndicatorView.color = [UIColor whiteColor];
+        waveLoadingIndicatorView.color = [UIColor whiteColor];
     }
     
     visualEffectView.tintColor = [self _normalTintColor];
@@ -210,9 +210,28 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
     
     middleContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, visualEffectView.frame.size.width, 200)];
     middleContainerView.alpha = 0.0;
-    middleContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
-    middleContainerView.center = visualEffectView.center;
     [visualEffectView.contentView addSubview:middleContainerView];
+    
+    waveLoadingIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [visualEffectView.contentView addSubview:waveLoadingIndicatorView];
+    
+
+    {
+        middleContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+        waveLoadingIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
+
+        NSDictionary *views = @{@"middleContainerView":middleContainerView};
+        
+        NSMutableArray *constraints = [[NSMutableArray alloc] init];
+        
+        [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[middleContainerView]-|" options:0 metrics:nil views:views]];
+
+        [constraints addObject:[NSLayoutConstraint constraintWithItem:middleContainerView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:visualEffectView.contentView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+        [constraints addObject:[NSLayoutConstraint constraintWithItem:waveLoadingIndicatorView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:middleContainerView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+        [constraints addObject:[NSLayoutConstraint constraintWithItem:waveLoadingIndicatorView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:middleContainerView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+        
+        [visualEffectView.contentView addConstraints:constraints];
+    }
     
     UIEdgeInsets waveformInset = UIEdgeInsetsMake(25, 22, 25, 22);
 
@@ -229,14 +248,20 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
         waveformView.doesAllowScroll = NO;
         waveformView.doesAllowScrubbing = NO;
         waveformView.doesAllowStretch = NO;
-        
-        waveformView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         [middleContainerView addSubview:waveformView];
         
-        waveLoadiingIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        waveLoadiingIndicatorView.center = middleContainerView.center;
-        waveLoadiingIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-        [visualEffectView.contentView addSubview:waveLoadiingIndicatorView];
+        {
+            waveformView.translatesAutoresizingMaskIntoConstraints = NO;
+
+            NSDictionary *views = @{@"waveformView":waveformView};
+            
+            NSMutableArray *constraints = [[NSMutableArray alloc] init];
+            
+            [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-22-[waveformView]-22-|" options:0 metrics:nil views:views]];
+            [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-25-[waveformView(==150)]-25-|" options:0 metrics:nil views:views]];
+
+            [middleContainerView addConstraints:constraints];
+        }
     }
     
     {
@@ -758,7 +783,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         [UIView animateWithDuration:0.1 animations:^{
             middleContainerView.alpha = 0.0;
-            [waveLoadiingIndicatorView startAnimating];
+            [waveLoadingIndicatorView startAnimating];
         }];
     }];
 }
@@ -767,7 +792,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
 {
     [UIView animateWithDuration:0.1 animations:^{
         middleContainerView.alpha = 1.0;
-        [waveLoadiingIndicatorView stopAnimating];
+        [waveLoadingIndicatorView stopAnimating];
     }];
 }
 

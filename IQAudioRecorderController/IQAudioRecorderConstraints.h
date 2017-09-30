@@ -22,9 +22,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-@import Foundation;
-@import CoreAudio;
-@import AVFoundation.AVFAudio.AVAudioSettings;
+#import <Foundation/Foundation.h>
+#import <CoreAudio/CoreAudioTypes.h>
+#import <AVFoundation/AVFoundation.h>
 
 typedef NS_ENUM(NSUInteger, IQAudioFormat) {
     IQAudioFormatDefault,  //   kAudioFormatMPEG4AAC    .m4a

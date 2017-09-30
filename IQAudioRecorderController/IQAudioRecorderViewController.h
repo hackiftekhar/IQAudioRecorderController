@@ -23,7 +23,7 @@
 // THE SOFTWARE.
 
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 #import "IQAudioRecorderConstraints.h"
 

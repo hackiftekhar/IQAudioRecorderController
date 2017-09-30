@@ -5,9 +5,8 @@
 //  Copyright (c) 2013 William Entriken. All rights reserved.
 //
 
-@import UIKit;
-@import MediaPlayer;
-@import AVFoundation;
+#import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 @protocol IQ_FDWaveformViewDelegate;
 
