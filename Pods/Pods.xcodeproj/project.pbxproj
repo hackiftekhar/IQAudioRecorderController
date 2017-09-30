@@ -7,40 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		075CE4802EB3983F7954D1F30600F9F5 /* IQCropSelectionBeginView.h in Headers */ = {isa = PBXBuildFile; fileRef = FCD54CEED1762E6B28FD96A96B9198FA /* IQCropSelectionBeginView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		008B1DBFBACD5BDFAC5B13A7F6454CDB /* IQ_FDWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35DA9CA69A86892AD187B6A778BA017D /* IQ_FDWaveformView.m */; };
+		00B545AE9F057B83D0B416EFE12409D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C1AF1A2C1DA4AAE58E96B4FFC8C74B2 /* Foundation.framework */; };
+		0298578C233322FFFE2FA17DC65B4DF3 /* IQAudioRecorderConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 63844E7F98C28F70C1BE7093450FE048 /* IQAudioRecorderConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07AE00CAEE93DBF3104839F02EFAA0E4 /* IQMessageDisplayView.h in Headers */ = {isa = PBXBuildFile; fileRef = 20DE4A6C21DD75C4A5F8F4D098CB0B6A /* IQMessageDisplayView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		0C4D2A11E71F938028BBF56169422F7B /* IQAudioRecorderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D5C4EA910AA69D767D406F8D92B83A2D /* IQAudioRecorderViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		158CB9F72740EBA8B110BF0173401BB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B4D7139C056742CFBD144958EA9F0F5 /* UIKit.framework */; };
+		1750C6574278E11E67FFFC03A141F02C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C1AF1A2C1DA4AAE58E96B4FFC8C74B2 /* Foundation.framework */; };
 		196C03C89F143A201EC2FA639ED57C00 /* Pods-IQAudioRecorderController Demo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6BD70BCD0BF355CC9E1F77632EEF5 /* Pods-IQAudioRecorderController Demo-dummy.m */; };
-		1AA542F6DC39A76E31EC0F850F71F8EC /* IQPlaybackDurationView.m in Sources */ = {isa = PBXBuildFile; fileRef = B852B9B97C7EE4DDE726F3F171F2824D /* IQPlaybackDurationView.m */; };
-		1D0C2E02DD05CC33794C8179704837F3 /* IQAudioRecorderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C9B8D72C5A2DC4BCA3F6CFE0A4097D5 /* IQAudioRecorderViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		22381CE2C3253BF66B99E38A13FDD1FD /* IQCropSelectionBeginView.m in Sources */ = {isa = PBXBuildFile; fileRef = F073F495EEF5394C6A6E25FD7B00F2C5 /* IQCropSelectionBeginView.m */; };
-		22E31A6E587C8E6D2DE0DA19D5455F74 /* NSString+IQTimeIntervalFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = C38A67EC7CDBE3BB3AC9D492D4033AF7 /* NSString+IQTimeIntervalFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2466DDF6C10EC3BB52BD02BA799B70FF /* IQCropSelectionEndView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA79DDDD0A1E81066A0D3862B69AB5C /* IQCropSelectionEndView.m */; };
-		310B4C029D2AED73AEDAD7549E7CDA05 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82762087201D191C524F4D7958FCBAF /* AVFoundation.framework */; };
-		45D1C85770A0DCF1048A2857D2137AFF /* IQMessageDisplayView.h in Headers */ = {isa = PBXBuildFile; fileRef = 115C98BBE5FD14FEFC0E158F8F24F7BD /* IQMessageDisplayView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C50F1893361D0D4307E4B7743DB33F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F5EB77DC99ABDB4BA746A91D9B96DA /* UIKit.framework */; };
-		65E4C880A5CC4F7B55F7082BFAA2943E /* IQAudioCropperViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2115D605026FC9B1FEB9460AABFBB8BF /* IQAudioCropperViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		68A547768529847327CE3ABB81338DDB /* IQCropSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80465E4EAC95CC02E96629BE7A378709 /* IQCropSelectionView.m */; };
-		6FFC404845A1CCD19F91953BC4D9ADA3 /* IQAudioRecorderConstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = C874D29FAB202FC6D5DE77408C99DE79 /* IQAudioRecorderConstraints.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		74ADAAD243EC03D9CC298584797E9D9E /* NSString+IQTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D30BDCE49A642437BEF0A42EE9814710 /* NSString+IQTimeIntervalFormatter.m */; };
-		80D40110A87C8317974D0208E34602B4 /* IQAudioRecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5486CA3EF2940BC22F304C93FE4572B3 /* IQAudioRecorderViewController.m */; };
-		8632CA61A75B0AC954120A4BD7EFD4E0 /* IQAudioRecorderController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E959A35DE57844231D672899ABD1E23C /* IQAudioRecorderController-dummy.m */; };
-		8DFEAA96A4BE26810B85A580A8054FDC /* IQMessageDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 150BBE1BEB6610878F89809339FF461E /* IQMessageDisplayView.m */; };
-		906BC43F02AF5AC92D8B0877D068EC8B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3365EAEC6295706CD0A55608D4AFD8A8 /* Foundation.framework */; };
-		914567F8CB06650FD2744F5CE0CFE83D /* IQ_FDWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECDA0B80900533DE5EBDDD6F8C8E9576 /* IQ_FDWaveformView.m */; };
-		A0216F97EE76EEAC00FF1EF64B56E827 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CCB1597205B19237D049C7775969697 /* QuartzCore.framework */; };
-		A6C3E555A6C24F7A93C0FF9DAD43E8DF /* IQCropSelectionEndView.h in Headers */ = {isa = PBXBuildFile; fileRef = B69310EA2ECD838F0C4C1067E0ED587D /* IQCropSelectionEndView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BA24065C0DA7BA2463F6DAAFAF6C3D1E /* IQ_FDWaveformView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB59FAA5B233ABAC9BA8DB3FBC8CFF9 /* IQ_FDWaveformView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BCDF549F3B3BF8A22D9C93E610281556 /* IQAudioRecorderConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98C93345CEAAC6B760F7B3E0A8198E /* IQAudioRecorderConstraints.m */; };
-		CC02E1642653A22D633F75B85C7A2B33 /* IQPlaybackDurationView.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6964706A476F719C36EAC2984AC168 /* IQPlaybackDurationView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D184F78259D15E09A0A805B91BDBA4B8 /* SCSiriWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB50F22742B98F3E9A844F96962C1FEC /* SCSiriWaveformView.m */; };
-		D2C36287A0D819EFF05FCEFC2722E719 /* SCSiriWaveformView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 197AA7E8FEF848CBA4FB165E498D0FA5 /* SCSiriWaveformView-dummy.m */; };
-		DD369F0D5FABC406032978DC2FA2C043 /* SCSiriWaveformView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D773D64936C9A4DACE0B04EE8C90ABB /* SCSiriWaveformView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E06BCAB12DDB17AC91744533530C0C9E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82762087201D191C524F4D7958FCBAF /* AVFoundation.framework */; };
-		E48F232575A5D40D9BC2F43D8A067907 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3365EAEC6295706CD0A55608D4AFD8A8 /* Foundation.framework */; };
-		E8D1C4CF3E554619E0C5B3C88F0C9999 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 603A638D24A0ADE588FDB8C7B7489A5E /* CoreGraphics.framework */; };
-		EF5AA9E2484DC04669489D1DC98A1CBD /* IQCropSelectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = BDABD6561BB0E8752BBE0E64EDADE6D2 /* IQCropSelectionView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8D300DB61F4D93220D3425FCC9D8632 /* IQAudioCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF95B80510E82EAD8173F5CDB10D772F /* IQAudioCropperViewController.m */; };
-		FA2332C18F1B7D67D0C0B739C708A294 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F5EB77DC99ABDB4BA746A91D9B96DA /* UIKit.framework */; };
-		FDB71E4E4AC644CD68B54D0A367EB835 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3365EAEC6295706CD0A55608D4AFD8A8 /* Foundation.framework */; };
+		24C5150EC898B99EE34964FC0291858C /* IQPlaybackDurationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DCA2A02324A686EB1B8DC60BF9918D /* IQPlaybackDurationView.m */; };
+		32EFA92185CB0C84829BB5FB93E1C6DD /* NSString+IQTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 24173866EB20B4A56535D60FC5F89F03 /* NSString+IQTimeIntervalFormatter.m */; };
+		36050C63AEC5BC62866A73C022924D8F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B4D7139C056742CFBD144958EA9F0F5 /* UIKit.framework */; };
+		4792B48842884FCB633FE57963C55C71 /* IQMessageDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED005B411A7E30492C04C8546646F187 /* IQMessageDisplayView.m */; };
+		4ABCEAB1975C5B592AAFAB8E0BBF9AC3 /* IQ_FDWaveformView.h in Headers */ = {isa = PBXBuildFile; fileRef = B8B418345C7AB2F5B0D4CB1D61D7DEA1 /* IQ_FDWaveformView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		4E8E465949AC8F43C13BD26F4C75D28A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841B8823931F45C2B231D271B1D326B4 /* CoreGraphics.framework */; };
+		5393B91B07F2C1F6CB439D549880CC4A /* IQCropSelectionBeginView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4510C8DECBD519BA2389312B77580FF /* IQCropSelectionBeginView.m */; };
+		5891A64689BCD9070936C744C71997AC /* SCSiriWaveformView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 197AA7E8FEF848CBA4FB165E498D0FA5 /* SCSiriWaveformView-dummy.m */; };
+		671F1718B18A58AEAB036A79FEED18EF /* IQAudioRecorderConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E39B6A463CB4655B8CC86AB6E6111CB /* IQAudioRecorderConstants.m */; };
+		6FE5B6E6252E00B17E6CE488E6F5AD5B /* IQAudioCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3333805E6D5536ED2191FF41749F85 /* IQAudioCropperViewController.m */; };
+		774D71887E74815D22FEEEFDCD15E9C3 /* IQCropSelectionEndView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8EA44C860E58FE45A238676422AC4F /* IQCropSelectionEndView.m */; };
+		854FAB36EAA79ECB1F334AE94845E31B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEFBE12E86D2D287753A614CE9706A2 /* QuartzCore.framework */; };
+		8CD223D5EB1B03EA41F496298772D678 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA4392B410EE8E416AE36089595DA05 /* CoreAudio.framework */; };
+		9F18C87A0BF17970D609D3EB50754FAF /* IQAudioRecorderController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FCCD5429229639F4E33899D9819D13EF /* IQAudioRecorderController-dummy.m */; };
+		A2D5DB10349615CA42C7B5F50BA09B6C /* SCSiriWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB50F22742B98F3E9A844F96962C1FEC /* SCSiriWaveformView.m */; };
+		A7E2D30D048A16B0BA7D7DCFF25DE217 /* IQCropSelectionEndView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DDA1678D2DA166E3B330EA5C0AD59B1 /* IQCropSelectionEndView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		B6E2FA9AAC1E952FCA9CA0C3F12A0F43 /* IQAudioRecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1684BEFD8E2E491361BFA6FFA0091512 /* IQAudioRecorderViewController.m */; };
+		B8C328CD5634DBF9A55A637B32AEEE5D /* SCSiriWaveformView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D773D64936C9A4DACE0B04EE8C90ABB /* SCSiriWaveformView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C0F79CD95709179BA9C56FF51C0535F6 /* IQCropSelectionBeginView.h in Headers */ = {isa = PBXBuildFile; fileRef = E18A8DCB57088793D581A783D3EF789C /* IQCropSelectionBeginView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		D046D1E5ED8BE70CAE4A3266A57E1697 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFE4F791937BD173E98C8FFBE824CE7 /* AVFoundation.framework */; };
+		D8088304BD4D0114F444CD15D6911279 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFE4F791937BD173E98C8FFBE824CE7 /* AVFoundation.framework */; };
+		DAB2E21E14BCEC0E97913E1346C5ED6D /* NSString+IQTimeIntervalFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = E6B780A3F92B51019B187F08290CAD91 /* NSString+IQTimeIntervalFormatter.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		E188834B0151842DA3804177638426B6 /* IQCropSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19434D4639EBC1F3FF23E30D0D8A8B45 /* IQCropSelectionView.m */; };
+		E859809DC1F6E5B1D07F333C5D7FAE4C /* IQPlaybackDurationView.h in Headers */ = {isa = PBXBuildFile; fileRef = E452DCF57E2020B88BDBDA5E505FE1E4 /* IQPlaybackDurationView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		F3C0DEC519EC71D469E3EE2E24F7E52F /* IQCropSelectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A93CEC39001B419DC00E0F7CDDC559D /* IQCropSelectionView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		F449D3C8ED800A68FB7BA155DC25F2CC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841B8823931F45C2B231D271B1D326B4 /* CoreGraphics.framework */; };
+		FD30A3F1FC8C9DE99FD30A1615FAE1D4 /* IQAudioCropperViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 274813169CB48ECC054224A0355C9809 /* IQAudioCropperViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FDB71E4E4AC644CD68B54D0A367EB835 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C1AF1A2C1DA4AAE58E96B4FFC8C74B2 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,21 +50,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A3207C8E40EF854A7BE058BC1545D98A;
+			remoteGlobalIDString = 6455C2CA1E136B9B640008F00CBA8F8B;
 			remoteInfo = IQAudioRecorderController;
+		};
+		3FFD9DA9B858E62F0C7D7745EC45BFD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A71B8246BBBE0296DC8D26D5AA7DE4D9;
+			remoteInfo = SCSiriWaveformView;
 		};
 		442C542DB3DD19429A29D88EAAE00312 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = FD53E3BD1F53D2E054A9906EDD5EDF6B;
-			remoteInfo = SCSiriWaveformView;
-		};
-		61FE72545CE12F67060CE353AD1DACAB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FD53E3BD1F53D2E054A9906EDD5EDF6B;
+			remoteGlobalIDString = A71B8246BBBE0296DC8D26D5AA7DE4D9;
 			remoteInfo = SCSiriWaveformView;
 		};
 /* End PBXContainerItemProxy section */
@@ -70,71 +72,74 @@
 /* Begin PBXFileReference section */
 		030F96130E46FEE56ED0583430A7B5F7 /* Pods-IQAudioRecorderController Demo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-IQAudioRecorderController Demo-acknowledgements.markdown"; sourceTree = "<group>"; };
 		08282BF00B6AA2031D9497FD4DD02A05 /* Pods-IQAudioRecorderController Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-IQAudioRecorderController Demo-frameworks.sh"; sourceTree = "<group>"; };
-		0C9B8D72C5A2DC4BCA3F6CFE0A4097D5 /* IQAudioRecorderViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorderViewController.h; sourceTree = "<group>"; };
-		115C98BBE5FD14FEFC0E158F8F24F7BD /* IQMessageDisplayView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = IQMessageDisplayView.h; sourceTree = "<group>"; };
-		150BBE1BEB6610878F89809339FF461E /* IQMessageDisplayView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = IQMessageDisplayView.m; sourceTree = "<group>"; };
+		10DCA2A02324A686EB1B8DC60BF9918D /* IQPlaybackDurationView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQPlaybackDurationView.m; path = IQAudioRecorderController/IQPlaybackDurationView.m; sourceTree = "<group>"; };
+		1684BEFD8E2E491361BFA6FFA0091512 /* IQAudioRecorderViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQAudioRecorderViewController.m; path = IQAudioRecorderController/IQAudioRecorderViewController.m; sourceTree = "<group>"; };
+		19434D4639EBC1F3FF23E30D0D8A8B45 /* IQCropSelectionView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQCropSelectionView.m; path = IQAudioRecorderController/IQCropSelectionView.m; sourceTree = "<group>"; };
 		197AA7E8FEF848CBA4FB165E498D0FA5 /* SCSiriWaveformView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SCSiriWaveformView-dummy.m"; sourceTree = "<group>"; };
 		1DD6BD70BCD0BF355CC9E1F77632EEF5 /* Pods-IQAudioRecorderController Demo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-IQAudioRecorderController Demo-dummy.m"; sourceTree = "<group>"; };
-		2115D605026FC9B1FEB9460AABFBB8BF /* IQAudioCropperViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = IQAudioCropperViewController.h; sourceTree = "<group>"; };
+		1E39B6A463CB4655B8CC86AB6E6111CB /* IQAudioRecorderConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQAudioRecorderConstants.m; path = IQAudioRecorderController/IQAudioRecorderConstants.m; sourceTree = "<group>"; };
+		20DE4A6C21DD75C4A5F8F4D098CB0B6A /* IQMessageDisplayView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQMessageDisplayView.h; path = IQAudioRecorderController/IQMessageDisplayView.h; sourceTree = "<group>"; };
 		23DBA9B767BB3B9C6E5F5587830986D9 /* libIQAudioRecorderController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libIQAudioRecorderController.a; path = libIQAudioRecorderController.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CCB1597205B19237D049C7775969697 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		24173866EB20B4A56535D60FC5F89F03 /* NSString+IQTimeIntervalFormatter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSString+IQTimeIntervalFormatter.m"; path = "IQAudioRecorderController/NSString+IQTimeIntervalFormatter.m"; sourceTree = "<group>"; };
+		274813169CB48ECC054224A0355C9809 /* IQAudioCropperViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQAudioCropperViewController.h; path = IQAudioRecorderController/IQAudioCropperViewController.h; sourceTree = "<group>"; };
 		2D773D64936C9A4DACE0B04EE8C90ABB /* SCSiriWaveformView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SCSiriWaveformView.h; path = SCSiriWaveformView/SCSiriWaveformView.h; sourceTree = "<group>"; };
-		3365EAEC6295706CD0A55608D4AFD8A8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		3CA79DDDD0A1E81066A0D3862B69AB5C /* IQCropSelectionEndView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = IQCropSelectionEndView.m; sourceTree = "<group>"; };
-		433D03DB637E3EEAA2CC56099984ECE1 /* IQAudioRecorderController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQAudioRecorderController-prefix.pch"; sourceTree = "<group>"; };
-		4CB59FAA5B233ABAC9BA8DB3FBC8CFF9 /* IQ_FDWaveformView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = IQ_FDWaveformView.h; sourceTree = "<group>"; };
-		5486CA3EF2940BC22F304C93FE4572B3 /* IQAudioRecorderViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorderViewController.m; sourceTree = "<group>"; };
+		2EFE4F791937BD173E98C8FFBE824CE7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		320DDE5B4870D6E2808648B1C0562D6A /* IQAudioRecorderController.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = IQAudioRecorderController.bundle; path = IQAudioRecorderController/Resources/IQAudioRecorderController.bundle; sourceTree = "<group>"; };
+		35DA9CA69A86892AD187B6A778BA017D /* IQ_FDWaveformView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = IQ_FDWaveformView.m; sourceTree = "<group>"; };
+		3AA4392B410EE8E416AE36089595DA05 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreAudio.framework; sourceTree = DEVELOPER_DIR; };
+		3CEFBE12E86D2D287753A614CE9706A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		57A211B8DDB8F88FA0B740BA84A93871 /* libSCSiriWaveformView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSCSiriWaveformView.a; path = libSCSiriWaveformView.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		603A638D24A0ADE588FDB8C7B7489A5E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		63844E7F98C28F70C1BE7093450FE048 /* IQAudioRecorderConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQAudioRecorderConstants.h; path = IQAudioRecorderController/IQAudioRecorderConstants.h; sourceTree = "<group>"; };
 		65216B852DB629DE5B066F3D3F6D7607 /* SCSiriWaveformView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SCSiriWaveformView-prefix.pch"; sourceTree = "<group>"; };
 		656C8AC1286A03344A580C749794AD02 /* Pods-IQAudioRecorderController Demo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IQAudioRecorderController Demo-acknowledgements.plist"; sourceTree = "<group>"; };
-		80465E4EAC95CC02E96629BE7A378709 /* IQCropSelectionView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = IQCropSelectionView.m; sourceTree = "<group>"; };
+		7A93CEC39001B419DC00E0F7CDDC559D /* IQCropSelectionView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQCropSelectionView.h; path = IQAudioRecorderController/IQCropSelectionView.h; sourceTree = "<group>"; };
+		7B4D7139C056742CFBD144958EA9F0F5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		841B8823931F45C2B231D271B1D326B4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		8AED0B1570FADB55D0515A6309648974 /* Pods-IQAudioRecorderController Demo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-IQAudioRecorderController Demo-resources.sh"; sourceTree = "<group>"; };
-		8E98C93345CEAAC6B760F7B3E0A8198E /* IQAudioRecorderConstraints.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = IQAudioRecorderConstraints.m; sourceTree = "<group>"; };
+		8C1AF1A2C1DA4AAE58E96B4FFC8C74B2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		8DDA1678D2DA166E3B330EA5C0AD59B1 /* IQCropSelectionEndView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQCropSelectionEndView.h; path = IQAudioRecorderController/IQCropSelectionEndView.h; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		99A6054AE9BE492F9ADAFFFD9F40A894 /* libPods-IQAudioRecorderController Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-IQAudioRecorderController Demo.a"; path = "libPods-IQAudioRecorderController Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A8C2E88B01D3C4BF71028B7C92E17EA6 /* IQAudioRecorderController.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; path = IQAudioRecorderController.bundle; sourceTree = "<group>"; };
 		ACBCC4EA7D54C00DA1D0E217EEAEEE3E /* Pods-IQAudioRecorderController Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IQAudioRecorderController Demo.release.xcconfig"; sourceTree = "<group>"; };
-		AF95B80510E82EAD8173F5CDB10D772F /* IQAudioCropperViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = IQAudioCropperViewController.m; sourceTree = "<group>"; };
-		B69310EA2ECD838F0C4C1067E0ED587D /* IQCropSelectionEndView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = IQCropSelectionEndView.h; sourceTree = "<group>"; };
-		B852B9B97C7EE4DDE726F3F171F2824D /* IQPlaybackDurationView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = IQPlaybackDurationView.m; sourceTree = "<group>"; };
-		BB6964706A476F719C36EAC2984AC168 /* IQPlaybackDurationView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = IQPlaybackDurationView.h; sourceTree = "<group>"; };
-		BDABD6561BB0E8752BBE0E64EDADE6D2 /* IQCropSelectionView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = IQCropSelectionView.h; sourceTree = "<group>"; };
+		B8B418345C7AB2F5B0D4CB1D61D7DEA1 /* IQ_FDWaveformView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = IQ_FDWaveformView.h; sourceTree = "<group>"; };
+		BB8EA44C860E58FE45A238676422AC4F /* IQCropSelectionEndView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQCropSelectionEndView.m; path = IQAudioRecorderController/IQCropSelectionEndView.m; sourceTree = "<group>"; };
 		BEC60F9939B45BE6F4630EA933D02FD0 /* SCSiriWaveformView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SCSiriWaveformView.xcconfig; sourceTree = "<group>"; };
-		C38A67EC7CDBE3BB3AC9D492D4033AF7 /* NSString+IQTimeIntervalFormatter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSString+IQTimeIntervalFormatter.h"; sourceTree = "<group>"; };
-		C874D29FAB202FC6D5DE77408C99DE79 /* IQAudioRecorderConstraints.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = IQAudioRecorderConstraints.h; sourceTree = "<group>"; };
+		C1D6FBCA489F252AF325344E4F49CC6C /* IQAudioRecorderController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "IQAudioRecorderController-prefix.pch"; sourceTree = "<group>"; };
+		C4510C8DECBD519BA2389312B77580FF /* IQCropSelectionBeginView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQCropSelectionBeginView.m; path = IQAudioRecorderController/IQCropSelectionBeginView.m; sourceTree = "<group>"; };
 		CB50F22742B98F3E9A844F96962C1FEC /* SCSiriWaveformView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SCSiriWaveformView.m; path = SCSiriWaveformView/SCSiriWaveformView.m; sourceTree = "<group>"; };
-		D30BDCE49A642437BEF0A42EE9814710 /* NSString+IQTimeIntervalFormatter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSString+IQTimeIntervalFormatter.m"; sourceTree = "<group>"; };
-		D50AC1E7326AB9822DE475BCA454BAC7 /* IQAudioRecorderController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQAudioRecorderController.xcconfig; sourceTree = "<group>"; };
-		D82762087201D191C524F4D7958FCBAF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		D5C4EA910AA69D767D406F8D92B83A2D /* IQAudioRecorderViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQAudioRecorderViewController.h; path = IQAudioRecorderController/IQAudioRecorderViewController.h; sourceTree = "<group>"; };
 		DA20E5DF7333A87C199D693AFEE69D15 /* Pods-IQAudioRecorderController Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IQAudioRecorderController Demo.debug.xcconfig"; sourceTree = "<group>"; };
-		E2F5EB77DC99ABDB4BA746A91D9B96DA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		E959A35DE57844231D672899ABD1E23C /* IQAudioRecorderController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "IQAudioRecorderController-dummy.m"; sourceTree = "<group>"; };
-		ECDA0B80900533DE5EBDDD6F8C8E9576 /* IQ_FDWaveformView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = IQ_FDWaveformView.m; sourceTree = "<group>"; };
-		F073F495EEF5394C6A6E25FD7B00F2C5 /* IQCropSelectionBeginView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = IQCropSelectionBeginView.m; sourceTree = "<group>"; };
-		FCD54CEED1762E6B28FD96A96B9198FA /* IQCropSelectionBeginView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = IQCropSelectionBeginView.h; sourceTree = "<group>"; };
+		E18A8DCB57088793D581A783D3EF789C /* IQCropSelectionBeginView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQCropSelectionBeginView.h; path = IQAudioRecorderController/IQCropSelectionBeginView.h; sourceTree = "<group>"; };
+		E452DCF57E2020B88BDBDA5E505FE1E4 /* IQPlaybackDurationView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQPlaybackDurationView.h; path = IQAudioRecorderController/IQPlaybackDurationView.h; sourceTree = "<group>"; };
+		E6B780A3F92B51019B187F08290CAD91 /* NSString+IQTimeIntervalFormatter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+IQTimeIntervalFormatter.h"; path = "IQAudioRecorderController/NSString+IQTimeIntervalFormatter.h"; sourceTree = "<group>"; };
+		ED005B411A7E30492C04C8546646F187 /* IQMessageDisplayView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQMessageDisplayView.m; path = IQAudioRecorderController/IQMessageDisplayView.m; sourceTree = "<group>"; };
+		F0C158C61ED6823D09DB71F5FBC53F19 /* IQAudioRecorderController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQAudioRecorderController.xcconfig; sourceTree = "<group>"; };
+		FCCD5429229639F4E33899D9819D13EF /* IQAudioRecorderController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "IQAudioRecorderController-dummy.m"; sourceTree = "<group>"; };
+		FF3333805E6D5536ED2191FF41749F85 /* IQAudioCropperViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQAudioCropperViewController.m; path = IQAudioRecorderController/IQAudioCropperViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		6AD8900CB9214F27980F456242A3A288 /* Frameworks */ = {
+		3C66028C17508DA509728C869A7B46DC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E06BCAB12DDB17AC91744533530C0C9E /* AVFoundation.framework in Frameworks */,
-				E48F232575A5D40D9BC2F43D8A067907 /* Foundation.framework in Frameworks */,
-				4C50F1893361D0D4307E4B7743DB33F8 /* UIKit.framework in Frameworks */,
+				D046D1E5ED8BE70CAE4A3266A57E1697 /* AVFoundation.framework in Frameworks */,
+				4E8E465949AC8F43C13BD26F4C75D28A /* CoreGraphics.framework in Frameworks */,
+				00B545AE9F057B83D0B416EFE12409D7 /* Foundation.framework in Frameworks */,
+				854FAB36EAA79ECB1F334AE94845E31B /* QuartzCore.framework in Frameworks */,
+				158CB9F72740EBA8B110BF0173401BB5 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C5CE7B5C96B8BE00A9533AAF18620197 /* Frameworks */ = {
+		5C046687B328568E1FF150C299661D5F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				310B4C029D2AED73AEDAD7549E7CDA05 /* AVFoundation.framework in Frameworks */,
-				E8D1C4CF3E554619E0C5B3C88F0C9999 /* CoreGraphics.framework in Frameworks */,
-				906BC43F02AF5AC92D8B0877D068EC8B /* Foundation.framework in Frameworks */,
-				A0216F97EE76EEAC00FF1EF64B56E827 /* QuartzCore.framework in Frameworks */,
-				FA2332C18F1B7D67D0C0B739C708A294 /* UIKit.framework in Frameworks */,
+				D8088304BD4D0114F444CD15D6911279 /* AVFoundation.framework in Frameworks */,
+				8CD223D5EB1B03EA41F496298772D678 /* CoreAudio.framework in Frameworks */,
+				F449D3C8ED800A68FB7BA155DC25F2CC /* CoreGraphics.framework in Frameworks */,
+				1750C6574278E11E67FFFC03A141F02C /* Foundation.framework in Frameworks */,
+				36050C63AEC5BC62866A73C022924D8F /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,41 +154,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1A02A374C34178687E5996F99DF31F9C /* iOS */ = {
+		0F75DF6C7C5F002280EC53F48E80B587 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D82762087201D191C524F4D7958FCBAF /* AVFoundation.framework */,
-				603A638D24A0ADE588FDB8C7B7489A5E /* CoreGraphics.framework */,
-				3365EAEC6295706CD0A55608D4AFD8A8 /* Foundation.framework */,
-				2CCB1597205B19237D049C7775969697 /* QuartzCore.framework */,
-				E2F5EB77DC99ABDB4BA746A91D9B96DA /* UIKit.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		20B56609144CE204DFA8221F742B2D76 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				1A02A374C34178687E5996F99DF31F9C /* iOS */,
+				4CF1C79930AC5924E6AF056091C2809B /* iOS */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		382150D7A0669DD9A6BD3C0EAD8A6055 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A8C2E88B01D3C4BF71028B7C92E17EA6 /* IQAudioRecorderController.bundle */,
-			);
-			name = Resources;
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		384BC8B52DA00FB4B6FDDE829F8465A1 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				B6F33B4AFDBF30E77C74DDEC38187C05 /* IQAudioRecorderController */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		3A768CD0519436B94C152287B658CAB9 /* Targets Support Files */ = {
@@ -194,31 +170,28 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		414EECAD51E8C6B872707B4785E150A4 /* IQAudioRecorderController */ = {
+		437AD46D022F6BE8434BE4D95633421F /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				2115D605026FC9B1FEB9460AABFBB8BF /* IQAudioCropperViewController.h */,
-				AF95B80510E82EAD8173F5CDB10D772F /* IQAudioCropperViewController.m */,
-				C874D29FAB202FC6D5DE77408C99DE79 /* IQAudioRecorderConstraints.h */,
-				8E98C93345CEAAC6B760F7B3E0A8198E /* IQAudioRecorderConstraints.m */,
-				0C9B8D72C5A2DC4BCA3F6CFE0A4097D5 /* IQAudioRecorderViewController.h */,
-				5486CA3EF2940BC22F304C93FE4572B3 /* IQAudioRecorderViewController.m */,
-				FCD54CEED1762E6B28FD96A96B9198FA /* IQCropSelectionBeginView.h */,
-				F073F495EEF5394C6A6E25FD7B00F2C5 /* IQCropSelectionBeginView.m */,
-				B69310EA2ECD838F0C4C1067E0ED587D /* IQCropSelectionEndView.h */,
-				3CA79DDDD0A1E81066A0D3862B69AB5C /* IQCropSelectionEndView.m */,
-				BDABD6561BB0E8752BBE0E64EDADE6D2 /* IQCropSelectionView.h */,
-				80465E4EAC95CC02E96629BE7A378709 /* IQCropSelectionView.m */,
-				115C98BBE5FD14FEFC0E158F8F24F7BD /* IQMessageDisplayView.h */,
-				150BBE1BEB6610878F89809339FF461E /* IQMessageDisplayView.m */,
-				BB6964706A476F719C36EAC2984AC168 /* IQPlaybackDurationView.h */,
-				B852B9B97C7EE4DDE726F3F171F2824D /* IQPlaybackDurationView.m */,
-				C38A67EC7CDBE3BB3AC9D492D4033AF7 /* NSString+IQTimeIntervalFormatter.h */,
-				D30BDCE49A642437BEF0A42EE9814710 /* NSString+IQTimeIntervalFormatter.m */,
-				F05AEF7B18F6D8E629F41CBEDF26C3F6 /* FDWaveformView */,
+				F0C158C61ED6823D09DB71F5FBC53F19 /* IQAudioRecorderController.xcconfig */,
+				FCCD5429229639F4E33899D9819D13EF /* IQAudioRecorderController-dummy.m */,
+				C1D6FBCA489F252AF325344E4F49CC6C /* IQAudioRecorderController-prefix.pch */,
 			);
-			name = IQAudioRecorderController;
-			path = IQAudioRecorderController;
+			name = "Support Files";
+			path = "Pods/Target Support Files/IQAudioRecorderController";
+			sourceTree = "<group>";
+		};
+		4CF1C79930AC5924E6AF056091C2809B /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				2EFE4F791937BD173E98C8FFBE824CE7 /* AVFoundation.framework */,
+				3AA4392B410EE8E416AE36089595DA05 /* CoreAudio.framework */,
+				841B8823931F45C2B231D271B1D326B4 /* CoreGraphics.framework */,
+				8C1AF1A2C1DA4AAE58E96B4FFC8C74B2 /* Foundation.framework */,
+				3CEFBE12E86D2D287753A614CE9706A2 /* QuartzCore.framework */,
+				7B4D7139C056742CFBD144958EA9F0F5 /* UIKit.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		572F883BA0E4B4C986931B1B2944A56E /* Pods */ = {
@@ -239,20 +212,30 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		74CFC3884F6AC8C422681CD644263CAE /* Development Pods */ = {
+		6C5F1C6E351886D3231D9D40A7209E17 /* IQAudioRecorderController */ = {
 			isa = PBXGroup;
 			children = (
-				758DCE9DAD92C15159F49F138990BB8E /* IQAudioRecorderController */,
-			);
-			name = "Development Pods";
-			sourceTree = "<group>";
-		};
-		758DCE9DAD92C15159F49F138990BB8E /* IQAudioRecorderController */ = {
-			isa = PBXGroup;
-			children = (
-				414EECAD51E8C6B872707B4785E150A4 /* IQAudioRecorderController */,
-				384BC8B52DA00FB4B6FDDE829F8465A1 /* Resources */,
-				A34DB19D859011F2FF070E321F90D697 /* Support Files */,
+				274813169CB48ECC054224A0355C9809 /* IQAudioCropperViewController.h */,
+				FF3333805E6D5536ED2191FF41749F85 /* IQAudioCropperViewController.m */,
+				63844E7F98C28F70C1BE7093450FE048 /* IQAudioRecorderConstants.h */,
+				1E39B6A463CB4655B8CC86AB6E6111CB /* IQAudioRecorderConstants.m */,
+				D5C4EA910AA69D767D406F8D92B83A2D /* IQAudioRecorderViewController.h */,
+				1684BEFD8E2E491361BFA6FFA0091512 /* IQAudioRecorderViewController.m */,
+				E18A8DCB57088793D581A783D3EF789C /* IQCropSelectionBeginView.h */,
+				C4510C8DECBD519BA2389312B77580FF /* IQCropSelectionBeginView.m */,
+				8DDA1678D2DA166E3B330EA5C0AD59B1 /* IQCropSelectionEndView.h */,
+				BB8EA44C860E58FE45A238676422AC4F /* IQCropSelectionEndView.m */,
+				7A93CEC39001B419DC00E0F7CDDC559D /* IQCropSelectionView.h */,
+				19434D4639EBC1F3FF23E30D0D8A8B45 /* IQCropSelectionView.m */,
+				20DE4A6C21DD75C4A5F8F4D098CB0B6A /* IQMessageDisplayView.h */,
+				ED005B411A7E30492C04C8546646F187 /* IQMessageDisplayView.m */,
+				E452DCF57E2020B88BDBDA5E505FE1E4 /* IQPlaybackDurationView.h */,
+				10DCA2A02324A686EB1B8DC60BF9918D /* IQPlaybackDurationView.m */,
+				E6B780A3F92B51019B187F08290CAD91 /* NSString+IQTimeIntervalFormatter.h */,
+				24173866EB20B4A56535D60FC5F89F03 /* NSString+IQTimeIntervalFormatter.m */,
+				D57B87B6D7DCDDBB3E561AD8FD6CBC1F /* FDWaveformView */,
+				83E0137A0F352D492B73FA0D090937E8 /* Resources */,
+				437AD46D022F6BE8434BE4D95633421F /* Support Files */,
 			);
 			name = IQAudioRecorderController;
 			path = ..;
@@ -262,23 +245,28 @@
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				74CFC3884F6AC8C422681CD644263CAE /* Development Pods */,
-				20B56609144CE204DFA8221F742B2D76 /* Frameworks */,
+				A19EBD882278851E5B6A7E7FF44A8F9B /* Development Pods */,
+				0F75DF6C7C5F002280EC53F48E80B587 /* Frameworks */,
 				572F883BA0E4B4C986931B1B2944A56E /* Pods */,
 				671C751768829A4A05AD336494404C14 /* Products */,
 				3A768CD0519436B94C152287B658CAB9 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		A34DB19D859011F2FF070E321F90D697 /* Support Files */ = {
+		83E0137A0F352D492B73FA0D090937E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D50AC1E7326AB9822DE475BCA454BAC7 /* IQAudioRecorderController.xcconfig */,
-				E959A35DE57844231D672899ABD1E23C /* IQAudioRecorderController-dummy.m */,
-				433D03DB637E3EEAA2CC56099984ECE1 /* IQAudioRecorderController-prefix.pch */,
+				320DDE5B4870D6E2808648B1C0562D6A /* IQAudioRecorderController.bundle */,
 			);
-			name = "Support Files";
-			path = "Pods/Target Support Files/IQAudioRecorderController";
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		A19EBD882278851E5B6A7E7FF44A8F9B /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6C5F1C6E351886D3231D9D40A7209E17 /* IQAudioRecorderController */,
+			);
+			name = "Development Pods";
 			sourceTree = "<group>";
 		};
 		A95FF7D38FCD138EE2327C82DB8A341E /* Support Files */ = {
@@ -292,13 +280,14 @@
 			path = "../Target Support Files/SCSiriWaveformView";
 			sourceTree = "<group>";
 		};
-		B6F33B4AFDBF30E77C74DDEC38187C05 /* IQAudioRecorderController */ = {
+		D57B87B6D7DCDDBB3E561AD8FD6CBC1F /* FDWaveformView */ = {
 			isa = PBXGroup;
 			children = (
-				382150D7A0669DD9A6BD3C0EAD8A6055 /* Resources */,
+				B8B418345C7AB2F5B0D4CB1D61D7DEA1 /* IQ_FDWaveformView.h */,
+				35DA9CA69A86892AD187B6A778BA017D /* IQ_FDWaveformView.m */,
 			);
-			name = IQAudioRecorderController;
-			path = IQAudioRecorderController;
+			name = FDWaveformView;
+			path = IQAudioRecorderController/FDWaveformView;
 			sourceTree = "<group>";
 		};
 		E861CCF84A2D5917EA282BBA2D2BEA0A /* Pods-IQAudioRecorderController Demo */ = {
@@ -327,63 +316,70 @@
 			path = SCSiriWaveformView;
 			sourceTree = "<group>";
 		};
-		F05AEF7B18F6D8E629F41CBEDF26C3F6 /* FDWaveformView */ = {
-			isa = PBXGroup;
-			children = (
-				4CB59FAA5B233ABAC9BA8DB3FBC8CFF9 /* IQ_FDWaveformView.h */,
-				ECDA0B80900533DE5EBDDD6F8C8E9576 /* IQ_FDWaveformView.m */,
-			);
-			name = FDWaveformView;
-			path = FDWaveformView;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		0F731F0B2671393FE727CD24ED38D968 /* Headers */ = {
+		3377334B5A922037C170BD3BD21B1779 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD369F0D5FABC406032978DC2FA2C043 /* SCSiriWaveformView.h in Headers */,
+				B8C328CD5634DBF9A55A637B32AEEE5D /* SCSiriWaveformView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2EE3FBBE3286A3B4147C268B920C4F4E /* Headers */ = {
+		49B6954B0DD3DD8F6681E61D0C8741BB /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA24065C0DA7BA2463F6DAAFAF6C3D1E /* IQ_FDWaveformView.h in Headers */,
-				65E4C880A5CC4F7B55F7082BFAA2943E /* IQAudioCropperViewController.h in Headers */,
-				6FFC404845A1CCD19F91953BC4D9ADA3 /* IQAudioRecorderConstraints.h in Headers */,
-				1D0C2E02DD05CC33794C8179704837F3 /* IQAudioRecorderViewController.h in Headers */,
-				075CE4802EB3983F7954D1F30600F9F5 /* IQCropSelectionBeginView.h in Headers */,
-				A6C3E555A6C24F7A93C0FF9DAD43E8DF /* IQCropSelectionEndView.h in Headers */,
-				EF5AA9E2484DC04669489D1DC98A1CBD /* IQCropSelectionView.h in Headers */,
-				45D1C85770A0DCF1048A2857D2137AFF /* IQMessageDisplayView.h in Headers */,
-				CC02E1642653A22D633F75B85C7A2B33 /* IQPlaybackDurationView.h in Headers */,
-				22E31A6E587C8E6D2DE0DA19D5455F74 /* NSString+IQTimeIntervalFormatter.h in Headers */,
+				4ABCEAB1975C5B592AAFAB8E0BBF9AC3 /* IQ_FDWaveformView.h in Headers */,
+				FD30A3F1FC8C9DE99FD30A1615FAE1D4 /* IQAudioCropperViewController.h in Headers */,
+				0298578C233322FFFE2FA17DC65B4DF3 /* IQAudioRecorderConstants.h in Headers */,
+				0C4D2A11E71F938028BBF56169422F7B /* IQAudioRecorderViewController.h in Headers */,
+				C0F79CD95709179BA9C56FF51C0535F6 /* IQCropSelectionBeginView.h in Headers */,
+				A7E2D30D048A16B0BA7D7DCFF25DE217 /* IQCropSelectionEndView.h in Headers */,
+				F3C0DEC519EC71D469E3EE2E24F7E52F /* IQCropSelectionView.h in Headers */,
+				07AE00CAEE93DBF3104839F02EFAA0E4 /* IQMessageDisplayView.h in Headers */,
+				E859809DC1F6E5B1D07F333C5D7FAE4C /* IQPlaybackDurationView.h in Headers */,
+				DAB2E21E14BCEC0E97913E1346C5ED6D /* NSString+IQTimeIntervalFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		A3207C8E40EF854A7BE058BC1545D98A /* IQAudioRecorderController */ = {
+		6455C2CA1E136B9B640008F00CBA8F8B /* IQAudioRecorderController */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 85788D0AAC0D9B49479A0F45ED6E549C /* Build configuration list for PBXNativeTarget "IQAudioRecorderController" */;
+			buildConfigurationList = AC85B493143B1772F3F40F3A92F82C43 /* Build configuration list for PBXNativeTarget "IQAudioRecorderController" */;
 			buildPhases = (
-				18ED56956F6C508A156905C301CCBF2F /* Sources */,
-				6AD8900CB9214F27980F456242A3A288 /* Frameworks */,
-				2EE3FBBE3286A3B4147C268B920C4F4E /* Headers */,
+				B59674DB7B3C2DDF4EE495093A240F82 /* Sources */,
+				5C046687B328568E1FF150C299661D5F /* Frameworks */,
+				49B6954B0DD3DD8F6681E61D0C8741BB /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				AD0E6BBD68CEBB43DCB55A5A96AF5941 /* PBXTargetDependency */,
+				0C45366F968154A0A85C6109E8639826 /* PBXTargetDependency */,
 			);
 			name = IQAudioRecorderController;
 			productName = IQAudioRecorderController;
 			productReference = 23DBA9B767BB3B9C6E5F5587830986D9 /* libIQAudioRecorderController.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		A71B8246BBBE0296DC8D26D5AA7DE4D9 /* SCSiriWaveformView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 987EEAD407DBA3E00A24A8D51483D19B /* Build configuration list for PBXNativeTarget "SCSiriWaveformView" */;
+			buildPhases = (
+				60BDA60A1B55512DBFFBEDD6D3AE2E10 /* Sources */,
+				3C66028C17508DA509728C869A7B46DC /* Frameworks */,
+				3377334B5A922037C170BD3BD21B1779 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SCSiriWaveformView;
+			productName = SCSiriWaveformView;
+			productReference = 57A211B8DDB8F88FA0B740BA84A93871 /* libSCSiriWaveformView.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		C4071BF24E1741AE87A5597413AF9BCE /* Pods-IQAudioRecorderController Demo */ = {
@@ -402,23 +398,6 @@
 			name = "Pods-IQAudioRecorderController Demo";
 			productName = "Pods-IQAudioRecorderController Demo";
 			productReference = 99A6054AE9BE492F9ADAFFFD9F40A894 /* libPods-IQAudioRecorderController Demo.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		FD53E3BD1F53D2E054A9906EDD5EDF6B /* SCSiriWaveformView */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E33F96EB2E9F954288370BC9F4037914 /* Build configuration list for PBXNativeTarget "SCSiriWaveformView" */;
-			buildPhases = (
-				BD2DBC48AAFE9C1D4EC1812CBD278DC7 /* Sources */,
-				C5CE7B5C96B8BE00A9533AAF18620197 /* Frameworks */,
-				0F731F0B2671393FE727CD24ED38D968 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SCSiriWaveformView;
-			productName = SCSiriWaveformView;
-			productReference = 57A211B8DDB8F88FA0B740BA84A93871 /* libSCSiriWaveformView.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -442,29 +421,20 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A3207C8E40EF854A7BE058BC1545D98A /* IQAudioRecorderController */,
+				6455C2CA1E136B9B640008F00CBA8F8B /* IQAudioRecorderController */,
 				C4071BF24E1741AE87A5597413AF9BCE /* Pods-IQAudioRecorderController Demo */,
-				FD53E3BD1F53D2E054A9906EDD5EDF6B /* SCSiriWaveformView */,
+				A71B8246BBBE0296DC8D26D5AA7DE4D9 /* SCSiriWaveformView */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		18ED56956F6C508A156905C301CCBF2F /* Sources */ = {
+		60BDA60A1B55512DBFFBEDD6D3AE2E10 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				914567F8CB06650FD2744F5CE0CFE83D /* IQ_FDWaveformView.m in Sources */,
-				F8D300DB61F4D93220D3425FCC9D8632 /* IQAudioCropperViewController.m in Sources */,
-				BCDF549F3B3BF8A22D9C93E610281556 /* IQAudioRecorderConstraints.m in Sources */,
-				8632CA61A75B0AC954120A4BD7EFD4E0 /* IQAudioRecorderController-dummy.m in Sources */,
-				80D40110A87C8317974D0208E34602B4 /* IQAudioRecorderViewController.m in Sources */,
-				22381CE2C3253BF66B99E38A13FDD1FD /* IQCropSelectionBeginView.m in Sources */,
-				2466DDF6C10EC3BB52BD02BA799B70FF /* IQCropSelectionEndView.m in Sources */,
-				68A547768529847327CE3ABB81338DDB /* IQCropSelectionView.m in Sources */,
-				8DFEAA96A4BE26810B85A580A8054FDC /* IQMessageDisplayView.m in Sources */,
-				1AA542F6DC39A76E31EC0F850F71F8EC /* IQPlaybackDurationView.m in Sources */,
-				74ADAAD243EC03D9CC298584797E9D9E /* NSString+IQTimeIntervalFormatter.m in Sources */,
+				5891A64689BCD9070936C744C71997AC /* SCSiriWaveformView-dummy.m in Sources */,
+				A2D5DB10349615CA42C7B5F50BA09B6C /* SCSiriWaveformView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,265 +446,286 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BD2DBC48AAFE9C1D4EC1812CBD278DC7 /* Sources */ = {
+		B59674DB7B3C2DDF4EE495093A240F82 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2C36287A0D819EFF05FCEFC2722E719 /* SCSiriWaveformView-dummy.m in Sources */,
-				D184F78259D15E09A0A805B91BDBA4B8 /* SCSiriWaveformView.m in Sources */,
+				008B1DBFBACD5BDFAC5B13A7F6454CDB /* IQ_FDWaveformView.m in Sources */,
+				6FE5B6E6252E00B17E6CE488E6F5AD5B /* IQAudioCropperViewController.m in Sources */,
+				671F1718B18A58AEAB036A79FEED18EF /* IQAudioRecorderConstants.m in Sources */,
+				9F18C87A0BF17970D609D3EB50754FAF /* IQAudioRecorderController-dummy.m in Sources */,
+				B6E2FA9AAC1E952FCA9CA0C3F12A0F43 /* IQAudioRecorderViewController.m in Sources */,
+				5393B91B07F2C1F6CB439D549880CC4A /* IQCropSelectionBeginView.m in Sources */,
+				774D71887E74815D22FEEEFDCD15E9C3 /* IQCropSelectionEndView.m in Sources */,
+				E188834B0151842DA3804177638426B6 /* IQCropSelectionView.m in Sources */,
+				4792B48842884FCB633FE57963C55C71 /* IQMessageDisplayView.m in Sources */,
+				24C5150EC898B99EE34964FC0291858C /* IQPlaybackDurationView.m in Sources */,
+				32EFA92185CB0C84829BB5FB93E1C6DD /* NSString+IQTimeIntervalFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0C45366F968154A0A85C6109E8639826 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SCSiriWaveformView;
+			target = A71B8246BBBE0296DC8D26D5AA7DE4D9 /* SCSiriWaveformView */;
+			targetProxy = 3FFD9DA9B858E62F0C7D7745EC45BFD7 /* PBXContainerItemProxy */;
+		};
 		51072E5486432FC18CDA91072783E3F0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SCSiriWaveformView;
-			target = FD53E3BD1F53D2E054A9906EDD5EDF6B /* SCSiriWaveformView */;
+			target = A71B8246BBBE0296DC8D26D5AA7DE4D9 /* SCSiriWaveformView */;
 			targetProxy = 442C542DB3DD19429A29D88EAAE00312 /* PBXContainerItemProxy */;
 		};
 		A667B6B8CAA68C0C5274E5A63C86A4E0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = IQAudioRecorderController;
-			target = A3207C8E40EF854A7BE058BC1545D98A /* IQAudioRecorderController */;
+			target = 6455C2CA1E136B9B640008F00CBA8F8B /* IQAudioRecorderController */;
 			targetProxy = 3C289FDF0F9C3DC61834A2AB78D3C8C0 /* PBXContainerItemProxy */;
-		};
-		AD0E6BBD68CEBB43DCB55A5A96AF5941 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SCSiriWaveformView;
-			target = FD53E3BD1F53D2E054A9906EDD5EDF6B /* SCSiriWaveformView */;
-			targetProxy = 61FE72545CE12F67060CE353AD1DACAB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0346883849A9A1AFA04C5F1258AA2210 /* Debug */ = {
+		199ED4F9820D808D2FD6CF9BD1533113 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BEC60F9939B45BE6F4630EA933D02FD0 /* SCSiriWaveformView.xcconfig */;
+			baseConfigurationReference = ACBCC4EA7D54C00DA1D0E217EEAEEE3E /* Pods-IQAudioRecorderController Demo.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SCSiriWaveformView/SCSiriWaveformView-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1A66C146E5430D695986726F4DF196EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA20E5DF7333A87C199D693AFEE69D15 /* Pods-IQAudioRecorderController Demo.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		34FE9531DA9AF2820790339988D5FF41 /* Release */ = {
+		1CC2D04BA1402B64930A0561FA8FCC53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BEC60F9939B45BE6F4630EA933D02FD0 /* SCSiriWaveformView.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/SCSiriWaveformView/SCSiriWaveformView-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		69B8D9C39398FFBAE2EA1E0CB50C4414 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0C158C61ED6823D09DB71F5FBC53F19 /* IQAudioRecorderController.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/IQAudioRecorderController/IQAudioRecorderController-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		863A4EAFA3F315A269A723DD216782A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BEC60F9939B45BE6F4630EA933D02FD0 /* SCSiriWaveformView.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/SCSiriWaveformView/SCSiriWaveformView-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B254DAA6CF0CE39F4A3D11B90A7E059A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_RELEASE=1",
 					"$(inherited)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		4D85041905ABFB526434C73AA27318DD /* Release */ = {
+		E38832D200C2C6964A25F2931E8191F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BEC60F9939B45BE6F4630EA933D02FD0 /* SCSiriWaveformView.xcconfig */;
+			baseConfigurationReference = F0C158C61ED6823D09DB71F5FBC53F19 /* IQAudioRecorderController.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SCSiriWaveformView/SCSiriWaveformView-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		6E288FF0543A441264DD2F0841C9A20C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D50AC1E7326AB9822DE475BCA454BAC7 /* IQAudioRecorderController.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/IQAudioRecorderController/IQAudioRecorderController-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		877B9CBC15A23F49EF40A89C4542ADB6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ACBCC4EA7D54C00DA1D0E217EEAEEE3E /* Pods-IQAudioRecorderController Demo.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		A0B87942B5BE4C02D1B05B691C230407 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DA20E5DF7333A87C199D693AFEE69D15 /* Pods-IQAudioRecorderController Demo.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		AC47A42B4AC40FF5ED393064E8F60E03 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D50AC1E7326AB9822DE475BCA454BAC7 /* IQAudioRecorderController.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/IQAudioRecorderController/IQAudioRecorderController-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		C104F7F091290C3D1E248192F07FE689 /* Debug */ = {
+		E4B68EE12B21C47CB798D9B1ECA6D7A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_DEBUG=1",
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
@@ -745,17 +736,17 @@
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C104F7F091290C3D1E248192F07FE689 /* Debug */,
-				34FE9531DA9AF2820790339988D5FF41 /* Release */,
+				E4B68EE12B21C47CB798D9B1ECA6D7A7 /* Debug */,
+				B254DAA6CF0CE39F4A3D11B90A7E059A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		85788D0AAC0D9B49479A0F45ED6E549C /* Build configuration list for PBXNativeTarget "IQAudioRecorderController" */ = {
+		987EEAD407DBA3E00A24A8D51483D19B /* Build configuration list for PBXNativeTarget "SCSiriWaveformView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AC47A42B4AC40FF5ED393064E8F60E03 /* Debug */,
-				6E288FF0543A441264DD2F0841C9A20C /* Release */,
+				1CC2D04BA1402B64930A0561FA8FCC53 /* Debug */,
+				863A4EAFA3F315A269A723DD216782A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -763,17 +754,17 @@
 		AA62917B47EA371F0E68C1E19CD4CC54 /* Build configuration list for PBXNativeTarget "Pods-IQAudioRecorderController Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A0B87942B5BE4C02D1B05B691C230407 /* Debug */,
-				877B9CBC15A23F49EF40A89C4542ADB6 /* Release */,
+				1A66C146E5430D695986726F4DF196EB /* Debug */,
+				199ED4F9820D808D2FD6CF9BD1533113 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E33F96EB2E9F954288370BC9F4037914 /* Build configuration list for PBXNativeTarget "SCSiriWaveformView" */ = {
+		AC85B493143B1772F3F40F3A92F82C43 /* Build configuration list for PBXNativeTarget "IQAudioRecorderController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0346883849A9A1AFA04C5F1258AA2210 /* Debug */,
-				4D85041905ABFB526434C73AA27318DD /* Release */,
+				E38832D200C2C6964A25F2931E8191F5 /* Debug */,
+				69B8D9C39398FFBAE2EA1E0CB50C4414 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

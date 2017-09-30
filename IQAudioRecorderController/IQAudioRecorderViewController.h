@@ -25,7 +25,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "IQAudioRecorderConstraints.h"
+#import "IQAudioRecorderConstants.h"
 
 @class IQAudioRecorderViewController;
 

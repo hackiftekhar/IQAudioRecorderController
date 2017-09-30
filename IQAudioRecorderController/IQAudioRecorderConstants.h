@@ -1,5 +1,5 @@
 //
-//  IQAudioRecorderConstraints.m
+//  IQAudioRecorderConstants.h
 // https://github.com/hackiftekhar/IQAudioRecorderController
 // Created by Iftekhar Qurashi
 // Copyright (c) 2015-16 Iftekhar Qurashi
@@ -22,5 +22,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "IQAudioRecorderConstraints.h"
+#import <Foundation/Foundation.h>
+#import <CoreAudio/CoreAudioTypes.h>
+#import <AVFoundation/AVFoundation.h>
+
+typedef NS_ENUM(NSUInteger, IQAudioFormat) {
+    IQAudioFormatDefault,  //   kAudioFormatMPEG4AAC    .m4a
+    IQAudioFormat_m4a       = kAudioFormatMPEG4AAC,  //.m4a
+    IQAudioFormat_caf       = kAudioFormatAppleLossless,  //.caf
+};
+
+typedef NS_ENUM(NSUInteger, IQAudioQuality) {
+    IQAudioQualityDefault   = -1,
+    IQAudioQualityMin       = AVAudioQualityMin,
+    IQAudioQualityLow       = AVAudioQualityLow,
+    IQAudioQualityMedium    = AVAudioQualityMedium,
+    IQAudioQualityHigh      = AVAudioQualityHigh,
+    IQAudioQualityMax       = AVAudioQualityMax,
+};
 
