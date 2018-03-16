@@ -75,6 +75,9 @@
 /// Rendering did complete
 - (void)waveformViewDidRender:(IQ_FDWaveformView *)waveformView;
 
+/// Rendering did failed
+- (void)waveformViewFailedToRender:(IQ_FDWaveformView *)waveformView;
+
 /// An audio file will be loaded
 - (void)waveformViewWillLoad:(IQ_FDWaveformView *)waveformView;
 

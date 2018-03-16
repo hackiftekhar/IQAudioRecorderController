@@ -167,7 +167,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
     _pauseButton.tintColor = [self _normalTintColor];
     _stopPlayButton.tintColor = [self _normalTintColor];
     _cropButton.tintColor = [self _normalTintColor];
-    self.waveformView.wavesColor = [self _normalTintColor];
+    _waveformView.wavesColor = [self _normalTintColor];
 }
 
 -(UIColor*)_normalTintColor
@@ -192,7 +192,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
 -(void)setHighlightedTintColor:(UIColor *)highlightedTintColor
 {
     _highlightedTintColor = highlightedTintColor;
-    self.waveformView.progressColor = [self _highlightedTintColor];
+    _waveformView.progressColor = [self _highlightedTintColor];
 }
 
 -(UIColor *)_highlightedTintColor
@@ -842,6 +842,26 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
     }];
 }
 
+-(void)waveformViewFailedToRender:(IQ_FDWaveformView *)waveformView
+{
+    [UIView animateWithDuration:0.1 animations:^{
+        [self.waveLoadingIndicatorView stopAnimating];
+    }];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Failed?",nil) message:NSLocalizedString(@"An error occured and rendering failed. Would you like to retry?",nil) preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Retry",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        waveformView.audioURL = waveformView.audioURL;
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self notifyCancelDelegate];
+    }]];
+    
+    alertController.popoverPresentationController.sourceView = self.waveLoadingIndicatorView;
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 - (void)waveformViewWillLoad:(IQ_FDWaveformView *)waveformView
 {
 //    NSLog(@"%@",NSStringFromSelector(_cmd));
@@ -930,8 +950,10 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
         {
             [self.delegate audioCropperController:self didFinishWithAudioAtPath:_currentAudioFilePath];
         }
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
+        else
+        {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     };
     
     if (self.blurrEnabled)

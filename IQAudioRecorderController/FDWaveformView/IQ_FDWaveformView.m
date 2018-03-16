@@ -365,27 +365,47 @@
     
     [IQ_FDWaveformView sliceAndDownsampleAsset:self.asset track:self.assetTrack startSamples:renderStartSamples endSamples:renderEndSamples targetSamples:widthInPixels done:^(NSData *samples, NSInteger sampleCount, Float32 sampleMax) {
         
-        [self plotLogGraph:samples
-              maximumValue:sampleMax
-              mimimumValue:noiseFloor
-               sampleCount:sampleCount
-               imageHeight:heightInPixels
-                      done:^(UIImage *image,
-                             UIImage *selectedImage,
-                             UIImage *cropImage) {
-                          dispatch_async(dispatch_get_main_queue(), ^{
-                              self.image.image = image;
-                              self.highlightedImage.image = selectedImage;
-                              self.croppedImage.image = cropImage;
-                              self.cachedStartSamples = renderStartSamples;
-                              self.cachedEndSamples = renderEndSamples;
-                              self.renderingInProgress = NO;
-                              [self layoutSubviews]; // warning
-                              if ([self.delegate respondsToSelector:@selector(waveformViewDidRender:)])
-                                  [self.delegate waveformViewDidRender:self];
-                          });
-                      }
-         ];
+
+        if (samples == nil)
+        {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                
+                self.image.image = nil;
+                self.highlightedImage.image = nil;
+                self.croppedImage.image = nil;
+                self.cachedStartSamples = 0;
+                self.cachedEndSamples = 0;
+                self.renderingInProgress = NO;
+                if ([self.delegate respondsToSelector:@selector(waveformViewFailedToRender:)])
+                    [self.delegate waveformViewFailedToRender:self];
+            }];
+        }
+        else
+        {
+            [self plotLogGraph:samples
+                  maximumValue:sampleMax
+                  mimimumValue:noiseFloor
+                   sampleCount:sampleCount
+                   imageHeight:heightInPixels
+                          done:^(UIImage *image,
+                                 UIImage *selectedImage,
+                                 UIImage *cropImage) {
+                              
+                              [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                  
+                                  self.image.image = image;
+                                  self.highlightedImage.image = selectedImage;
+                                  self.croppedImage.image = cropImage;
+                                  self.cachedStartSamples = renderStartSamples;
+                                  self.cachedEndSamples = renderEndSamples;
+                                  self.renderingInProgress = NO;
+                                  [self setNeedsLayout];
+                                  if ([self.delegate respondsToSelector:@selector(waveformViewDidRender:)])
+                                      [self.delegate waveformViewDidRender:self];
+                              }];
+                          }
+             ];
+        }
     }];
 }
 
@@ -463,6 +483,8 @@
     // Something went wrong. Handle it.
     if (reader.status == AVAssetReaderStatusCompleted){
         done(fullSongData, fullSongData.length/4, sampleMax);
+    } else {
+        done(nil, 0, 0);
     }
 }
 

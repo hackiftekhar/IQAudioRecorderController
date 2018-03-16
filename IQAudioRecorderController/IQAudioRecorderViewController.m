@@ -220,12 +220,11 @@
         [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[musicFlowView]-|" options:0 metrics:nil views:views]];
         [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[viewMicrophoneDenied]-|" options:0 metrics:nil views:views]];
 
-        [constraints addObject:[NSLayoutConstraint constraintWithItem:musicFlowView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:visualEffectView.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+        [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[musicFlowView]-|" options:0 metrics:nil views:views]];
+
         [constraints addObject:[NSLayoutConstraint constraintWithItem:viewMicrophoneDenied attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:visualEffectView.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
 
         [visualEffectView.contentView addConstraints:constraints];
-
-        [musicFlowView addConstraint:[NSLayoutConstraint constraintWithItem:musicFlowView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:musicFlowView attribute:NSLayoutAttributeHeight multiplier:0.25 constant:0]];
     }
 
     {
@@ -344,7 +343,7 @@
     
     //Player Duration View
     {
-        _viewPlayerDuration = [[IQPlaybackDurationView alloc] init];
+        _viewPlayerDuration = [[IQPlaybackDurationView alloc] initWithFrame:self.navigationController.navigationBar.bounds];
         _viewPlayerDuration.delegate = self;
         _viewPlayerDuration.tintColor = [self _highlightedTintColor];
         _viewPlayerDuration.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -540,14 +539,14 @@
     {
         _viewPlayerDuration.duration = _audioPlayer.duration;
         _viewPlayerDuration.currentTime = _audioPlayer.currentTime;
-        _viewPlayerDuration.frame = self.navigationController.navigationBar.bounds;
-        
-        
-        [_viewPlayerDuration setNeedsLayout];
-        [_viewPlayerDuration layoutIfNeeded];
         
         self.navigationItem.titleView = _viewPlayerDuration;
-        
+
+        _viewPlayerDuration.translatesAutoresizingMaskIntoConstraints = YES;
+        _viewPlayerDuration.frame = self.navigationController.navigationBar.bounds;
+        [_viewPlayerDuration setNeedsLayout];
+        [_viewPlayerDuration layoutIfNeeded];
+
         _viewPlayerDuration.alpha = 0.0;
         [UIView animateWithDuration:0.2 delay:0.1 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
             _viewPlayerDuration.alpha = 1.0;
@@ -814,6 +813,8 @@
     {
         [self presentAudioCropperViewControllerAnimated:controller];
     }
+    
+    [self stopUpdatingMeter];
 }
 
 -(void)audioCropperController:(IQAudioCropperViewController *)controller didFinishWithAudioAtPath:(NSString *)filePath
@@ -824,11 +825,17 @@
     AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:audioFileURL options:nil];
     CMTime audioDuration = audioAsset.duration;
     self.navigationItem.title = [NSString timeStringForTimeInterval:CMTimeGetSeconds(audioDuration)];
+    
+    [controller dismissViewControllerAnimated:YES completion:nil];
+
+    [self startUpdatingMeter];
 }
 
 -(void)audioCropperControllerDidCancel:(IQAudioCropperViewController *)controller
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
+
+    [self startUpdatingMeter];
 }
 
 #pragma mark - Delete Audio
