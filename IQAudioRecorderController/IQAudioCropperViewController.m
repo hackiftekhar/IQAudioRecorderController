@@ -273,7 +273,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
 
         NSDictionary *views = @{@"middleContainerView":self.middleContainerView};
         
-        NSMutableArray *constraints = [[NSMutableArray alloc] init];
+        NSMutableArray<NSLayoutConstraint*> *constraints = [[NSMutableArray alloc] init];
         
         [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[middleContainerView]-|" options:0 metrics:nil views:views]];
 
@@ -302,7 +302,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
 
             NSDictionary *views = @{@"waveformView":self.waveformView};
             
-            NSMutableArray *constraints = [[NSMutableArray alloc] init];
+            NSMutableArray<NSLayoutConstraint*> *constraints = [[NSMutableArray alloc] init];
             
             [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-22-[waveformView]-22-|" options:0 metrics:nil views:views]];
             [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-25-[waveformView(==150)]-25-|" options:0 metrics:nil views:views]];

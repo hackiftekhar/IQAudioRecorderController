@@ -215,7 +215,7 @@
 
         NSDictionary *views = @{@"viewMicrophoneDenied":viewMicrophoneDenied,@"musicFlowView":musicFlowView};
         
-        NSMutableArray *constraints = [[NSMutableArray alloc] init];
+        NSMutableArray<NSLayoutConstraint*> *constraints = [[NSMutableArray alloc] init];
         
         [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[musicFlowView]-|" options:0 metrics:nil views:views]];
         [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[viewMicrophoneDenied]-|" options:0 metrics:nil views:views]];
