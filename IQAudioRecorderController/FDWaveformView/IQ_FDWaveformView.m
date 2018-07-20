@@ -115,20 +115,22 @@
     self.asset = [AVURLAsset URLAssetWithURL:audioURL options:nil];
     self.assetTrack = [[self.asset tracksWithMediaType:AVMediaTypeAudio] firstObject];
 
-    [self.asset loadValuesAsynchronouslyForKeys:@[@"duration"] completionHandler:^() {
-        self.loadingInProgress = NO;
-        if ([self.delegate respondsToSelector:@selector(waveformViewDidLoad:)])
-            [self.delegate waveformViewDidLoad:self];
+    __weak typeof(self) weakSelf = self;
+
+    [self.asset loadValuesAsynchronouslyForKeys:@[@"duration"] completionHandler:^{
+        weakSelf.loadingInProgress = NO;
+        if ([weakSelf.delegate respondsToSelector:@selector(waveformViewDidLoad:)])
+            [weakSelf.delegate waveformViewDidLoad:weakSelf];
         
         NSError *error = nil;
-        AVKeyValueStatus durationStatus = [self.asset statusOfValueForKey:@"duration" error:&error];
+        AVKeyValueStatus durationStatus = [weakSelf.asset statusOfValueForKey:@"duration" error:&error];
         switch (durationStatus) {
             case AVKeyValueStatusLoaded:{
                 
                 void (^threadSafeNilImage)(void) = ^{
-                    self.image.image = nil;
-                    self.highlightedImage.image = nil;
-                    self.croppedImage.image = nil;
+                    weakSelf.image.image = nil;
+                    weakSelf.highlightedImage.image = nil;
+                    weakSelf.croppedImage.image = nil;
                 };
                 
                 if ([NSThread isMainThread]) {
@@ -139,17 +141,17 @@
                     });
                 }
                 
-                NSArray *formatDesc = self.assetTrack.formatDescriptions;
+                NSArray *formatDesc = weakSelf.assetTrack.formatDescriptions;
                 CMAudioFormatDescriptionRef item = (__bridge CMAudioFormatDescriptionRef)formatDesc[0];
                 const AudioStreamBasicDescription *asbd = CMAudioFormatDescriptionGetStreamBasicDescription(item);
-                unsigned long int samples = asbd->mSampleRate * (float)self.asset.duration.value/self.asset.duration.timescale;
-                self.totalSamples = self.zoomEndSamples = self.cropEndSamples = samples;
-                self.progressSamples = self.zoomStartSamples = self.cropStartSamples = 0;
+                unsigned long int samples = asbd->mSampleRate * (float)weakSelf.asset.duration.value/weakSelf.asset.duration.timescale;
+                self.totalSamples = weakSelf.zoomEndSamples = weakSelf.cropEndSamples = samples;
+                self.progressSamples = weakSelf.zoomStartSamples = weakSelf.cropStartSamples = 0;
 
                 void (^threadSafeUpdate)(void) = ^{
                     
-                    [self setNeedsDisplay];
-                    [self setNeedsLayout];
+                    [weakSelf setNeedsDisplay];
+                    [weakSelf setNeedsLayout];
                 };
                 
                 if ([NSThread isMainThread]) {
@@ -180,13 +182,15 @@
     if (self.totalSamples) {
         float progress = (float)self.progressSamples / self.totalSamples;
         
+        __weak typeof(self) weakSelf = self;
+
         void (^threadSafeUpdate)(void) = ^{
             
             CALayer *layer = [[CALayer alloc] init];
-            layer.frame = CGRectMake(0,0,self.frame.size.width*progress,self.frame.size.height);
+            layer.frame = CGRectMake(0,0,weakSelf.frame.size.width*progress,weakSelf.frame.size.height);
             layer.backgroundColor = [[UIColor blackColor] CGColor];
-            self.highlightedImage.layer.mask = layer;
-            [self setNeedsLayout];
+            weakSelf.highlightedImage.layer.mask = layer;
+            [weakSelf setNeedsLayout];
         };
         
         if ([NSThread isMainThread]) {
@@ -207,20 +211,22 @@
         float startProgress = (float)self.cropStartSamples / self.totalSamples;
         float endProgress = (float)self.cropEndSamples / self.totalSamples;
 
+        __weak typeof(self) weakSelf = self;
+
         void (^threadSafeUpdate)(void) = ^{
             
-            CGRect visibleRect = CGRectMake(self.frame.size.width*startProgress,0,self.frame.size.width*(endProgress-startProgress),self.frame.size.height);;
-            UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:self.croppedImage.bounds];
+            CGRect visibleRect = CGRectMake(weakSelf.frame.size.width*startProgress,0,weakSelf.frame.size.width*(endProgress-startProgress),weakSelf.frame.size.height);;
+            UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:weakSelf.croppedImage.bounds];
             [bezierPath appendPath:[UIBezierPath bezierPathWithRect:visibleRect]];
             
             CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-            layer.frame = self.croppedImage.bounds;
+            layer.frame = weakSelf.croppedImage.bounds;
             layer.fillRule = kCAFillRuleEvenOdd;
             layer.fillColor = [UIColor blackColor].CGColor;
             layer.path = bezierPath.CGPath;
             
-            self.croppedImage.layer.mask = layer;
-            [self setNeedsLayout];
+            weakSelf.croppedImage.layer.mask = layer;
+            [weakSelf setNeedsLayout];
         };
         
         if ([NSThread isMainThread]) {
@@ -260,10 +266,12 @@
 {
     _zoomStartSamples = startSamples;
 
+    __weak typeof(self) weakSelf = self;
+
     void (^threadSafeUpdate)(void) = ^{
         
-        [self setNeedsDisplay];
-        [self setNeedsLayout];
+        [weakSelf setNeedsDisplay];
+        [weakSelf setNeedsLayout];
     };
     
     if ([NSThread isMainThread]) {
@@ -279,10 +287,12 @@
 {
     _zoomEndSamples = endSamples;
     
+    __weak typeof(self) weakSelf = self;
+
     void (^threadSafeUpdate)(void) = ^{
         
-        [self setNeedsDisplay];
-        [self setNeedsLayout];
+        [weakSelf setNeedsDisplay];
+        [weakSelf setNeedsLayout];
     };
     
     if ([NSThread isMainThread]) {
@@ -322,8 +332,11 @@
     if (self.image.image.size.height > self.frame.size.height * [UIScreen mainScreen].scale * verticalMaximumOverdraw)
         needToRender = YES;
     if (needToRender) {
+        
+        __weak typeof(self) weakSelf = self;
+
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [self renderAsset];
+            [weakSelf renderAsset];
         });
         return;
     }
@@ -355,7 +368,8 @@
     
     __block CGFloat widthInPixels = 0;
     __block CGFloat heightInPixels = 0;
-    
+    __weak typeof(self) weakSelf = self;
+
     if ([NSThread isMainThread])
     {
         widthInPixels = self.frame.size.width * [UIScreen mainScreen].scale * horizontalTargetOverdraw;
@@ -364,8 +378,8 @@
     else
     {
         dispatch_sync(dispatch_get_main_queue(), ^{
-            widthInPixels = self.frame.size.width * [UIScreen mainScreen].scale * horizontalTargetOverdraw;
-            heightInPixels = self.frame.size.height * [UIScreen mainScreen].scale * verticalTargetOverdraw;
+            widthInPixels = weakSelf.frame.size.width * [UIScreen mainScreen].scale * horizontalTargetOverdraw;
+            heightInPixels = weakSelf.frame.size.height * [UIScreen mainScreen].scale * verticalTargetOverdraw;
         });
     }
     
@@ -376,19 +390,19 @@
         {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 
-                self.image.image = nil;
-                self.highlightedImage.image = nil;
-                self.croppedImage.image = nil;
-                self.cachedStartSamples = 0;
-                self.cachedEndSamples = 0;
-                self.renderingInProgress = NO;
-                if ([self.delegate respondsToSelector:@selector(waveformViewFailedToRender:)])
-                    [self.delegate waveformViewFailedToRender:self];
+                weakSelf.image.image = nil;
+                weakSelf.highlightedImage.image = nil;
+                weakSelf.croppedImage.image = nil;
+                weakSelf.cachedStartSamples = 0;
+                weakSelf.cachedEndSamples = 0;
+                weakSelf.renderingInProgress = NO;
+                if ([weakSelf.delegate respondsToSelector:@selector(waveformViewFailedToRender:)])
+                    [weakSelf.delegate waveformViewFailedToRender:weakSelf];
             }];
         }
         else
         {
-            [self plotLogGraph:samples
+            [weakSelf plotLogGraph:samples
                   maximumValue:sampleMax
                   mimimumValue:noiseFloor
                    sampleCount:sampleCount
@@ -399,15 +413,15 @@
                               
                               [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                                   
-                                  self.image.image = image;
-                                  self.highlightedImage.image = selectedImage;
-                                  self.croppedImage.image = cropImage;
-                                  self.cachedStartSamples = renderStartSamples;
-                                  self.cachedEndSamples = renderEndSamples;
-                                  self.renderingInProgress = NO;
-                                  [self setNeedsLayout];
-                                  if ([self.delegate respondsToSelector:@selector(waveformViewDidRender:)])
-                                      [self.delegate waveformViewDidRender:self];
+                                  weakSelf.image.image = image;
+                                  weakSelf.highlightedImage.image = selectedImage;
+                                  weakSelf.croppedImage.image = cropImage;
+                                  weakSelf.cachedStartSamples = renderStartSamples;
+                                  weakSelf.cachedEndSamples = renderEndSamples;
+                                  weakSelf.renderingInProgress = NO;
+                                  [weakSelf setNeedsLayout];
+                                  if ([weakSelf.delegate respondsToSelector:@selector(waveformViewDidRender:)])
+                                      [weakSelf.delegate waveformViewDidRender:weakSelf];
                               }];
                           }
              ];

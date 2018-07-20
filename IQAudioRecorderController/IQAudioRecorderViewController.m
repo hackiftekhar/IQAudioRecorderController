@@ -36,53 +36,50 @@
 
 @interface IQAudioRecorderViewController() <AVAudioRecorderDelegate,AVAudioPlayerDelegate,IQPlaybackDurationViewDelegate,IQMessageDisplayViewDelegate,IQAudioCropperViewControllerDelegate>
 {
-    //BlurrView
-    UIVisualEffectView *visualEffectView;
     BOOL _isFirstTime;
     
     //Recording...
-    AVAudioRecorder *_audioRecorder;
-    SCSiriWaveformView *musicFlowView;
-    NSString *_recordingFilePath;
     CADisplayLink *meterUpdateDisplayLink;
     
     //Playing
     AVAudioPlayer *_audioPlayer;
     BOOL _wasPlaying;
-    IQPlaybackDurationView *_viewPlayerDuration;
     CADisplayLink *playProgressDisplayLink;
-
-    //Navigation Bar
-    NSString *_navigationTitle;
-    UIBarButtonItem *_cancelButton;
-    UIBarButtonItem *_doneButton;
-    
-    //Toolbar
-    UIBarButtonItem *_flexItem;
-
-    //Playing controls
-    UIBarButtonItem *_playButton;
-    UIBarButtonItem *_pauseButton;
-    UIBarButtonItem *_stopPlayButton;
 
     //Recording controls
     BOOL _isRecordingPaused;
-    UIBarButtonItem *_cancelRecordingButton;
-    UIBarButtonItem *_startRecordingButton;
-    UIBarButtonItem *_continueRecordingButton;
-    UIBarButtonItem *_pauseRecordingButton;
-    UIBarButtonItem *_stopRecordingButton;
-    
-    //Crop/Delete controls
-    UIBarButtonItem *_cropOrDeleteButton;
-    
-    //Access
-    IQMessageDisplayView *viewMicrophoneDenied;
     
     //Private variables
     NSString *_oldSessionCategory;
     BOOL _wasIdleTimerDisabled;
 }
+
+//BlurrView
+@property UIVisualEffectView *visualEffectView;
+
+//Playing
+@property IQPlaybackDurationView *viewPlayerDuration;
+
+//Recording...
+@property AVAudioRecorder *audioRecorder;
+@property SCSiriWaveformView *musicFlowView;
+@property NSString *recordingFilePath;
+
+//Access
+@property IQMessageDisplayView *viewMicrophoneDenied;
+
+//Navigation Bar
+@property NSString *navigationTitle;
+@property UIBarButtonItem *cancelButton, *doneButton;
+
+//Playing controls
+@property UIBarButtonItem *playButton, *pauseButton, *stopPlayButton, *flexItem;
+
+//Recording controls
+@property UIBarButtonItem *cancelRecordingButton, *startRecordingButton, *continueRecordingButton, *pauseRecordingButton, *stopRecordingButton;
+
+//Crop/Delete controls
+@property UIBarButtonItem *cropOrDeleteButton;
 
 @property(nonatomic, assign) BOOL blurrEnabled;
 
@@ -154,10 +151,10 @@
 
 -(void)loadView
 {
-    visualEffectView = [[UIVisualEffectView alloc] initWithEffect:nil];
-    visualEffectView.frame = [UIScreen mainScreen].bounds;
+    _visualEffectView = [[UIVisualEffectView alloc] initWithEffect:nil];
+    _visualEffectView.frame = [UIScreen mainScreen].bounds;
     
-    self.view = visualEffectView;
+    self.view = _visualEffectView;
 }
 
 - (void)viewDidLoad
@@ -181,39 +178,39 @@
     if (resourcesBundle == nil) resourcesBundle = bundle;
 
     {
-        viewMicrophoneDenied = [[IQMessageDisplayView alloc] initWithFrame:visualEffectView.contentView.bounds];
-        viewMicrophoneDenied.delegate = self;
-        viewMicrophoneDenied.alpha = 0.0;
+        _viewMicrophoneDenied = [[IQMessageDisplayView alloc] initWithFrame:_visualEffectView.contentView.bounds];
+        _viewMicrophoneDenied.delegate = self;
+        _viewMicrophoneDenied.alpha = 0.0;
         
         if (self.barStyle == UIBarStyleDefault)
         {
-            viewMicrophoneDenied.tintColor = [UIColor darkGrayColor];
+            _viewMicrophoneDenied.tintColor = [UIColor darkGrayColor];
         }
         else
         {
-            viewMicrophoneDenied.tintColor = [UIColor whiteColor];
+            _viewMicrophoneDenied.tintColor = [UIColor whiteColor];
         }
         
-        viewMicrophoneDenied.image = [[UIImage imageNamed:@"microphone_access" inBundle:resourcesBundle compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        viewMicrophoneDenied.title = NSLocalizedString(@"Microphone Access Denied!",nil);
-        viewMicrophoneDenied.message = NSLocalizedString(@"Unable to access microphone. Please enable microphone access in Settings.",nil);
-        viewMicrophoneDenied.buttonTitle = NSLocalizedString(@"Go to Settings",nil);
-        [visualEffectView.contentView addSubview:viewMicrophoneDenied];
+        _viewMicrophoneDenied.image = [[UIImage imageNamed:@"microphone_access" inBundle:resourcesBundle compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _viewMicrophoneDenied.title = NSLocalizedString(@"Microphone Access Denied!",nil);
+        _viewMicrophoneDenied.message = NSLocalizedString(@"Unable to access microphone. Please enable microphone access in Settings.",nil);
+        _viewMicrophoneDenied.buttonTitle = NSLocalizedString(@"Go to Settings",nil);
+        [_visualEffectView.contentView addSubview:_viewMicrophoneDenied];
         
     }
     
     {
-        musicFlowView = [[SCSiriWaveformView alloc] initWithFrame:visualEffectView.contentView.bounds];
-        musicFlowView.alpha = 0.0;
-        musicFlowView.backgroundColor = [UIColor clearColor];
-        [visualEffectView.contentView addSubview:musicFlowView];
+        _musicFlowView = [[SCSiriWaveformView alloc] initWithFrame:_visualEffectView.contentView.bounds];
+        _musicFlowView.alpha = 0.0;
+        _musicFlowView.backgroundColor = [UIColor clearColor];
+        [_visualEffectView.contentView addSubview:_musicFlowView];
     }
     
     {
-        viewMicrophoneDenied.translatesAutoresizingMaskIntoConstraints = NO;
-        musicFlowView.translatesAutoresizingMaskIntoConstraints = NO;
+        _viewMicrophoneDenied.translatesAutoresizingMaskIntoConstraints = NO;
+        _musicFlowView.translatesAutoresizingMaskIntoConstraints = NO;
 
-        NSDictionary *views = @{@"viewMicrophoneDenied":viewMicrophoneDenied,@"musicFlowView":musicFlowView};
+        NSDictionary *views = @{@"viewMicrophoneDenied":_viewMicrophoneDenied,@"musicFlowView":_musicFlowView};
         
         NSMutableArray<NSLayoutConstraint*> *constraints = [[NSMutableArray alloc] init];
         
@@ -222,9 +219,9 @@
 
         [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[musicFlowView]-|" options:0 metrics:nil views:views]];
 
-        [constraints addObject:[NSLayoutConstraint constraintWithItem:viewMicrophoneDenied attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:visualEffectView.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+        [constraints addObject:[NSLayoutConstraint constraintWithItem:_viewMicrophoneDenied attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_visualEffectView.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
 
-        [visualEffectView.contentView addConstraints:constraints];
+        [_visualEffectView.contentView addConstraints:constraints];
     }
 
     {
@@ -323,8 +320,8 @@
         _audioRecorder.delegate = self;
         _audioRecorder.meteringEnabled = YES;
         
-        musicFlowView.primaryWaveLineWidth = 3.0f;
-        musicFlowView.secondaryWaveLineWidth = 1.0;
+        _musicFlowView.primaryWaveLineWidth = 3.0f;
+        _musicFlowView.secondaryWaveLineWidth = 1.0;
     }
 
     //Navigation Bar Settings
@@ -370,8 +367,8 @@
         self.navigationController.toolbar.tintColor = [UIColor whiteColor];
     }
 
-    viewMicrophoneDenied.tintColor = [self _normalTintColor];
-    visualEffectView.tintColor = [self _normalTintColor];
+    _viewMicrophoneDenied.tintColor = [self _normalTintColor];
+    _visualEffectView.tintColor = [self _normalTintColor];
     self.highlightedTintColor = self.highlightedTintColor;
     self.normalTintColor = self.normalTintColor;
 }
@@ -393,14 +390,16 @@
 
         if (self.blurrEnabled)
         {
+            __weak typeof(self) weakSelf = self;
+
             [UIView animateWithDuration:0.3 animations:^{
-                if (self.barStyle == UIBarStyleDefault)
+                if (weakSelf.barStyle == UIBarStyleDefault)
                 {
-                    visualEffectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+                    weakSelf.visualEffectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
                 }
                 else
                 {
-                    visualEffectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+                    weakSelf.visualEffectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
                 }
             }];
         }
@@ -408,11 +407,11 @@
         {
             if (self.barStyle == UIBarStyleDefault)
             {
-                visualEffectView.backgroundColor = [UIColor whiteColor];
+                _visualEffectView.backgroundColor = [UIColor whiteColor];
             }
             else
             {
-                visualEffectView.backgroundColor = [UIColor darkGrayColor];
+                _visualEffectView.backgroundColor = [UIColor darkGrayColor];
             }
         }
     }
@@ -447,8 +446,8 @@
         
         CGFloat normalizedValue = pow (10, [_audioRecorder averagePowerForChannel:0] / 20);
         
-        musicFlowView.waveColor = [self _highlightedTintColor];
-        [musicFlowView updateWithLevel:normalizedValue];
+        _musicFlowView.waveColor = [self _highlightedTintColor];
+        [_musicFlowView updateWithLevel:normalizedValue];
         
         self.navigationItem.title = [NSString timeStringForTimeInterval:_audioRecorder.currentTime];
     }
@@ -458,15 +457,15 @@
         {
             [_audioPlayer updateMeters];
             CGFloat normalizedValue = pow (10, [_audioPlayer averagePowerForChannel:0] / 20);
-            [musicFlowView updateWithLevel:normalizedValue];
+            [_musicFlowView updateWithLevel:normalizedValue];
         }
 
-        musicFlowView.waveColor = [self _highlightedTintColor];
+        _musicFlowView.waveColor = [self _highlightedTintColor];
     }
     else
     {
-        musicFlowView.waveColor = [self _normalTintColor];
-        [musicFlowView updateWithLevel:0];
+        _musicFlowView.waveColor = [self _normalTintColor];
+        [_musicFlowView updateWithLevel:0];
     }
 }
 
@@ -548,8 +547,9 @@
         [_viewPlayerDuration layoutIfNeeded];
 
         _viewPlayerDuration.alpha = 0.0;
+        __weak typeof(self) weakSelf = self;
         [UIView animateWithDuration:0.2 delay:0.1 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-            _viewPlayerDuration.alpha = 1.0;
+            weakSelf.viewPlayerDuration.alpha = 1.0;
         } completion:^(BOOL finished) {
         }];
         
@@ -584,8 +584,10 @@
         [playProgressDisplayLink invalidate];
         playProgressDisplayLink = nil;
         
+        __weak typeof(self) weakSelf = self;
+
         [UIView animateWithDuration:0.1 animations:^{
-            _viewPlayerDuration.alpha = 0.0;
+            weakSelf.viewPlayerDuration.alpha = 0.0;
         } completion:^(BOOL finished) {
             self.navigationItem.titleView = nil;
             [self showNavigationButton:YES];
@@ -737,6 +739,8 @@
 
 -(void)notifyCancelDelegate
 {
+    __weak typeof(self) weakSelf = self;
+
     void (^notifyDelegateBlock)(void) = ^{
         if ([self.delegate respondsToSelector:@selector(audioRecorderControllerDidCancel:)])
         {
@@ -753,8 +757,8 @@
         [self.navigationController setToolbarHidden:YES animated:YES];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
         [UIView animateWithDuration:0.3 animations:^{
-            visualEffectView.effect = nil;
-            musicFlowView.alpha = 0;
+            weakSelf.visualEffectView.effect = nil;
+            weakSelf.musicFlowView.alpha = 0;
         } completion:^(BOOL finished) {
             notifyDelegateBlock();
         }];
@@ -767,14 +771,16 @@
 
 -(void)notifySuccessDelegate
 {
+    __weak typeof(self) weakSelf = self;
+
     void (^notifyDelegateBlock)(void) = ^{
-        if ([self.delegate respondsToSelector:@selector(audioRecorderController:didFinishWithAudioAtPath:)])
+        if ([weakSelf.delegate respondsToSelector:@selector(audioRecorderController:didFinishWithAudioAtPath:)])
         {
-            [self.delegate audioRecorderController:self didFinishWithAudioAtPath:_recordingFilePath];
+            [weakSelf.delegate audioRecorderController:weakSelf didFinishWithAudioAtPath:weakSelf.recordingFilePath];
         }
         else
         {
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [weakSelf dismissViewControllerAnimated:YES completion:nil];
         }
     };
     
@@ -783,8 +789,8 @@
         [self.navigationController setToolbarHidden:YES animated:YES];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
         [UIView animateWithDuration:0.3 animations:^{
-            visualEffectView.effect = nil;
-            musicFlowView.alpha = 0;
+            weakSelf.visualEffectView.effect = nil;
+            weakSelf.musicFlowView.alpha = 0;
         } completion:^(BOOL finished) {
             notifyDelegateBlock();
         }];
@@ -842,18 +848,20 @@
 
 -(void)deleteAction:(UIBarButtonItem*)item
 {
+    __weak typeof(self) weakSelf = self;
+
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:NSLocalizedString(@"Delete Recording",nil)
                                                       style:UIAlertActionStyleDestructive
                                                     handler:^(UIAlertAction *action){
 
-                                                        [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath error:nil];
+                                                        [[NSFileManager defaultManager] removeItemAtPath:weakSelf.recordingFilePath error:nil];
                                                         
-                                                        _playButton.enabled = NO;
-                                                        _cropOrDeleteButton.enabled = NO;
-                                                        _doneButton.enabled = NO;
-                                                        self.navigationItem.title = _navigationTitle;
+                                                        weakSelf.playButton.enabled = NO;
+                                                        weakSelf.cropOrDeleteButton.enabled = NO;
+                                                        weakSelf.doneButton.enabled = NO;
+                                                        weakSelf.navigationItem.title = weakSelf.navigationTitle;
                                                     }];
     
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil)
@@ -896,15 +904,17 @@
 
 - (void)validateMicrophoneAccess
 {
+    __weak typeof(self) weakSelf = self;
+
     AVAudioSession *session = [AVAudioSession sharedInstance];
     
     [session requestRecordPermission:^(BOOL granted) {
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            viewMicrophoneDenied.alpha = !granted;
-            musicFlowView.alpha = granted;
-            _startRecordingButton.enabled = granted;
+            weakSelf.viewMicrophoneDenied.alpha = !granted;
+            weakSelf.musicFlowView.alpha = granted;
+            weakSelf.startRecordingButton.enabled = granted;
         });
     }];
 }
