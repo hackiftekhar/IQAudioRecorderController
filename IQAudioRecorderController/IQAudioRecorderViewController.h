@@ -23,7 +23,7 @@
 // THE SOFTWARE.
 
 
-#import <UIKit/UIKit.h>
+#import <UIKit/UIViewController.h>
 
 #import "IQAudioRecorderConstants.h"
 

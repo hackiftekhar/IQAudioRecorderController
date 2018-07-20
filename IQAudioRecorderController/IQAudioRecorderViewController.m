@@ -23,7 +23,7 @@
 // THE SOFTWARE.
 
 
-#import <AVFoundation/AVFoundation.h>
+#import <CoreMedia/CMTime.h>
 
 #import "IQAudioRecorderViewController.h"
 #import "NSString+IQTimeIntervalFormatter.h"

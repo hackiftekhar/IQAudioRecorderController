@@ -10,6 +10,12 @@
 // DO SEE http://stackoverflow.com/questions/1191868/uiimageview-scaling-interpolation
 // see http://stackoverflow.com/questions/3514066/how-to-tint-a-transparent-png-image-in-iphone
 
+#import <AVFoundation/AVAssetTrack.h>
+#import <AVFoundation/AVAssetReader.h>
+#import <AVFoundation/AVAssetReaderOutput.h>
+#import <AVFoundation/AVFAudio.h>
+#import <CoreMedia/CMFormatDescription.h>
+
 #import "IQ_FDWaveformView.h"
 
 #define absX(x) ((x)<0?0-(x):(x))

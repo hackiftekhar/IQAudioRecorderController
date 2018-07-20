@@ -1,9 +1,9 @@
 {
   "name": "IQAudioRecorderController",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "source": {
     "git": "https://github.com/hackiftekhar/IQAudioRecorderController.git",
-    "tag": "v1.2.2"
+    "tag": "v1.2.3"
   },
   "summary": "A drop-in universal library allows to record audio within the app with a nice User Interface.",
   "homepage": "https://github.com/hackiftekhar/IQAudioRecorderController",
@@ -22,11 +22,12 @@
   ],
   "resources": "IQAudioRecorderController/Resources/*.*",
   "frameworks": [
-    "UIKit",
-    "Foundation",
-    "CoreGraphics",
+    "AVFoundation",
     "CoreAudio",
-    "AVFoundation"
+    "CoreGraphics",
+    "CoreMotion",
+    "Foundation",
+    "UIKit"
   ],
   "dependencies": {
     "SCSiriWaveformView": [

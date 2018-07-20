@@ -22,6 +22,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <AVFoundation/AVFAudio.h>
+#import <AVFoundation/AVAssetTrack.h>
+#import <AVFoundation/AVAudioMix.h>
+#import <AVFoundation/AVAssetExportSession.h>
+#import <CoreMedia/CMTime.h>
+
 #import "IQAudioCropperViewController.h"
 #import "IQ_FDWaveformView.h"
 #import "NSString+IQTimeIntervalFormatter.h"
