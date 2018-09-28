@@ -280,6 +280,12 @@
 
             recordSettings[AVFormatIDKey] = @(kAudioFormatMPEG4AAC);
         }
+        else if (self.audioFormat == IQAudioFormat_wav)
+        {
+            _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.wav",globallyUniqueString]];
+            
+            recordSettings[AVFormatIDKey] = @(kAudioFormatLinearPCM);
+        }
         else if (self.audioFormat == IQAudioFormat_caf)
         {
             _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf",globallyUniqueString]];
