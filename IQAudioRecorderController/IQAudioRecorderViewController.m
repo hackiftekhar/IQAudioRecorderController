@@ -816,6 +816,7 @@
     controller.barStyle = self.barStyle;
     controller.normalTintColor = self.normalTintColor;
     controller.highlightedTintColor = self.highlightedTintColor;
+    controller.audioFormat = self.audioFormat;
     
     if (self.blurrEnabled)
     {
