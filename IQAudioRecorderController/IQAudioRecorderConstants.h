@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, IQAudioFormat) {
     IQAudioFormatDefault,  //   kAudioFormatMPEG4AAC    .m4a
     IQAudioFormat_m4a       = kAudioFormatMPEG4AAC,  //.m4a
     IQAudioFormat_caf       = kAudioFormatAppleLossless,  //.caf
+    IQAudioFormat_wav       = kAudioFormatLinearPCM, //.wav
 };
 
 typedef NS_ENUM(NSUInteger, IQAudioQuality) {
