@@ -18,7 +18,9 @@
     "public_header_files": [
         "IQAudioRecorderController/IQAudioRecorderViewController.h",
         "IQAudioRecorderController/IQAudioCropperViewController.h",
-        "IQAudioRecorderController/IQAudioRecorderConstants.h"
+        "IQAudioRecorderController/IQAudioRecorderConstants.h",
+        "IQAudioRecorderController/IQPlaybackDurationView.h",
+        "IQAudioRecorderController/FDWaveformView/IQ_FDWaveformView.h"
     ],
     "resources": "IQAudioRecorderController/Resources/*.*",
     "frameworks": [
