@@ -1,6 +1,6 @@
 project 'IQAudioRecorderController Demo.xcodeproj'
 
-platform :ios, '8.0'
+platform :ios, '12.0'
 
 target 'IQAudioRecorderController Demo' do
     pod "IQAudioRecorderController", :path => "."

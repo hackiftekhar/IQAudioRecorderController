@@ -78,7 +78,7 @@
     controller.allowCropping = switchAllowsCropping.on;
     controller.normalTintColor = normalTintColor;
     controller.highlightedTintColor = highlightedTintColor;
-    
+//    controller.audioFormat = IQAudioFormat_mp3;
     if (switchDarkUserInterface.on)
     {
         controller.barStyle = UIBarStyleBlack;
