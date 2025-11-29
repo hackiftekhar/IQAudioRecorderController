@@ -70,6 +70,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
 @property IQCropSelectionView *rightCropView;
 @property AVAudioPlayer *audioPlayer;
 
+
 //Navigation Bar
 @property UIBarButtonItem *cancelButton, *doneButton;
 
@@ -729,10 +730,7 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
             // create the export session
             // no need for a retain here, the session will be retained by the
             // completion handler since it is referenced there
-            AVAssetExportSession *exportSession = [AVAssetExportSession
-                                                   exportSessionWithAsset:asset
-                                                   presetName:AVAssetExportPresetAppleM4A];
-            
+            AVAssetExportSession *exportSession;
             CMTimeScale scale = [track naturalTimeScale];
 
             CMTime startTime = CMTimeMake(_leftCropView.cropTime*scale, scale);
@@ -747,11 +745,40 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
             
             NSString *globallyUniqueString = [NSProcessInfo processInfo].globallyUniqueString;
             
-            NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",globallyUniqueString]];
+            NSString *filePath;
+            if (self.audioFormat == IQAudioFormatDefault || self.audioFormat == IQAudioFormat_m4a)
+            {
+                filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",globallyUniqueString]];
+                
+                exportSession = [AVAssetExportSession
+                   exportSessionWithAsset:asset
+                   presetName:AVAssetExportPresetAppleM4A];
+                
+                exportSession.outputFileType = AVFileTypeAppleM4A; // output file type
+            }
+            else if (self.audioFormat == IQAudioFormat_wav)
+            {
+                filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.wav",globallyUniqueString]];
+                
+                exportSession = [AVAssetExportSession
+                                 exportSessionWithAsset:asset
+                                 presetName:AVAssetExportPresetPassthrough];
 
+                exportSession.outputFileType = AVFileTypeWAVE; // output file type
+            }
+            else if (self.audioFormat == IQAudioFormat_caf)
+            {
+                filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf",globallyUniqueString]];
+                
+                exportSession = [AVAssetExportSession
+                                 exportSessionWithAsset:asset
+                                 presetName:AVFileTypeCoreAudioFormat];
+
+                exportSession.outputFileType = AVFileTypeCoreAudioFormat; // output file type
+            }
+            
             // configure export session  output with all our parameters
             exportSession.outputURL = [NSURL fileURLWithPath:filePath]; // output path
-            exportSession.outputFileType = AVFileTypeAppleM4A; // output file type
             exportSession.timeRange = exportTimeRange; // trim time range
             exportSession.audioMix = exportAudioMix; // fade in audio mix
             
@@ -771,7 +798,21 @@ typedef NS_ENUM(NSUInteger, IQCropGestureState) {
                             if (exportSession.status == AVAssetExportSessionStatusCompleted)
                             {
                                 NSString *globallyUniqueString = [NSProcessInfo processInfo].globallyUniqueString;
-                                NSString *newFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",globallyUniqueString]];
+                                NSString *newFilePath;
+                                
+                                if (self.audioFormat == IQAudioFormatDefault || self.audioFormat == IQAudioFormat_m4a)
+                                {
+                                     newFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",globallyUniqueString]];
+                                }
+                                else if (self.audioFormat == IQAudioFormat_wav)
+                                {
+                                    newFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.wav",globallyUniqueString]];
+                                }
+                                else if (self.audioFormat == IQAudioFormat_caf)
+                                {
+                                    newFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf",globallyUniqueString]];
+                                }
+                                
                                 NSURL *audioURL = [NSURL fileURLWithPath:newFilePath];
 
                                 [[NSFileManager defaultManager] moveItemAtURL:exportSession.outputURL toURL:audioURL error:nil];

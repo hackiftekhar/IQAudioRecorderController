@@ -288,6 +288,23 @@
 //                _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",globallyUniqueString]];
 //                recordSettings[AVFormatIDKey] = @(kAudioFormatMPEGLayer3);
 //                break;
+        if (self.audioFormat == IQAudioFormatDefault || self.audioFormat == IQAudioFormat_m4a)
+        {
+            _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a",globallyUniqueString]];
+
+            recordSettings[AVFormatIDKey] = @(kAudioFormatMPEG4AAC);
+        }
+        else if (self.audioFormat == IQAudioFormat_wav)
+        {
+            _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.wav",globallyUniqueString]];
+            
+            recordSettings[AVFormatIDKey] = @(kAudioFormatLinearPCM);
+        }
+        else if (self.audioFormat == IQAudioFormat_caf)
+        {
+            _recordingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf",globallyUniqueString]];
+
+            recordSettings[AVFormatIDKey] = @(kAudioFormatAppleLossless);
         }
 
         if (self.sampleRate > 0.0f)
@@ -813,6 +830,7 @@
     controller.barStyle = self.barStyle;
     controller.normalTintColor = self.normalTintColor;
     controller.highlightedTintColor = self.highlightedTintColor;
+    controller.audioFormat = self.audioFormat;
     
     if (self.blurrEnabled)
     {
