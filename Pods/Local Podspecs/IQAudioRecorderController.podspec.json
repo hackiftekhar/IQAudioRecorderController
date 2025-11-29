@@ -12,13 +12,15 @@
     "Iftekhar Qurashi": "hack.iftekhar@gmail.com"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "13.0"
   },
   "source_files": "IQAudioRecorderController/**/*.{h,m}",
   "public_header_files": [
     "IQAudioRecorderController/IQAudioRecorderViewController.h",
     "IQAudioRecorderController/IQAudioCropperViewController.h",
-    "IQAudioRecorderController/IQAudioRecorderConstants.h"
+    "IQAudioRecorderController/IQAudioRecorderConstants.h",
+    "IQAudioRecorderController/IQPlaybackDurationView.h",
+    "IQAudioRecorderController/FDWaveformView/IQ_FDWaveformView.h"
   ],
   "resources": "IQAudioRecorderController/Resources/*.*",
   "frameworks": [
@@ -30,9 +32,7 @@
     "UIKit"
   ],
   "dependencies": {
-    "SCSiriWaveformView": [
-
-    ]
+    "SCSiriWaveformView": []
   },
   "requires_arc": true
 }

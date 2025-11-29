@@ -7,7 +7,7 @@ DEPENDENCIES:
   - IQAudioRecorderController (from `.`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - SCSiriWaveformView
 
 EXTERNAL SOURCES:
@@ -15,9 +15,9 @@ EXTERNAL SOURCES:
     :path: "."
 
 SPEC CHECKSUMS:
-  IQAudioRecorderController: cb2dbf00bf26e84ac183fbf4077cfd2d1f29abec
+  IQAudioRecorderController: 8fb700e6408d634f98dcb4a0a6822f378aabf5d9
   SCSiriWaveformView: 15b9dd6f94c7536e2032b34a35c6ff74d38c7411
 
-PODFILE CHECKSUM: 8f86a9bff719fe87000669f4d4dd77ed3b5cd532
+PODFILE CHECKSUM: 6d291f0903f0c640a315b97bd0012a8cbbd36f83
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.16.2
