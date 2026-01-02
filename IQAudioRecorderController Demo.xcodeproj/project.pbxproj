@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -154,8 +154,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5D474311A6A2EF200771B83 /* Build configuration list for PBXNativeTarget "IQAudioRecorderController Demo" */;
 			buildPhases = (
-				283A85F2871545E892634D6E /* Compile Target Symbols */,
-				4247993A1EABC828A9227380 /* [CP] Check Pods Manifest.lock */,
+				1380F51FAC6701796177DA32 /* [CP] Check Pods Manifest.lock */,
 				B5D4740A1A6A2EF200771B83 /* Sources */,
 				B5D4740B1A6A2EF200771B83 /* Frameworks */,
 				B5D4740C1A6A2EF200771B83 /* Resources */,
@@ -237,36 +236,20 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IQAudioRecorderController Demo/Pods-IQAudioRecorderController Demo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		283A85F2871545E892634D6E /* Compile Target Symbols */ = {
+		1380F51FAC6701796177DA32 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
-			);
-			name = "Compile Target Symbols";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\nsh -c \"${AE6D436}\"";
-			showEnvVarsInLog = 0;
-		};
-		4247993A1EABC828A9227380 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-IQAudioRecorderController Demo-checkManifestLockResult.txt",
 			);
@@ -427,10 +410,7 @@
 				DEVELOPMENT_TEAM = 7UUTF6T5P9;
 				INFOPLIST_FILE = "IQAudioRecorderController Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iftekhar.audio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -448,10 +428,7 @@
 				DEVELOPMENT_TEAM = 7UUTF6T5P9;
 				INFOPLIST_FILE = "IQAudioRecorderController Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iftekhar.audio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
